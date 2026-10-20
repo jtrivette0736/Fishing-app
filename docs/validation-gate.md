@@ -369,6 +369,10 @@ a wide margin. It does not ask for a venture outcome, and this is not one.
 | C6 | **Pilot gate: ≥5 external shops each invoiced ≥$1 under C1 within 90 days of launch.** If not met, criterion 2 is re-scored FAIL and the gate moves to (b). | Converts the lean WTP pass into a clean one, or ends it. | 2 |
 | C7 | **Each shop gets a public, indexable intake page with its prices and turnaround and a "powered by" link** in v1 — the only built-in distribution loop, and the feature that absorbs candidate i (reel-service directory). | The first-100 math counts the loop only after month 6; without the pages there is no loop at all. | 3, 5 |
 
+| C0 | **Pre-build commitment test (red team, pass 1):** within 21 days the founder contacts ≥20 named external shops and obtains ≥5 written commitments (next 10 jobs at $1/job, card on file at signup, Stripe connected at onboarding). <3 → stop and record FAIL on criterion 2; 3–4 → proceed only with the lifestyle ceiling accepted in the decision log. | Moves the kill switch in front of build investment; costs nothing. | 2 |
+| C6′ | **C6 tightened (red team):** ≥5 external shops each with ≥10 jobs across ≥2 calendar months and ≥1 customer payment through its connected account by day 90; fewer → criterion 2 FAIL, gate re-opened. | Five shops at one job each is not a pass. | 2 |
+| C5′ | **Launch window corrected (red team):** mid-November to early December 2026, hard stop mid-February; July–October is the dead window, winter is working season for mail-in techs. | The original C5 rationale had the seasons backwards (R29–R31). | 3 |
+
 Deliberately *not* assumed: SEO search volume (none on disk), Facebook group sizes (unmeasured),
 the founder's Instagram reach (P7), supplier partnerships beyond a mention (unasked), and any
 angler-side consumer product (candidate d) — the latter can be added later as a customer-owned
@@ -379,7 +383,7 @@ part of this pass.
 
 ## 8. Result and next candidate
 
-**Result for (a): PASS (6/6), conditional on C1–C7.** The gate proceeds to product definition for
+**Result for (a): PASS (6/6), conditional on C0–C7 as amended by the red team (C0, C5′, C6′ above; full list in `docs/product-definition.md` §16).** Red team pass 1 (`research/red-team.md`): APPROVE WITH REQUIRED CHANGES, all accepted. The gate proceeds to product definition for
 (a) under those conditions. Re-score trigger: C6 at day 90 after launch.
 
 **Candidate (b), private web logbook — runner-up, not gated in full because (a) passed.** Its

@@ -6,9 +6,9 @@ agent as items are verified. Nothing here is BLOCKING as of the preflight (2026-
 | ID | Item | Priority | Status | Verified how / when |
 |----|------|----------|--------|---------------------|
 | A1 | Allow `reddit.com`, `www.reddit.com`, `old.reddit.com`, `api.pullpush.io` in the environment network policy | RECOMMENDED | pending | `curl https://www.reddit.com/r/Fishing/.json` → 403 on 2026-10-20 22:05 UTC. Fallback in use: search-engine snippets + reachable forums. |
-| A2 | Supabase account + project; `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `SUPABASE_DB_PASSWORD` as environment secrets | CONDITIONAL (after gate) | not requested as blocking yet | Will verify with `npx supabase link && npx supabase db push`. Fallback: local Postgres 16 for migrations/RLS tests. |
-| A3 | Netlify account + site; `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` | CONDITIONAL (after gate) | not requested as blocking yet | Will verify with `curl -I` on the site URL. Fallback: netlify.toml + README; prototype published as an Artifact. |
-| A4 | Stripe test-mode keys (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `VITE_STRIPE_PUBLISHABLE_KEY`) | CONDITIONAL (after gate, if in-app billing) | not requested | Fallback: billing behind a feature flag. |
+| A2 | Supabase account + project; `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `SUPABASE_DB_PASSWORD` as environment secrets | RECOMMENDED since the gate passed (2026-10-21); not blocking: deliverables run on the local harness and demo mode | pending | Will verify with `npx supabase link && npx supabase db push`. Fallback: local Postgres 16 for migrations/RLS tests. |
+| A3 | Netlify account + site; `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` | RECOMMENDED since the gate passed (2026-10-21); not blocking | pending | Will verify with `curl -I` on the site URL. Fallback: netlify.toml + README; prototype published as an Artifact. |
+| A4 | Stripe account in test mode with **Connect enabled** (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `VITE_STRIPE_PUBLISHABLE_KEY`) | RECOMMENDED since the gate passed: the product takes deposits on shops' connected accounts and a $1 application fee | pending | Fallback: billing behind a feature flag. |
 | A5 | Third-party data API keys | CONDITIONAL on winning candidate | not requested | Free key-less sources (NOAA, USGS, Open-Meteo) verified reachable 2026-10-20. |
 | A6 | Domain | CONDITIONAL (launch) | not requested | — |
 | A7 | Transactional email (Resend) | CONDITIONAL (launch) | not requested | — |
@@ -36,3 +36,12 @@ Not available:
   api.pullpush.io (429), BassResource forums (502), thehulltruth.com (403) → search-engine snippets
   (`site:reddit.com …`) and reachable forums (stripersonline, tackletour, ifish, walleyecentral).
 - No Supabase or Netlify login on this machine; no project exists yet.
+
+## Founder actions that are not credentials (from the red team, 2026-10-21)
+
+| ID | Action | Deadline | Why |
+|----|--------|----------|-----|
+| F1 | **C0 commitment test:** contact ≥20 named external shops (list in `research/red-team.md` §5 change 1 and `research/evidence-repair-shop-tool.md` §3) and get ≥5 written commitments to run their next 10 jobs at $1/job with a card on file. <3 → stop. | 21 days | Criterion 2 (willingness to pay) is a FAIL until shops commit. |
+| F2 | Measure Facebook group sizes (custom rod builders; reel repair/restoration groups) while logged in; record in `docs/decision-log.md`. | 7 days | Channel math has an unmeasured row. |
+| F3 | Replace the stormprooftackle.com template (lorem-ipsum testimonials, dead "Book NOW") with the product's public page before any peer pitch. | before launch | Credibility with peers. |
+| F4 | Decide on `benchtag.com` (parked) vs `benchtag.app`; ask an accountant about the $1 service-fee line wording and sales-tax treatment of platform fees. | before launch | Open questions PD §14. |

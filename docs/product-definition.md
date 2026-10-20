@@ -811,3 +811,34 @@ is reported honestly as a fail, not rounded up.
 | PD13 | Domain checks by curl through the session proxy: `benchtag.com`, `benchqueue.com`, `reelticket.com`, `reeldesk.com` → HTTP 200 with a 114-byte registrar lander redirect (registered, parked); `benchslip.com`, `benchorder.com` → CONNECT failed (no DNS; likely unregistered); `tacklebench.com` → live site titled "Construction"; `reelqueue.com` → 302 to HugeDomains; `tackleticket.com` → Sedo parking; `jobbench.com` → TLS error. Not a legal or trademark check. | as listed | this agent | — | — | 2026-10-20 | §1a |
 | PD14 | Cost table arithmetic | **estimate:** 6 emails/job (intake, received, quote, ready, shipped/closed, one reminder) and 2 photos/job; platform invoices ≈ shops with ≥1 job that month at ARPU $19 (GA7) → Stripe 2.9% + 30¢ + 0.4% ≈ $0.93 each; Resend tier by monthly volume; Netlify Personal when bandwidth ≈ 40 GB (GA10) | estimate | — | — | — | 2026-10-20 | §9c |
 | PD15 | Founder site facts reused: "Book NOW" → "#", "$0.00" repairs heading, Spinning Reel Service $30, guide replacement from $10, drop-off at Princess Anne Distributing | as recorded | monetization.md / sources.md | P1, P3, P4, P5, VS19 | — | 2026-10-20 | §5a, §12 |
+
+## 16. Red-team revisions (pass 1), accepted 2026-10-21
+
+`research/red-team.md` §5 approved the product with 17 required changes. All are accepted; this
+section is the delta the build (5b), the prototype and the launch plan follow. Where a change
+alters an earlier section, this section wins.
+
+| # | Change | What it modifies | Build / founder |
+|---|---|---|---|
+| 1 | **C0 pre-build commitment test**: within 21 days the founder contacts ≥20 named external shops and gets ≥5 written commitments (next 10 jobs at $1/job, card on file at signup, Stripe connected at onboarding). <3 → stop and record FAIL on criterion 2; 3–4 → proceed only with the lifestyle ceiling accepted in the decision log. | §12 launch plan; gate §7 | founder (the starter in `/app` is still delivered: it is the mission's deliverable and the pilot's vehicle; C0 governs build investment beyond it) |
+| 2 | **Status page works without email**: every job gets a short code (e.g. `SPT-4F7K`) and a QR on the printed/emailed receipt; `/s/:slug/find` accepts the short code + phone or email; email is a channel, not the delivery mechanism. | F7, §5b–5c, data model (`jobs.short_code` unique per shop, 6 chars, no ambiguous glyphs) | build |
+| 3 | **Jobs never depend on Stripe onboarding**: jobs, promised dates, status emails and quotes work before a connected account exists; only deposit and payment-link buttons wait on `charges_enabled`. | F2, F4, F9 | build |
+| 4 | **"Closed until <date>" switch** on the public page in v1; intake stays open and queued; the page and JSON-LD show the state. | F3, §10a `/app/page`, data model (`shops.closed_until date null`, `shops.closed_message text`) | build |
+| 5 | CSV export and a customer-PII deletion path from day one. | F13 (already) + `delete_customer_pii(customer_id)` RPC that nulls contact fields and keeps job history | build |
+| 6 | **Collect the $1 as a Stripe application fee** on any customer payment through the shop's connected account (deposit or completion); the pass-through option is a line item on that charge. No Stripe fee applies to application fees. | §9a (reverses "deliberately not used"), §11, data model (`usage_events.collection` enum `application_fee` / `ledger`, `usage_events.payment_id` nullable) | build |
+| 7 | **Residual jobs accrue on the shop ledger**; the card on file is charged only when the accrued balance is ≥$5 or the month hits the $29 cap; smaller balances roll forward. "$0 in a month with no jobs" stays literally true. One sentence on the pricing page. | §11, F12, `billing_periods` (carry-forward column), monthly job | build |
+| 8 | **Application-fee refund rule**: full deposit refund within 7 days of intake refunds the $1 too (`refund_application_fee: true`); otherwise the fee is kept. | §5i refunds, webhook handler | build |
+| 9 | **Card on file at signup** (Stripe SetupIntent on the platform account) — the commitment signal and the mechanism for #7. | F1 (already), onboarding step order: card before Stripe Connect | build |
+| 10 | One job object; a rod build is a job with a deposit percentage and a longer promised date. | §5d (already) | — |
+| 11 | Written out of scope for v1: inventory, cost tracking, POS, SMS, parts catalogue, customer accounts, multi-user roles beyond owner + one helper, AI. | §4c | — |
+| 12 | Public pages indexable with LocalBusiness structured data including opening hours and the closed-until state, plus "powered by". | F3 (already) + closed state | build |
+| 13 | **Launch mid-November to early December 2026; mid-February is the hard stop.** Winter is the working season for mail-in techs; July–October is the dead window. | §12 (replaces the C5 rationale) | founder |
+| 14 | Order of operations: founder's shop live 2–3 weeks → template site replaced by the product's public page → ten Hampton Roads visits (weeks 1–4) → DMs to the named list → one post on alantani's "Reel Repair Service Centers" board (live), not "Member Services" (dormant since 2023) → ICRBE Feb 20–21 2027 as a walker with QR cards unless a booth is priced by 2026-12-01. | §12 | founder |
+| 15 | Founder measures Facebook group sizes (custom rod builders, reel repair/restoration groups) within a week and records them in `docs/decision-log.md`; channel math is recomputed before the first-100 claim is repeated. | gate §3 | founder |
+| 16 | **C6 tightened**: ≥5 external shops each with ≥10 jobs across ≥2 calendar months and ≥1 customer payment through its connected account, by day 90; fewer → criterion 2 FAIL, gate re-opened. | §12, gate §7 | query |
+| 17 | Day-90 scorecard (reported, no pass/fail): external shops with ≥1 job; share of jobs with a promised date; share whose customer opened the status page; month-3 activity of month-1 shops (target ≥60%); application fees vs ledger invoices (mostly fees); failed card charges; email bounce + complaint rate (<0.3%); ARPU per active shop; median time signup→first job (<1 day) and →first public-page visit. | §12, `/app/billing` and an admin SQL view | build (views) |
+
+Schema consequences for 5b, in one place: `jobs.short_code`; `shops.closed_until`,
+`shops.closed_message`, `shops.platform_customer_id`, `shops.platform_payment_method_id`;
+`usage_events.collection`, `usage_events.payment_id`, `usage_events.application_fee_id`;
+`billing_periods.carried_forward_cents`; RPC `delete_customer_pii`; admin views for the scorecard.
