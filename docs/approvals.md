@@ -30,7 +30,9 @@ Verified working without the founder:
 Not available:
 
 - Docker daemon (client only) → no local Supabase stack. Fallback: plain Postgres 16.
-- Supabase CLI, Netlify CLI, Deno not installed → install on demand with `npx` where needed.
-- Reddit (403 via proxy), Trustpilot (403), api.pullpush.io (429), BassResource forums
-  (502 via proxy) → search snippets and other forums.
+- Supabase CLI and Netlify CLI not installed globally, but `npx supabase@latest` and `npx netlify-cli@latest` both run (verified 2026-10-20 22:25 UTC). Deno not installed (only needed if we ship Supabase edge functions; `npx supabase functions serve` bundles Deno).
+- Throwaway PostgreSQL 16 cluster verified: `initdb`/`pg_ctl` as the `postgres` user under `/tmp`, `auth.uid()` shim, RLS policy creation all work (22:28 UTC). This is the migration/RLS test harness for phase 5.
+- Reddit (403 via proxy, and Reddit also blocks reader proxies such as r.jina.ai), Trustpilot (403),
+  api.pullpush.io (429), BassResource forums (502), thehulltruth.com (403) → search-engine snippets
+  (`site:reddit.com …`) and reachable forums (stripersonline, tackletour, ifish, walleyecentral).
 - No Supabase or Netlify login on this machine; no project exists yet.
