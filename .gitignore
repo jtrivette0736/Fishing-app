@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
+.netlify/
+.supabase/
+supabase/.temp/
+*.log
+.tmp/
