@@ -382,9 +382,30 @@ part of this pass.
 **Result for (a): PASS (6/6), conditional on C1–C7.** The gate proceeds to product definition for
 (a) under those conditions. Re-score trigger: C6 at day 90 after launch.
 
-**Candidate (b), private web logbook:** not gated in this pass because (a) passed; it is next if C6
-fails. Its targeted evidence file (`research/evidence-private-logbook.md`) is not on disk as of
-2026-10-20 — **b: awaiting evidence file.**
+**Candidate (b), private web logbook — runner-up, not gated in full because (a) passed.** Its
+targeted evidence round (`research/evidence-private-logbook.md`, 566 lines, 42 new pain rows
+L-P1–L-P42, 80+ sources) reached these verdicts on its own, recorded here so the red team and the
+report can see why it lost and what would revive it:
+
+| Criterion | (b) verdict from its evidence file | Key evidence |
+|---|---|---|
+| 1 Functionality | PASS — 46 + 40 named handles, 8 platforms, 20 years of the same pains (lapse, transcription, no automatic conditions, lock-in, spot privacy) | I-E rows; L-P1–L-P42 |
+| 2 Willingness to pay | PASS only at $10–20/yr or $25–40 one-time; unproven at $29/yr (that price belongs to map/forecast bundles) | Amazon paper log 976 ratings at $8.99 (L29); Anglers' Log 100K+ downloads at $11.99/yr (L6); LogIT/FishLogger $29.99 lifetime |
+| 3 Organic path | LIKELY FAIL at 90 days — reach is huge (r/Fishing 3.1M) but intent is thin: ≈2,400 US searches/month for the log family, ≈130 with "app" intent; 23–65 payers in 90 days on stated assumptions | L38, L39, L48–L50 |
+| 4 Resource | PASS — NOAA/NWS key-less, public domain | D4–D7 |
+| 5 Defensibility | WEAK — Fishing Points already ships a private log with automatic weather/solunar/tide, GPX import, web app and sync to 10M+ installs; only CSV export and charts are missing; 101 log apps launched in 2026 | L58–L61, L87 |
+| 6 Economics | PASS on cost, FRAGILE on retention — 33% of incentivised diarists still logging at 12 months; 3–7% day-30 retention for apps | L71, L74 |
+
+Why (b) lost to (a): lower price point ($10–20/yr vs ~$19/month active ARPU), a weaker 90-day
+path, a 10M-install incumbent one release away from parity, and a retention problem that no feature
+removes. What would revive it: C6 failing for (a), plus a distribution partner (a forum or creator
+post) and a design that removes entry effort (automatic conditions from a single tap). It also
+remains the natural consumer companion to (a): the per-item service history the shop tool creates
+is the seed of an angler-owned gear record (gap-analysis §5, candidate d).
+
+**Candidate (e), fly-tying materials inventory:** not gated; third on points (61) only because
+competition was never researched; one platform (FAOL), threads 2006–2013 — fails criterion 1's
+three-platform rule on current evidence (gap-analysis §3).
 
 **The single weakest point, for the red team.** Criterion 2: no fishing shop anywhere in 54 pain
 rows, seven price lists and eight shop websites is shown paying for job tracking; the willingness-

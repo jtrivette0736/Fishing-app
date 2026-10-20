@@ -28,6 +28,8 @@ FILES = [
     "evidence-repair-shop-tool.md",
     "evidence-private-logbook.md",
     "red-team.md",
+    "../docs/validation-gate.md",
+    "../docs/product-definition.md",
 ]
 
 ROW = re.compile(r"^\|\s*([A-Z]{1,2}\d+[a-z]?)\s*\|(.*)\|\s*$")
