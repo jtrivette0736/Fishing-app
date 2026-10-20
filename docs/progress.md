@@ -16,10 +16,10 @@ Stop condition: go (prototype + /app + report + red team) or a documented no-go.
 | 1 Setup | done 2026-10-20 | repo skeleton, logs, first four skills, initial push |
 | 2 Broad research | done 2026-10-20 | `research/market-sizing.md`, `research/hobby-immersion.md`, `research/competitors.md`, `research/monetization.md` |
 | 3 Gap analysis + gate | done 2026-10-21 — (a) PASS 6/6 conditional (C1–C7); (b), (e) runners-up | `research/gap-analysis.md`, `docs/validation-gate.md` |
-| 4 Product definition | in progress (agent running) | `docs/product-definition.md` |
+| 4 Product definition | done 2026-10-21 — Bench Tag, 13 MVP features | `docs/product-definition.md` |
 | 5 Foundation (/app) | 5a in progress (scaffold agent running); 5b after phase 4 | `app/` |
-| 6 Prototype | pending | `deliverables/prototype.html` |
-| 7 Red team | pending | `research/red-team.md` |
+| 6 Prototype | in progress (agent running) | `deliverables/prototype.html` |
+| 7 Red team | 7a gate re-run in progress (agent running); 7b code review after 5b | `research/red-team.md` |
 | 8 Packaging | pending | `deliverables/report.md`, `deliverables/report.html` |
 
 ## Timeline
@@ -36,3 +36,4 @@ Stop condition: go (prototype + /app + report + red team) or a documented no-go.
 - Hard truths: $4/yr digital spend per angler; 33% yearly churn out of the hobby; consumer ceiling $29–49/yr; founder's brand has no measurable reach today and his website needs fixing before any peer pitch.
 - 2026-10-21 01:10 UTC — gap analysis (14 candidates), two evidence rounds and the gate run complete. Winner: (a) job tracking for reel/rod service businesses, PASS 6/6 with conditions. Logged D9.
 - 2026-10-21 01:20 UTC — phase 4 (product definition) and phase 5a (scaffold) launched in parallel (D10).
+- 2026-10-21 01:50 UTC — product definition done (`docs/product-definition.md`, 813 lines). Prototype agent launched. Red-team pass 1 (independent gate re-run) running. 5a scaffold running.
