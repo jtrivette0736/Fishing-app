@@ -1,0 +1,12 @@
+# Repo-level Netlify configuration: the deployable app lives in app/. Netlify changes into the
+# base directory, then reads app/netlify.toml (build command, publish dir, SPA redirect, headers).
+# The command and publish settings are repeated here so the site still builds if only this
+# file is read; `publish` is relative to `base`.
+
+[build]
+  base = "app"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

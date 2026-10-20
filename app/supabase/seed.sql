@@ -1,0 +1,3 @@
+-- Seed data for local development and previews. Intentionally empty in phase 5a.
+-- Phase 5b adds a demo shop, a few jobs in each status and one customer with a status-page
+-- token so a fresh `supabase db reset` lands on something to look at.

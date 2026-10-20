@@ -1,0 +1,2 @@
+# SPA fallback (also declared in netlify.toml; kept here so it survives a root-only Netlify config).
+/*  /index.html  200

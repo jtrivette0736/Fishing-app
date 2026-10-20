@@ -1,0 +1,35 @@
+# Netlify configuration for the app. The repo root also has a netlify.toml that sets
+# `base = "app"`, so Netlify reads this file for the build. Deploy docs: README.md -> Deploy.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# Single-page app: every path is served by index.html and react-router picks the page.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(self \"https://js.stripe.com\")"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # Allowed third parties: Supabase (API, realtime, storage), Stripe.js + Checkout/Connect
+    # frames, Cloudflare Turnstile. Resend is server-side only and needs nothing here.
+    # Self-hosted Supabase: replace *.supabase.co with your API host.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://js.stripe.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://challenges.cloudflare.com; frame-src https://js.stripe.com https://hooks.stripe.com https://connect.stripe.com https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://checkout.stripe.com https://connect.stripe.com; object-src 'none'; upgrade-insecure-requests"
+
+# Hashed build assets never change: cache them for a year.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
