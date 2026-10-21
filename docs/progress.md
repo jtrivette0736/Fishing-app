@@ -17,10 +17,10 @@ Stop condition: go (prototype + /app + report + red team) or a documented no-go.
 | 2 Broad research | done 2026-10-20 | `research/market-sizing.md`, `research/hobby-immersion.md`, `research/competitors.md`, `research/monetization.md` |
 | 3 Gap analysis + gate | done 2026-10-21 — (a) PASS 6/6 conditional (C1–C7); (b), (e) runners-up | `research/gap-analysis.md`, `docs/validation-gate.md` |
 | 4 Product definition | done 2026-10-21 — Bench Tag, 13 MVP features | `docs/product-definition.md` |
-| 5 Foundation (/app) | 5a in progress (scaffold agent running); 5b after phase 4 | `app/` |
+| 5 Foundation (/app) | 5a done 2026-10-21 (27 tests, SQL harness, CI); 5b in progress (schema, RLS, slice) | `app/` |
 | 6 Prototype | in progress (agent running) | `deliverables/prototype.html` |
 | 7 Red team | 7a done 2026-10-21: APPROVE WITH REQUIRED CHANGES (17, all accepted, PD §16); 7b code review after 5b | `research/red-team.md` |
-| 8 Packaging | pending | `deliverables/report.md`, `deliverables/report.html` |
+| 8 Packaging | report draft in progress (agent running; TODO placeholders for 5b/prototype) | `deliverables/report.md`, `deliverables/report.html` |
 
 ## Timeline
 
@@ -38,3 +38,4 @@ Stop condition: go (prototype + /app + report + red team) or a documented no-go.
 - 2026-10-21 01:20 UTC — phase 4 (product definition) and phase 5a (scaffold) launched in parallel (D10).
 - 2026-10-21 01:50 UTC — product definition done (`docs/product-definition.md`, 813 lines). Prototype agent launched. Red-team pass 1 (independent gate re-run) running. 5a scaffold running.
 - 2026-10-21 02:10 UTC — red team pass 1 in: approve with 17 required changes; all accepted and folded into `docs/product-definition.md` §16, gate C0/C5′/C6′, approvals F1–F4. Logged D13.
+- 2026-10-21 03:05 UTC — 5a scaffold green and re-verified by the lead (`npm run check`, `npm run test:sql`). 5b launched. Report draft agent running in parallel.
