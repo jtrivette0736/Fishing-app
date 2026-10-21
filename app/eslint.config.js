@@ -75,9 +75,14 @@ export default defineConfig(
     },
   },
 
-  // The data layer and auth are the only modules allowed to import Supabase.
+  // The client module, the data layer and auth are the only modules allowed to import Supabase.
   {
-    files: ['src/lib/api/**/*.ts', 'src/lib/auth/**/*.{ts,tsx}', 'src/features/*/api/**/*.ts'],
+    files: [
+      'src/lib/supabase/client.ts',
+      'src/lib/api/**/*.ts',
+      'src/lib/auth/**/*.{ts,tsx}',
+      'src/features/*/api/**/*.ts',
+    ],
     rules: { 'no-restricted-imports': 'off' },
   },
 

@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react'
+import { type SubmitEvent, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { z } from 'zod'
 
@@ -40,7 +40,7 @@ export function Login() {
     return <Navigate to={redirectTarget(location.state)} replace />
   }
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     setErrors({})
 

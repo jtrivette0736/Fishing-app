@@ -33,7 +33,7 @@ describe('Result', () => {
   it('unwrap returns data or throws an ApiRequestError carrying the code', () => {
     expect(unwrap(ok('data'))).toBe('data')
     const failed: Result<string> = err(apiError('forbidden'))
-    expect(() => unwrap(failed)).toThrowError(ApiRequestError)
+    expect(() => unwrap(failed)).toThrow(ApiRequestError)
     try {
       unwrap(failed)
     } catch (thrown) {

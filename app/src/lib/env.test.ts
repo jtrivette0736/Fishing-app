@@ -36,16 +36,16 @@ describe('parseEnv', () => {
   it('refuses a URL that is not a URL, in plain English', () => {
     expect(() =>
       parseEnv({ ...supabase, VITE_SUPABASE_URL: 'abcd.supabase.co' }),
-    ).toThrowError(/VITE_SUPABASE_URL must be a full URL/)
+    ).toThrow(/VITE_SUPABASE_URL must be a full URL/)
   })
 
   it('refuses half a Supabase configuration instead of silently going demo', () => {
-    expect(() => parseEnv({ VITE_SUPABASE_URL: supabase.VITE_SUPABASE_URL })).toThrowError(
+    expect(() => parseEnv({ VITE_SUPABASE_URL: supabase.VITE_SUPABASE_URL })).toThrow(
       /Set both VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY/,
     )
     expect(() =>
       parseEnv({ VITE_SUPABASE_ANON_KEY: supabase.VITE_SUPABASE_ANON_KEY }),
-    ).toThrowError(/Set both VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY/)
+    ).toThrow(/Set both VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY/)
   })
 
   it('keeps the optional Turnstile key when present', () => {

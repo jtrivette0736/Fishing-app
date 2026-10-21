@@ -13,18 +13,24 @@ trap 'rm -f "$TMP"' EXIT
 HARNESS_PORT="${HARNESS_PORT:-54329}"
 HARNESS_DB="${HARNESS_DB:-fishing_test}"
 
+# Fresh database with every migration applied, left running until we are done.
+bash "$APP_DIR/supabase/tests/run.sh" --keep
 if [[ -n "${DATABASE_URL:-}" ]]; then
-  bash "$APP_DIR/supabase/tests/run.sh" --keep
   DB_URL="${DATABASE_URL%/*}/$HARNESS_DB"
 else
-  bash "$APP_DIR/supabase/tests/run.sh" --keep
   trap 'rm -f "$TMP"; bash "$APP_DIR/supabase/tests/run.sh" --stop' EXIT
   DB_URL="postgresql://postgres@127.0.0.1:$HARNESS_PORT/$HARNESS_DB"
 fi
 
+# The harness speaks plaintext; the CLI tries TLS first unless told not to.
+case "$DB_URL" in
+  *\?*) GEN_URL="$DB_URL&sslmode=disable" ;;
+  *) GEN_URL="$DB_URL?sslmode=disable" ;;
+esac
+
 echo "[types] supabase gen types <- $DB_URL"
 # Supabase CLI 2.x; pinned to the major so a new major cannot change the output shape silently.
-npx --yes supabase@2 gen types typescript --db-url "$DB_URL" --schema public > "$TMP"
+npx --yes supabase@2 gen types typescript --db-url "$GEN_URL" --schema public > "$TMP"
 
 {
   cat <<'EOF'
