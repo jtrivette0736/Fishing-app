@@ -1,0 +1,2933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Bench Tag — final report for the founder</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff; --fg: #1d2330; --muted: #5b6474; --line: #d9dee7; --accent: #0b5d8a;
+  --code-bg: #f3f5f8; --row: #f7f9fb; --head: #e9eef4; --todo: #fff4d6; --todo-fg: #6b4b00;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12161d; --fg: #e4e8ee; --muted: #a0a8b6; --line: #2d3542; --accent: #7fc1ea;
+    --code-bg: #1b2029; --row: #171c25; --head: #202734; --todo: #3a2f12; --todo-fg: #f0d28a;
+  }
+}
+* { box-sizing: border-box; }
+html { font-size: 16px; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.55;
+}
+.wrap { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 2rem; max-width: 1360px; margin: 0 auto; padding: 1.5rem 16px 4rem; }
+nav.toc { position: sticky; top: 1rem; align-self: start; max-height: calc(100vh - 2rem); overflow: auto; font-size: 0.86rem; border-right: 1px solid var(--line); padding-right: 1rem; }
+nav.toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 .5rem; }
+nav.toc ul { list-style: none; margin: 0; padding: 0; }
+nav.toc li { margin: .15rem 0; }
+nav.toc li.h3 { padding-left: .9rem; color: var(--muted); }
+nav.toc a { color: inherit; text-decoration: none; }
+nav.toc a:hover { color: var(--accent); }
+main { min-width: 0; }
+h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 .5rem; }
+h2 { font-size: 1.4rem; margin: 2.4rem 0 .8rem; padding-top: .6rem; border-top: 1px solid var(--line); }
+h3 { font-size: 1.1rem; margin: 1.8rem 0 .6rem; }
+p, li { max-width: 78ch; }
+a { color: var(--accent); }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
+code { background: var(--code-bg); padding: .1em .3em; border-radius: 3px; }
+pre { background: var(--code-bg); padding: .8rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.4; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1rem 0; padding: .2rem 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { border: 1px solid var(--line); padding: .4rem .55rem; vertical-align: top; text-align: left; }
+th { background: var(--head); font-weight: 600; }
+tbody tr:nth-child(even) { background: var(--row); }
+td { word-break: break-word; }
+.todo { background: var(--todo); color: var(--todo-fg); border: 1px dashed var(--todo-fg); padding: .6rem .9rem; border-radius: 6px; margin: 1rem 0; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85rem; }
+.meta { color: var(--muted); font-size: .9rem; }
+input[type=checkbox] { margin-right: .4rem; }
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: 1fr; }
+  nav.toc { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 1rem; margin-bottom: 1rem; }
+}
+@media print { nav.toc { display: none; } .wrap { display: block; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc"><h2>Contents</h2><ul><li class="h2"><a href="#executive-summary">Executive summary</a></li>
+<li class="h2"><a href="#1-what-the-app-is">1. What the app is</a></li>
+<li class="h2"><a href="#2-the-problem-it-solves">2. The problem it solves</a></li>
+<li class="h3"><a href="#2a-what-they-do-today">2a. What they do today</a></li>
+<li class="h3"><a href="#2b-verbatim-evidence-24-people-12-platforms">2b. Verbatim evidence (24 people, 12 platforms)</a></li>
+<li class="h3"><a href="#2c-feature-pain-what-each-piece-of-the-product-removes">2c. Feature → pain (what each piece of the product removes)</a></li>
+<li class="h2"><a href="#3-the-validation-gate-completed">3. The validation gate, completed</a></li>
+<li class="h3"><a href="#3a-the-six-criteria-gate-verdicts">3a. The six criteria (gate verdicts)</a></li>
+<li class="h3"><a href="#3b-conditions-c0c7-as-amended-by-the-red-team">3b. Conditions C0–C7 (as amended by the red team)</a></li>
+<li class="h3"><a href="#3c-gate-versus-red-team-side-by-side">3c. Gate versus red team, side by side</a></li>
+<li class="h2"><a href="#4-why-existing-tools-fail">4. Why existing tools fail</a></li>
+<li class="h3"><a href="#4a-competitor-matrix-for-this-job">4a. Competitor matrix for this job</a></li>
+<li class="h3"><a href="#4b-the-gaps-in-one-table">4b. The gaps, in one table</a></li>
+<li class="h3"><a href="#4c-the-graveyard-pattern">4c. The graveyard pattern</a></li>
+<li class="h2"><a href="#5-what-it-needs">5. What it needs</a></li>
+<li class="h3"><a href="#5a-feature-list-13-mvp-features-plus-the-red-team-deltas">5a. Feature list: 13 MVP features plus the red-team deltas</a></li>
+<li class="h3"><a href="#5b-supabase-schema-outline">5b. Supabase schema outline</a></li>
+<li class="h3"><a href="#5c-netlify-setup">5c. Netlify setup</a></li>
+<li class="h3"><a href="#5d-external-services-and-what-they-cost">5d. External services and what they cost</a></li>
+<li class="h3"><a href="#5e-estimated-build-effort">5e. Estimated build effort</a></li>
+<li class="h3"><a href="#5f-monthly-third-party-cost-at-scale">5f. Monthly third-party cost at scale</a></li>
+<li class="h3"><a href="#5g-what-is-already-built-in-app">5g. What is already built in /app</a></li>
+<li class="h3"><a href="#5h-prototype">5h. Prototype</a></li>
+<li class="h2"><a href="#6-market-data">6. Market data</a></li>
+<li class="h3"><a href="#6a-participation-spend-segments-churn-seasonality-demographics">6a. Participation, spend, segments, churn, seasonality, demographics</a></li>
+<li class="h3"><a href="#6b-the-a-specific-tam-sam-som-math-shown">6b. The (a)-specific TAM / SAM / SOM, math shown</a></li>
+<li class="h2"><a href="#7-monetization">7. Monetization</a></li>
+<li class="h3"><a href="#7a-the-recommended-model-c1-as-amended">7a. The recommended model (C1 as amended)</a></li>
+<li class="h3"><a href="#7b-alternatives-considered">7b. Alternatives considered</a></li>
+<li class="h3"><a href="#7c-revenue-projections">7c. Revenue projections</a></li>
+<li class="h3"><a href="#7d-unit-economics">7d. Unit economics</a></li>
+<li class="h3"><a href="#7e-break-even">7e. Break-even</a></li>
+<li class="h3"><a href="#7f-the-ceiling">7f. The ceiling</a></li>
+<li class="h2"><a href="#8-organic-go-to-market-the-first-100-customers">8. Organic go-to-market: the first 100 customers</a></li>
+<li class="h3"><a href="#8a-step-zero-the-c0-commitment-test-days-121-0">8a. Step zero: the C0 commitment test (days 1–21, $0)</a></li>
+<li class="h3"><a href="#8b-the-channel-table-reach-conversion-paying-shops">8b. The channel table (reach × conversion = paying shops)</a></li>
+<li class="h3"><a href="#8c-the-90-day-plan-week-by-week-pd-12-as-amended-by-red-team-changes-1315">8c. The 90-day plan, week by week (PD §12 as amended by red-team changes 13–15)</a></li>
+<li class="h3"><a href="#8d-built-in-loops">8d. Built-in loops</a></li>
+<li class="h2"><a href="#9-risks-and-red-team-findings">9. Risks and red-team findings</a></li>
+<li class="h3"><a href="#9a-five-failure-modes-red-team-4-probabilities-are-the-red-teams-estimates-for-the-first-twelve-months-after-launch-overlapping-not-summing">9a. Five failure modes (red team §4; probabilities are the red team&#x27;s estimates for the first twelve months after launch, overlapping, not summing)</a></li>
+<li class="h3"><a href="#9b-counter-evidence-the-gate-weighed-evidence-file-6">9b. Counter-evidence the gate weighed (evidence file §6)</a></li>
+<li class="h3"><a href="#9c-data-licensing-and-legal-exposure-red-team-3g">9c. Data, licensing and legal exposure (red team §3g)</a></li>
+<li class="h3"><a href="#9d-how-it-fails-without-ad-spend">9d. How it fails without ad spend</a></li>
+<li class="h3"><a href="#9e-what-would-need-to-be-true-for-this-to-work-checklist">9e. What would need to be true for this to work (checklist)</a></li>
+<li class="h2"><a href="#10-remaining-actions-for-the-founder">10. Remaining actions for the founder</a></li>
+<li class="h3"><a href="#10a-do-this-week">10a. Do this week</a></li>
+<li class="h3"><a href="#10b-before-deploy">10b. Before deploy</a></li>
+<li class="h3"><a href="#10c-before-launch">10c. Before launch</a></li>
+<li class="h2"><a href="#11-decision-log-highlights-and-runner-up-opportunities">11. Decision log highlights and runner-up opportunities</a></li>
+<li class="h3"><a href="#11a-the-eight-most-consequential-decisions-docsdecision-logmd">11a. The eight most consequential decisions (docs/decision-log.md)</a></li>
+<li class="h3"><a href="#11b-runner-up-opportunities">11b. Runner-up opportunities</a></li>
+<li class="h3"><a href="#11c-scoring-grid-top-8-researchgap-analysismd-2-nine-criteria-weights-332122122-max-90">11c. Scoring grid, top 8 (research/gap-analysis.md §2; nine criteria, weights 3/3/2/1/2/2/1/2/2, max 90)</a></li>
+<li class="h2"><a href="#12-appendix">12. Appendix</a></li>
+<li class="h3"><a href="#12a-method">12a. Method</a></li>
+<li class="h3"><a href="#12b-evidence-limits">12b. Evidence limits</a></li>
+<li class="h3"><a href="#12c-source-list">12c. Source list</a></li></ul></nav>
+<main>
+<h1 id="bench-tag-final-report-for-the-founder">Bench Tag — final report for the founder</h1>
+<p>Report Agent, 2026-10-21. Repository <code>Fishing-app</code>. Every number below carries a source id in the
+form (S-id / local id): the S-id is the row in <a href="../docs/sources.md"><code>docs/sources.md</code></a> (727 rows,
+regenerated today so that the red team's <code>R</code> rows and the product definition's <code>PD</code> rows are
+included), the local id is the row in the research file that produced it. Estimates are labelled
+<strong>estimate</strong> and show their derivation. Quotes are verbatim; ellipses mark cuts. Two sections carry
+<code>TODO</code> placeholders for work still in progress (the <code>/app</code> starter and the prototype).</p>
+<h2 id="executive-summary">Executive summary</h2>
+<ol>
+<li><strong>Outcome: GO, conditional.</strong> Candidate (a), job tracking for small fishing-gear service businesses, passed the six-criterion validation gate 6/6 with conditions C0–C7; the independent red team scored it 5/6 (criterion 2, willingness to pay, FAIL as written) and returned APPROVE WITH REQUIRED CHANGES, all 17 accepted (<code>docs/validation-gate.md</code> §8, <code>research/red-team.md</code> §5, decision D13).</li>
+<li><strong>The gap:</strong> reel techs, rod repairers and custom rod builders run intake, the queue, parts approval, status and money through phone calls, texts, dates written on boxes, printed forms in the box and hand-raised invoices; no fishing-specific job-tracking product exists in the US (S542 / VS60), and generic repair software costs $70–149 a month (S450 / P111, S451 / P112) against shops grossing $750–5,000 a month.</li>
+<li><strong>The app in one sentence:</strong> Bench Tag gives a one-person reel or rod shop a public "send us your reel / order a rod" page with a deposit, a job board with promised dates, online quote-and-approve for parts, a private customer status page with automatic emails, and a payment link that settles to the shop's own Stripe account.</li>
+<li><strong>Top data point 1:</strong> 24 verbatim accounts from 24 different people on 12 platforms describe the workaround or the loss, 13 of them dated 2020–2026 (S712 / GA19); e.g. "I had to start calling him every day" (S545 / V34) and "they told me my reels were ready when they weren't" (S547 / V39).</li>
+<li><strong>Top data point 2:</strong> the US pool is ≈2,000–4,500 businesses (800–1,400 reel-service listings, S564 / VS82; 1,500–4,000 custom rod builders, S565 / VS83) plus 250–450 in the UK, Canada and Australia (S566 / VS84); the fishing hobby behind them is 57.0M participants (S1 / M1) spending $99.4B a year (S28 / M28).</li>
+<li><strong>Top data point 3:</strong> nobody in the segment is shown paying for job tracking today; the nearest paying neighbours are bike shops at $52–60/month for job cards with automatic customer updates (S675 / R24, S676 / R25) and Australian fishing retailers at A$265+/month for POS with a repairs module (S524 / VS42).</li>
+<li><strong>Pricing:</strong> $1.00 per job created, capped at $29 per shop per month, $0 in an idle month, optional $290/yr prepay; the dollar is collected as a Stripe application fee when the job has a customer payment, otherwise it accrues on a ledger charged at ≥$5 or the cap (C1 as amended by red-team changes 6–7).</li>
+<li><strong>Economics:</strong> break-even at 3–5 paying shops (S705 / GA12); 100 shops ≈ $14K–20K a year gross depending on whose ARPU you believe (S692 / R41 vs S700 / GA7); the full-penetration ceiling is $0.3–1.1M a year, a lifestyle or wedge business (S710 / GA17).</li>
+<li><strong>First-100 path, no ads:</strong> founder's own shop live first → ten Hampton Roads visits → direct messages to a named list of shops → one post on alantani.com's live Service Centers board → rodbuilding.org and the ICRBE expo (2,000–2,500 builders, Feb 20–21 2027, S669 / R18) → supplier mentions → each shop's indexable public page; 70–160 paying in 12 months on stated assumptions (S708 / GA15), 10–25 by day 90 (S709 / GA16).</li>
+<li><strong>Step zero is a $0 test:</strong> within 21 days the founder contacts ≥20 named shops and gets ≥5 written commitments (next 10 jobs at $1 each, card on file, Stripe connected); fewer than 3 stops the project before build money is spent (C0).</li>
+<li><strong>Outstanding founder actions: 15</strong> (3 this week, 7 before deploy, 5 before launch), none blocking the deliverables; detail in §10.</li>
+<li><strong>Deliverables:</strong> this report (<code>deliverables/report.md</code>, <code>deliverables/report.html</code>), <code>docs/product-definition.md</code>, <code>docs/validation-gate.md</code>, <code>research/red-team.md</code>, <code>docs/sources.md</code>; the <code>/app</code> starter and <code>deliverables/prototype.html</code> are in progress and their sections are marked <code>TODO</code> in §5.</li>
+</ol>
+<hr />
+<h2 id="1-what-the-app-is">1. What the app is</h2>
+<p><strong>Name:</strong> Bench Tag. <strong>Tagline:</strong> <em>Every reel on the bench, every customer in the loop.</em>
+(<code>docs/product-definition.md</code> §1; three names were checked, <code>benchtag.com</code> is registered and parked, S725 / PD13.)</p>
+<p><strong>Pitch.</strong> Bench Tag is job tracking for the one-person reel and rod shop. A customer sends in a reel
+or orders a rod from the shop's own public page and pays the deposit; the shop sees every job on one
+board with a promised date; parts are quoted and approved online instead of by phone; the customer
+watches a private status page and gets an email at each step; the shop sends a payment link when the
+work is done and the money lands in the shop's own Stripe account. It costs $1 per job, never more
+than $29 a month, and $0 in a month the shop is closed (PD §1b).</p>
+<p><strong>Target user (the buyer).</strong> A reel technician, rod repairer or custom rod builder: one person, often
+part-time and seasonal, doing 10–100 jobs a month (S485 / V3: "fixing reels at a clip of about 100 a
+month"; S489 / V11: "backed up 35 orders"; S487 / V5: "keeping me busy on a part time basis"), taking
+50% deposits and parts payments by hand (S491 / V13; S496 / V22), with intake by text, call, printed
+form or a two-hour meeting (S484 / V2; S486 / V4; S551 / V47; S489 / V11). What they will not do:
+learn a POS, pay $99 a month, hold a customer's money, or scale (PD §2a; S494 / V20; S543 / N-V17).
+Customer zero is the founder's own workshop, Storm Proof Tackle in Virginia Beach, whose site today
+has a dead "Book NOW" button and a "$0.00" repairs heading (S340 / P1; S672 / R21).</p>
+<p><strong>The end user (the shop's customer).</strong> An angler who left a $30–$500 reel with a shop and wants to
+know when it comes back, who found the shop through a forum or Facebook (S552 / V51; S140 / M20) and
+will switch shops over silence (S547 / V40; S548 / V44). The product has to deliver the positive
+version of the same need: "my reels are always done before the estimated date given at drop off"
+(S547 / V41).</p>
+<p><strong>Not the target in v1</strong> (PD §2c): multi-tech shops with counters and staff (served by RepairDesk and
+Tower at $99–A$298, S698 / GA5, S524 / VS42); anyone whose problem is point-of-sale or parts stock;
+directories and marketplaces; OEM service centres; anglers as paying users.</p>
+<hr />
+<h2 id="2-the-problem-it-solves">2. The problem it solves</h2>
+<h3 id="2a-what-they-do-today">2a. What they do today</h3>
+<p>Intake arrives by phone, text, Facebook message, a printed form shipped in the box, a web form that is
+re-typed into a text, or a two-hour meeting; the queue is dates written on the outside of the box or a
+list in the tech's head; status is a phone call from the customer, or from the tech when the work is
+done; money is a 50% deposit collected by hand (builders), parts prepaid through a hand-raised
+invoice, cheques that must clear, or cash on pickup; uncollected work is handled by a rule printed on a
+paper receipt (<code>research/evidence-repair-shop-tool.md</code> §1 summary). Three of the seven shops with
+public price lists close for 4–8 weeks in season (S408 / P69; S409 / P70; S410 / P71), and the one
+mainstream tool a rod builder tried, Square, cannot express a two-to-three-week lead time (S483 / V1).</p>
+<h3 id="2b-verbatim-evidence-24-people-12-platforms">2b. Verbatim evidence (24 people, 12 platforms)</h3>
+<p>B = business side (the buyer), A = angler side (the buyer's customer). Independence and recency count:
+24 quotes, 24 distinct people, 12 platforms, 13 of 24 dated 2020–2026 (S712 / GA19).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Side</th>
+<th>Verbatim</th>
+<th>Who</th>
+<th>Where</th>
+<th>Date</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>B</td>
+<td>"each build takes anywhere from a few days to two or three weeks depending on complexity and parts availability" … "from what I can see I can only change the item prep time and that's only up to one day of prep."</td>
+<td>Travis1836, custom rod builder</td>
+<td>Square Seller Community</td>
+<td>2023-02-26</td>
+<td><a href="https://community.squareup.com/t5/Questions-How-To/How-would-I-show-my-customers-order-wait-time-or-how-long-an/td-p/639869">S483 / V1</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>B</td>
+<td>"The first thing I'm going to do when I receive a reel for service is review the form the sender submits online" … "send a text or email confirming receipt and condition"</td>
+<td>Doug Lemons, Doug's Reel Repair (Hudson, OH)</td>
+<td>Pond Boss magazine</td>
+<td>2023-03</td>
+<td><a href="https://www.pdbmagazine.com/2023/03/preseason-reel-repair">S484 / V2</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>B</td>
+<td>"fixing reels at a clip of about 100 a month." … "i've got about 60 reels in line right now." … "write the "shipped on ...." date and the "please return by ...." date on the OUTSIDE of the box."</td>
+<td>Alan Tani</td>
+<td>alantani.com</td>
+<td>2009–2011</td>
+<td><a href="https://alantani.com/index.php/topic,277.0.html">S485 / V3</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>B</td>
+<td>"Text or email me for a repair/service quote." … "parts are an extra charge if needed" … "Text or email is best. (Greasy Hands, cannot always pick up the phone.)"</td>
+<td>Scott Rodriguez, Maybe We Can Fix It (Orange, CA)</td>
+<td>alantani.com</td>
+<td>2020-10-24</td>
+<td><a href="https://alantani.com/index.php/topic,32169.0.html">S486 / V4</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>B</td>
+<td>"Last night a guy picked up a repair I did and brought two 100 dollar bills for a $25.00 repair." … "How do you guys handle repair jobs with clients you don't know? Pay first?"</td>
+<td>Harry Bell</td>
+<td>rodbuilding.org</td>
+<td>2014-09-27</td>
+<td><a href="https://www.rodbuilding.org/read.php?2,429833">S488 / V6</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>B</td>
+<td>"I call my customers and let them know the repair is complete and the charge is X amount" … "If it's a person I have not dealt with and they want write a check I tell them no rod until check clears."</td>
+<td>Dave Loren</td>
+<td>rodbuilding.org</td>
+<td>2014-09-27</td>
+<td>S488 / V7</td>
+</tr>
+<tr>
+<td>7</td>
+<td>B</td>
+<td>"their receipt for it states, goods left over 120 days without payment will be sold for charges." … "Bottom line, no payment, no rod."</td>
+<td>Ron Weber</td>
+<td>rodbuilding.org</td>
+<td>2014-09-27</td>
+<td>S488 / V8</td>
+</tr>
+<tr>
+<td>8</td>
+<td>B</td>
+<td>"With repairs, I'll probably just do cash in advance for everyone except repeat customers"</td>
+<td>John E Powell</td>
+<td>rodbuilding.org</td>
+<td>2014-09-29</td>
+<td>S488 / V10</td>
+</tr>
+<tr>
+<td>9</td>
+<td>B</td>
+<td>"Right now I am backed up 35 orders." … "I do not take a deposit as I do not want to hold onto someone's money." … "a 2 hour customer meeting takes place before ordering a rod"</td>
+<td>Capt Neil Faulkner</td>
+<td>rodbuilding.org</td>
+<td>2013-10-01</td>
+<td><a href="https://www.rodbuilding.org/read.php?2,414727">S489 / V11</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>B</td>
+<td>"Got a few people who dropped rods off to be wrappd a while ago, haven't been given a deposit or even heard from them"</td>
+<td>Billy Vivona</td>
+<td>rodbuilding.org</td>
+<td>2010-09-13</td>
+<td><a href="https://www.rodbuilding.org/read.php?2,342991">S490 / V12</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>B</td>
+<td>"Yes. I require a minimum 50% non-refundable deposit to accept an order for production." … "Any balance due must be collected before shipment or at the time delivery."</td>
+<td>Jim Gamble</td>
+<td>rodbuilding.org</td>
+<td>2010-12-16</td>
+<td><a href="https://www.rodbuilding.org/read.php?2,348911">S491 / V13</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td>B</td>
+<td>"No fishing reel repairs are completed without customer approval." … "If repair cost appear to be getting out of line you will be contacted with an estimate" … "Come see us and drop off your reels at the shows:"</td>
+<td>Mat's Reel Repair (Eagle River, WI)</td>
+<td>shop website (GoDaddy builder)</td>
+<td>2026</td>
+<td><a href="https://matsreelrepair.com/">S495 / V21</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>B</td>
+<td>"In the case of repairs requiring parts, we will provide you with a quote for the parts and labor before proceeding." … "After invoicing you for the parts—which must be paid prior to the commencement of repairs—we will begin the work." … "Upon completion, we will invoice you for the labor and return shipping costs."</td>
+<td>Valley Reel Works (Rock Hill, SC)</td>
+<td>shop website (Webador)</td>
+<td>2026</td>
+<td><a href="https://www.valleyreelworks.com/">S496 / V22</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td>B</td>
+<td>"PLEASE CALL OR TEXT ANYTIME BEFORE ARRIVING AT MY RESIDENCE (706) 761-2779" … "will reopen on 9/21/2026"</td>
+<td>Rod &amp; Reel Repair Guy (Valley, AL)</td>
+<td>shop website (GoDaddy builder)</td>
+<td>2026</td>
+<td><a href="https://fixreels.com/">S531 / V23</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td>A</td>
+<td>"I used OE's guy (doesn't do reels anymore) once and he had my reel for three months." … "I had to start calling him every day, finally got it back but what a pain...."</td>
+<td>Bodofish</td>
+<td>Northwest Fishing Reports forum</td>
+<td>2012-06-18</td>
+<td><a href="https://cdn.northwestfishingreports.com/Forum/viewtopic.php?p=160872">S545 / V34</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td>A</td>
+<td>"they took months and I had to call them to continually get an update." … "$35 was the charge since I did not need any parts replaced."</td>
+<td>shoffer</td>
+<td>Texas Kayak Fisherman forum</td>
+<td>2024-02-13</td>
+<td><a href="https://texaskayakfisherman.com/forum/viewtopic.php?p=2339973">S547 / V38</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td>A</td>
+<td>"they blew there timeline and the kicker was that they told me my reels were ready when they weren't."</td>
+<td>OldTownYakBoi</td>
+<td>Texas Kayak Fisherman forum</td>
+<td>2025-01-13</td>
+<td>S547 / V39</td>
+</tr>
+<tr>
+<td>18</td>
+<td>A</td>
+<td>"FTU takes forever but the work they do is fine." … "my reels are always done before the estimated date given at drop off."</td>
+<td>LocoSeamonkey</td>
+<td>Texas Kayak Fisherman forum</td>
+<td>2025-02-21</td>
+<td>S547 / V41</td>
+</tr>
+<tr>
+<td>19</td>
+<td>A</td>
+<td>"I entrusted my reel to Otto's for repair, with the expectation of a prompt resolution within approximately two weeks." … "subsequent updates on the progress were scarce." … "Despite assurances of timely communication upon completion, I received no further updates."</td>
+<td>Chris, 1-star review of Otto's Tackle World (Sydney)</td>
+<td>Trustpilot</td>
+<td>2024-03-13</td>
+<td><a href="https://ie.trustpilot.com/review/ottostackleworld.com.au">S548 / V44</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>A</td>
+<td>"I sent a reel in under warranty 6 weeks ago for repair and have not heard anything back" (snippet)</td>
+<td>reviewer (PENN)</td>
+<td>Trustpilot</td>
+<td>n.d.</td>
+<td><a href="https://es.trustpilot.com/review/pennfishing.com">S549 / V45</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>A</td>
+<td>"Any recommendations on where I can take them for a quickish fix?" … "I didn't even know shops did this." … "East county has a 8 week backlog. Ugh"</td>
+<td>Shawnster</td>
+<td>sdfish.org</td>
+<td>2026-06-16/18</td>
+<td><a href="https://www.sdfish.org/viewtopic.php?p=28999">S174 / M1</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td>A</td>
+<td>"They have a website with a repair form to print and put in box with reel." … "One just needed cleaning $29.99 and $15.00 FedEx."</td>
+<td>HomerRudd</td>
+<td>TigerDroppings</td>
+<td>2025-10-18</td>
+<td><a href="https://www.tigerdroppings.com/rant/outdoor/fishin-reel-repair/120703280/">S551 / V47</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td>A</td>
+<td>"Rochester Reel Repair check him out on Facebook. Brian at 585-455-1792"</td>
+<td>oneluvunknown</td>
+<td>Lake Ontario United</td>
+<td>2020-04-28</td>
+<td><a href="https://www.lakeontariounited.com/fishing-hunting/topic/85867-reel-repairs/">S552 / V51</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td>A</td>
+<td>"It might take a while @ Haddrell's, I was on a 5 week wait."</td>
+<td>in_the_grass</td>
+<td>charlestonfishing</td>
+<td>2012-05-20</td>
+<td><a href="https://forum.charlestonfishing.com/t/reels/38461">S142 / M26</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Eight of the fourteen business-side quotes are rodbuilding.org threads from 2004–2014; the gate did
+not take them on faith. The 2026 shop pages (rows 12–14) still describe call/text intake, approval by
+phone and a two-invoice parts flow; the 2023 profile (row 2) still has a web form re-typed into texts;
+the 2024–2026 angler complaints (rows 16–19, 21) are about the same silence. The workflow has not
+changed (gate §1a). The only 2026 first-person software ask found anywhere in the trade, "Wondering
+what you all are using and what you would recommend for software to keep track of inventory, costs,
+sales, etc.", was answered with "I personally use Google Spreadsheet." (S667 / R16).</p>
+<h3 id="2c-feature-pain-what-each-piece-of-the-product-removes">2c. Feature → pain (what each piece of the product removes)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Core feature</th>
+<th>Business-side quotes</th>
+<th>Angler-side quotes</th>
+<th>Pain it removes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public intake page (item, problem, contact)</td>
+<td>V2, V4, V23, V3, V20, V21, V11</td>
+<td>V47, V51, M1, M20, M22, M25</td>
+<td>Intake that lives in texts, calls, boxes and printed forms; no front door a customer can find</td>
+</tr>
+<tr>
+<td>Stripe deposit at intake</td>
+<td>V6, V12, V13, V15–V17, V25, V10, V22</td>
+<td>customers already pay 10–30% deposits to guides (S425 / P86) and $15–20 estimate fees to shops (S406 / P67, S407 / P68)</td>
+<td>Non-payment and abandoned work; the deposit flow builders already run by hand</td>
+</tr>
+<tr>
+<td>Job board with statuses and a promised date</td>
+<td>V3, V11, V27, V1, V30</td>
+<td>V39, V41, M26, S5</td>
+<td>A queue kept in the tech's head or on cardboard; promised dates that are blanket statements</td>
+</tr>
+<tr>
+<td>Tokenised status page + automatic emails</td>
+<td>V7, V4, V2, V21</td>
+<td>V34, V38, V44, V45, V46</td>
+<td>Status enquiries by phone in both directions</td>
+</tr>
+<tr>
+<td>Quote-and-approve step for parts</td>
+<td>V4, V21, V22, V28, S13 (S228 / I125)</td>
+<td>V54, V42</td>
+<td>Approval by phone; two hand-raised invoices per job</td>
+</tr>
+<tr>
+<td>Service history per customer and per item</td>
+<td>V10, V12, V8, V9, V2</td>
+<td>M48 (S232 / I129), M27 (S143 / I40)</td>
+<td>Who owns what, what was done last time, what is still uncollected</td>
+</tr>
+<tr>
+<td>Payment link at completion</td>
+<td>V7, V8, V3, V22, P72 (S411)</td>
+<td>V47</td>
+<td>Cheques, cash on pickup, payment by phone</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="3-the-validation-gate-completed">3. The validation gate, completed</h2>
+<p>Rules (<code>.claude/skills/validation-gate-checklist</code>): a candidate must pass all six criteria; a
+well-evidenced FAIL beats a weak PASS; criterion 1 needs ≥10 independent verbatim examples on ≥3
+platforms describing a workaround or a loss; every criterion is argued to FAIL before it is scored
+(<code>docs/validation-gate.md</code>). Gate order was (a) → (b) private logbook → (e) fly-tying inventory.</p>
+<h3 id="3a-the-six-criteria-gate-verdicts">3a. The six criteria (gate verdicts)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Criterion</th>
+<th>Verdict</th>
+<th>Evidence summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Functionality case</td>
+<td><strong>PASS</strong></td>
+<td>24 people, 12 platforms, workaround-or-loss in every row (§2b); strongest case to fail is that no tech asks for software and the busiest one ran 100 reels a month on box dates (S485 / N-V10, S543 / N-V17). Business-side intensity caps at 2; the 3s (switched shop, took the reel elsewhere) are the buyer's customers.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Willingness to pay</td>
+<td><strong>PASS (lean, conditional)</strong></td>
+<td>No fishing shop is shown paying for job tracking; shops run $0–30 website builders (S530–S533 / VS48–VS51) and take cheques and PayPal (S485 / V3, S407 / P68). Adjacent categories pay with volume: Tower A$265+/mo, 3,500+ AU/NZ customers (S524 / VS42); RepairDesk $99, 3,000+ stores (S698 / GA5); Jobber $21–49, 100K+ businesses (S699 / GA6); one rod builder already pays Square (S483 / V1). Supported price ≤$29/mo, metered (C1).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Organic marketability</td>
+<td><strong>PASS (conditional)</strong></td>
+<td>Named, counted channels: ≈1,560 YP-listed US repair businesses (S502–S506 / VS20–VS24), alantani.com 17,263 members (S511 / VS29), rodbuilding.org and ICRBE's 2,000–2,500 builders (S512–S513 / VS30–VS31), Mud Hole's 73.4K-subscriber channel (S526 / VS44), Hampton Roads in person; 70–160 paying in ~12 months (S708 / GA15), 10–25 in 90 days (S709 / GA16). Passes only with rod builders in scope (C2).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Low resource requirement</td>
+<td><strong>PASS</strong></td>
+<td>No licensed data, no network effect, no moderation, no hardware. At 10,000 jobs a month: Supabase Pro $25 (S467 / D1), Netlify $9 (S468 / D2), Resend $20–35 (S694 / GA1), Stripe on the platform's own invoices only (S469 / D3; S697 / GA4). SMS excluded: ~$384/mo plus unverified 10DLC fees (S696 / GA3, S711 / GA18).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Defensible enough</td>
+<td><strong>PASS (weak)</strong></td>
+<td>It is a form, a board and a status page; Paperform sells the intake half for $0 (S558 / V31, S659 / R8). Nobody bigger will take it: the prize is ≤$0.5–1.7M/yr at 100% penetration (S710 / GA17), below any sales team's threshold; Fishbrain, Garmin, onX and Omnia monetise anglers, not benches. The moat: founder as a working peer with a live reference shop, per-item history, the shop's public URL on tags, the trade's vocabulary.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Economics</td>
+<td><strong>PASS</strong></td>
+<td>Fixed costs $46–55/mo; break-even 3 shops (5 if all part-timers) (S705 / GA12); 100 shops ≈ $1,750/mo net in an active month at the gate's ARPU (S700 / GA7); plateau 155–400 shops after 40–45% churn (S706 / GA13). The constraint is the ceiling, not hosting.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Result:</strong> PASS 6/6, conditional. Criterion 2 is the lean one: if the pilot condition is not met it
+is re-scored FAIL and the gate moves to (b).</p>
+<h3 id="3b-conditions-c0c7-as-amended-by-the-red-team">3b. Conditions C0–C7 (as amended by the red team)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Condition</th>
+<th>Protects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C0</td>
+<td><strong>Pre-build commitment test:</strong> within 21 days the founder contacts ≥20 named external shops and obtains ≥5 written commitments (next 10 jobs at $1/job, card on file at signup, Stripe connected at onboarding). &lt;3 → stop and record FAIL on criterion 2; 3–4 → proceed only with the lifestyle ceiling accepted in the decision log.</td>
+<td>2</td>
+</tr>
+<tr>
+<td>C1</td>
+<td><strong>Metered pricing:</strong> $1.00 per job created, capped at $29 per shop per month, $0 in a month with no jobs; the shop may pass the dollar to the customer as a service-fee line; optional $290/yr prepay; charge from day one, no free season. Amended mechanics: the $1 is a Stripe application fee when a customer payment exists; residual jobs accrue on a ledger charged at ≥$5 or the cap.</td>
+<td>2, 6</td>
+</tr>
+<tr>
+<td>C2</td>
+<td><strong>Custom rod orders in v1:</strong> an item is a reel or a rod build, with 50% deposit, promised date, status page and balance on completion.</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C3</td>
+<td><strong>Email-only notifications in the MVP;</strong> SMS later as an opt-in add-on at pass-through plus margin once 10DLC fees are verified.</td>
+<td>4, 6</td>
+</tr>
+<tr>
+<td>C4</td>
+<td><strong>Money settles to the shop's own Stripe account</strong> (Connect, Standard behaviour, direct charges); the platform never holds deposits. Verified against Stripe's docs by the red team (S652–S657 / R1–R6).</td>
+<td>4, 6</td>
+</tr>
+<tr>
+<td>C5′</td>
+<td><strong>Launch mid-November to early December 2026, hard stop mid-February 2027.</strong> Corrected rationale: winter is working season for mail-in techs (S681 / R30, S682 / R31); July–October is the dead window (S680 / R29, S409 / P70, S531 / V23). Founder's shop runs live first; presence at ICRBE Feb 20–21 2027.</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C6′</td>
+<td><strong>Pilot gate tightened:</strong> ≥5 external shops each with ≥10 jobs across ≥2 calendar months and ≥1 customer payment through its connected account by day 90; fewer → criterion 2 FAIL, gate re-opened.</td>
+<td>2</td>
+</tr>
+<tr>
+<td>C7</td>
+<td><strong>Each shop gets a public, indexable intake page</strong> with prices, turnaround, LocalBusiness structured data, the "closed until" state and a "powered by" link: the only built-in distribution loop.</td>
+<td>3, 5</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3c-gate-versus-red-team-side-by-side">3c. Gate versus red team, side by side</h3>
+<p>The red team wrote its verdicts before reading the gate document (<code>research/red-team.md</code> §1).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Gate</th>
+<th>Red team (independent)</th>
+<th>Agreement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Functionality</td>
+<td>PASS</td>
+<td>PASS (weak): buyers describe the process, never call it a problem; 14 of 29 business voices are 2004–2015; passes the workaround-or-loss test, not the "they asked for a product" test</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>2 Willingness to pay</td>
+<td>PASS (lean, conditional on C6)</td>
+<td><strong>FAIL as written (marginal), convertible:</strong> "The $0-idle metered price is itself an admission that a budget line does not exist"; convertible only by a commitment test with external shops, not by more desk research</td>
+<td><strong>No</strong> — same facts, different disposition; resolved by moving the kill switch in front of the build (C0)</td>
+</tr>
+<tr>
+<td>3 Organic marketability</td>
+<td>PASS (conditional on C2, C5)</td>
+<td>PASS (weak, 12-month horizon): alantani channel over-counted (its business board has been dormant since 2023-09-24, S664 / R13; the Service Centers board has four topics with 2025–26 activity, S663 / R12); Facebook unmeasured; founder's own distribution unverified</td>
+<td>Yes on verdict, no on two inputs</td>
+</tr>
+<tr>
+<td>4 Low resource</td>
+<td>PASS</td>
+<td>PASS; both of the gate's VERIFY items resolved (Supabase compute credit, S687 / R36; Connect fee wording, S652–S657 / R1–R6)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>5 Defensible</td>
+<td>PASS (weak)</td>
+<td>PASS (weak): "Defensible because nobody wants it" is the same fact as criterion 2's weakness</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>6 Economics</td>
+<td>PASS; break-even 3–5 shops; ARPU $19 active / $17 averaged</td>
+<td>PASS with a pricing-mechanics caveat; ARPU ≈ $12 active / $11.7 averaged (S692 / R41), so every downstream revenue figure in the gate is ~40% high; Stripe Billing on a $3 invoice costs 14%, so small balances must carry forward</td>
+<td>Yes on verdict; ARPU corrected</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Red team disposition:</strong> APPROVE WITH REQUIRED CHANGES (17), on the grounds that a veto would send
+the team to a runner-up that fails two criteria structurally, while this one's weakness is testable
+in three weeks for $0. All 17 changes were accepted and recorded in <code>docs/product-definition.md</code> §16
+(decision D13).</p>
+<hr />
+<h2 id="4-why-existing-tools-fail">4. Why existing tools fail</h2>
+<h3 id="4a-competitor-matrix-for-this-job">4a. Competitor matrix for this job</h3>
+<p>Searches for "reel repair software", "reel service software", "tackle shop repair tracking" and each
+repair-SaaS name with "fishing reel" returned only a GoCanvas form template and Tower Systems; no US
+fishing-specific product exists (S542 / VS60).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Price</th>
+<th>Who it is built for</th>
+<th>What it covers of this job</th>
+<th>What is missing for a one-person reel/rod shop</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RepairDesk</td>
+<td>$99/mo ($79 annual), Growth $149</td>
+<td>phone, computer, jewellery, "mail-in" repair stores; "3,000+ Repair Stores", no fishing vertical</td>
+<td>ticket, quote, status, pickup</td>
+<td>3–5× the budget of a shop grossing $750–5,000/mo; its own blog concedes a spreadsheet "can feel perfectly fine when … the same one or two people touch every repair"</td>
+<td>S450 / P111, S698 / GA5, S543 / VS61</td>
+</tr>
+<tr>
+<td>RepairShopr</td>
+<td>$69.99 / $139.99 / $149.99</td>
+<td>general repair shops, multi-tech</td>
+<td>same workflow</td>
+<td>priced for counters with staff; one reviewer: "a bit steep if you have many users"</td>
+<td>S451 / P112, red team §3a</td>
+</tr>
+<tr>
+<td>Digital Wrench, RepairTRAX, Orderry, Shop Pro</td>
+<td>$39.95; $30/user; $39; $39.99</td>
+<td>generic single-user repair</td>
+<td>same workflow</td>
+<td>no deposit at intake, no fishing vocabulary, no customer-facing status page with promised date</td>
+<td>S452 / P113, S677 / R26</td>
+</tr>
+<tr>
+<td>Jobber</td>
+<td>Core $49 monthly, $21–24 annual (1 user); "100K+" businesses</td>
+<td>home-service trades</td>
+<td>quote → approve → job → invoice</td>
+<td>built for site visits and scheduling, not for an item left on a bench for weeks; no mail-in intake page</td>
+<td>S535 / VS53, S699 / GA6</td>
+</tr>
+<tr>
+<td>Square (Appointments / Invoices)</td>
+<td>Free; Plus $49/location; Invoices Free 3.3% + 30¢</td>
+<td>small service businesses</td>
+<td>deposit on an estimate, reminders, card on file</td>
+<td>item "prep time" caps at one day, so a rod builder cannot express a 2–3-week build (V1); no queue, no status page, no per-item history</td>
+<td>S441 / P102, S661 / R10, S483 / V1</td>
+</tr>
+<tr>
+<td>Shopify</td>
+<td>Basic $39 ($29 annual)</td>
+<td>retail e-commerce</td>
+<td>one reel shop takes service orders through product checkout pages</td>
+<td>a product catalogue, not a job; no promised date, status or approval step</td>
+<td>S442 / P103, S409 / P70</td>
+</tr>
+<tr>
+<td>Paperform</td>
+<td>Free (30 submissions/mo, Stripe included, badge cannot be removed); Pro $49 annual</td>
+<td>horizontal forms; has a "Custom Fishing Rod Order Form" template whose copy is this product's pitch ("email threads and text messages become a tangled mess")</td>
+<td>public intake page with deposit, for ≤30 jobs a month</td>
+<td>job board, promised date, status page, quote-and-approve, history, metering; at 31+ jobs it is $49/mo</td>
+<td>S537 / VS55, S558 / V31, S659 / R8</td>
+</tr>
+<tr>
+<td>Jotform</td>
+<td>Starter free: 100 submissions, <strong>10 payment submissions</strong> a month; Bronze $39</td>
+<td>horizontal forms</td>
+<td>intake with deposit for ≤10 deposits a month</td>
+<td>the payment cap bites a 10-job shop immediately</td>
+<td>S660 / R9</td>
+</tr>
+<tr>
+<td>GoCanvas</td>
+<td>$29–49 per user, 3-user minimum → $87+/mo</td>
+<td>mobile forms; has a "Fishing Rod and Reel Repair Request Form" template</td>
+<td>the form only</td>
+<td>no job board, no status page, priced above the whole shop's software budget</td>
+<td>S536 / VS54, S559 / V32</td>
+</tr>
+<tr>
+<td>Tower Systems (AU/NZ)</td>
+<td>A$265–298/mo inc GST annual; fishing shops priced at "$165/month" in 2023; "3,500+ customers" all verticals</td>
+<td>Australian and New Zealand fishing and outdoor retailers; "Manage rod and lure repairs" is a named buying reason</td>
+<td>repairs and job management with SMS inside a POS</td>
+<td>POS-first, not sold in the US, priced for a store with a till; no sign of US intent</td>
+<td>S524 / VS42, S538 / VS56, S539 / VS57</td>
+</tr>
+<tr>
+<td>Hubtiger (bike shops, nearest analogue)</td>
+<td>Lite $52/mo (1 technician, 100 SMS credits), Professional $99, Premium $125; "average cost is $60 a month"</td>
+<td>bicycle workshops</td>
+<td>job cards "with colour coded statuses", "Keep customers informed automatically without manual follow-up"</td>
+<td>not fishing; priced above the segment; proves one-tech shops in an adjacent trade do pay $30–60/mo for exactly this shape</td>
+<td>S675 / R24, S676 / R25</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why the fishing apps do not touch it.</strong> Fishbrain (10M+ installs, $79.99/yr), Fishing Points, onX
+Fish, Navionics and Omnia monetise anglers through subscriptions, ads, charts and retail (S236 / C1,
+S255 / C20, S309 / C74; <code>research/competitors.md</code> §7); a tech's bench has no ad inventory, no map and no
+catch data. The only maintenance-adjacent consumer app found is ReelKeep, a solo developer's
+iPhone-only app from June 2026 with zero ratings (S314 / C79). The competitor file's own white-space
+reading: gear maintenance and inventory "have no network effect and no ad inventory, so VC-funded
+social apps skip them" (competitors §3).</p>
+<h3 id="4b-the-gaps-in-one-table">4b. The gaps, in one table</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Nearest substitute</th>
+<th>What the substitute leaves undone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A front door a customer can find ("[city] reel repair")</td>
+<td>a Facebook page and a phone number (S552 / V51), a GoDaddy or Webador site (S530–S533 / VS48–VS51)</td>
+<td>indexable page with prices, turnaround and a request form that creates a job</td>
+</tr>
+<tr>
+<td>A deposit before parts are ordered</td>
+<td>50% collected by hand (S491 / V13), Paperform Free + Stripe (S659 / R8)</td>
+<td>the deposit tied to a job, a promised date and a balance</td>
+</tr>
+<tr>
+<td>A queue with promised dates</td>
+<td>dates on boxes (S485 / V3), a mental list ("backed up 35 orders", S489 / V11)</td>
+<td>overdue view, promised-date change notices</td>
+</tr>
+<tr>
+<td>"Where is my reel?" answered without a call</td>
+<td>the phone, both directions (S545 / V34, S488 / V7)</td>
+<td>tokenised status page, emails at each step, short code and QR on the receipt</td>
+</tr>
+<tr>
+<td>Parts approval in writing</td>
+<td>a phone call or two hand-raised invoices (S496 / V22)</td>
+<td>quote with lines, approve/decline on the status page, prepay-on-approval</td>
+</tr>
+<tr>
+<td>What was done to this reel last time</td>
+<td>memory (S488 / V10), nothing (S490 / V12)</td>
+<td>per-item, per-customer history, searchable</td>
+</tr>
+<tr>
+<td>Paid before it leaves</td>
+<td>cheques that must clear, cash on pickup (S488 / V7, S488 / V8)</td>
+<td>payment link on the shop's own Stripe account; "Mark paid cash" for the counter</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="4c-the-graveyard-pattern">4c. The graveyard pattern</h3>
+<p>Every dead or neutered fishing product since 2018 was a social or data-sharing layer or a public-sector
+native app replaced by web: Fishidy (850K users, sold to FLIR, now an empty shell, S328 / C93),
+Fishhound (domain dead, S330 / C95), FishHunter's social layer removed in 2023 (S317 / C82), NOAA's iOS
+reporting app folded into a web app in 2025 (S331 / C96), SmartTacklebox abandoned in 2016 (S312 / C77),
+iCatch retired "due to lack of funding support" (S332 / C97). None was a paid private utility
+(competitors §8). Bench Tag is a paid private utility with no social layer, which is the side of the
+pattern that survives; its risk is not the graveyard's but failure mode 1 in §9 ("free and fine").</p>
+<hr />
+<h2 id="5-what-it-needs">5. What it needs</h2>
+<h3 id="5a-feature-list-13-mvp-features-plus-the-red-team-deltas">5a. Feature list: 13 MVP features plus the red-team deltas</h3>
+<p>From <code>docs/product-definition.md</code> §4a, with the §16 amendments folded in.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Feature</th>
+<th>What it does</th>
+<th>Pain rows</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>Shop account and onboarding wizard</td>
+<td>Sign up by email (magic link + 6-digit code); profile, services menu with price or "quoted", deposit and turnaround per service, policy text, <strong>card on file</strong> (red-team change 9, before Stripe Connect)</td>
+<td>V21–V23, P67–P72</td>
+<td>C1, C7</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Stripe Connect onboarding</td>
+<td>Stripe-hosted onboarding for the shop's own account; <code>charges_enabled</code> gates only deposits and payment links; <strong>jobs never wait on Stripe</strong> (change 3)</td>
+<td>V6, V7, V22</td>
+<td>C4</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Public shop page</td>
+<td><code>/s/:slug</code>, server-rendered, indexable, LocalBusiness JSON-LD with opening hours and the <strong>"closed until <date>" state</strong> (changes 4, 12), services, turnaround, mail-in instructions, "Powered by Bench Tag"</td>
+<td>M20, M22, V47, V52</td>
+<td>C7</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Public request form</td>
+<td>Reel or rod build; Turnstile; rate-limited; creates customer + item + job; redirects to Stripe Checkout on the shop's account when the service carries a deposit; confirmation email with the status link</td>
+<td>V1, V2, V13, V25, V31</td>
+<td>C2, C4</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Counter intake</td>
+<td>A drop-off logged in under 60 seconds on the phone: customer, item, service, problem, promised date defaulted from turnaround, deposit, camera photo</td>
+<td>V3, V36, V47</td>
+<td>C1</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>Job board</td>
+<td>Every open job by status with promised date and overdue badge; status change in two taps; every change logged</td>
+<td>V3, V11, V39, V41</td>
+<td>—</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Customer status page and automatic emails</td>
+<td><code>/t/:token</code> (128-bit token, hashed at rest) shows item, status, promised date, history, quote, balance and Pay button; emails at each step; <strong>a short code (e.g. <code>SPT-4F7K</code>) and QR on every receipt so the page works without email</strong> (change 2)</td>
+<td>V34, V38, V44, V45, V7, V4</td>
+<td>C3</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Quote and approve</td>
+<td>Quote lines (labour, part, shipping, fee, discount), expiry; the customer approves or declines on the status page; shop may record a phone approval; optional collect-on-approval for prepaid parts</td>
+<td>V4, V21, V22, V28, V54</td>
+<td>—</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>Payment link at completion</td>
+<td>Balance computed in the database; Checkout on the shop's Stripe account; optional "$1.00 online service fee" line when the shop passes the fee on; "Mark paid (cash/check)"; closing with a balance needs an override</td>
+<td>V7, V8, V3, V22, V47</td>
+<td>C1, C4</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>Pickup, shipping and uncollected items</td>
+<td>Close as picked up / shipped (tracking emailed) / returned unrepaired / abandoned; reminders at ready+7 and +30 days; final notice at the shop's configured day (default 90)</td>
+<td>V8, V9, V12, S13</td>
+<td>—</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>Customers, items and history</td>
+<td>Customer page, item service record, global search by name, phone, email, serial, job number</td>
+<td>V10, V12, M48, M27</td>
+<td>—</td>
+</tr>
+<tr>
+<td>F12</td>
+<td>Metered billing</td>
+<td>Usage counted when a job reaches <code>received</code>; <strong>$1 collected as a Stripe application fee on any customer payment through the shop's account; otherwise accrued on the shop ledger and charged to the card on file at ≥$5 or the $29 cap, smaller balances roll forward</strong> (changes 6–7); <strong>application-fee refund rule:</strong> full deposit refund within 7 days refunds the $1 (change 8); $290/yr prepay credit; <code>/app/billing</code> shows the month's count</td>
+<td>P67, P68, N-V8</td>
+<td>C1, C6</td>
+</tr>
+<tr>
+<td>F13</td>
+<td>Your data is yours</td>
+<td>CSV export of customers, items, jobs, quotes, payments; shop deletion (30-day soft delete, then purge); <strong><code>delete_customer_pii</code> RPC</strong> (change 5)</td>
+<td>gate §5</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Written out of scope for v1 (change 11): inventory, cost tracking, POS, SMS, parts catalogue, customer
+accounts, multi-user roles beyond owner plus one helper, AI. One job object: a rod build is a job with
+a deposit percentage and a longer promised date (change 10). v1.1 candidates: multi-item tickets,
+staff logins, in-app refunds, printable QR hang tags, quote templates, bulk status updates, SMS as an
+opt-in add-on (PD §4b).</p>
+<h3 id="5b-supabase-schema-outline">5b. Supabase schema outline</h3>
+<p>Conventions (PD §6): uuid primary keys, <code>created_at</code>/<code>updated_at</code> with a shared trigger, money as
+integer cents, <code>shop_id</code> on every tenant table and indexed, soft delete where listed, numbered
+migrations under <code>app/supabase/migrations</code>, generated <code>Database</code> types.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Purpose</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shops</code></td>
+<td>the tenant: slug, name, contact, timezone, policies, <code>uncollected_days</code>, <code>pass_fee_to_customer</code>, Stripe account and billing status, <code>closed_until</code> / <code>closed_message</code></td>
+<td><code>billing_exempt</code> (founder only) settable by service role only</td>
+</tr>
+<tr>
+<td><code>shop_members</code></td>
+<td>who may sign in for a shop (<code>owner</code>, <code>staff</code> reserved)</td>
+<td>inserted only by <code>create_shop()</code></td>
+</tr>
+<tr>
+<td><code>shop_pages</code></td>
+<td>the public page's copy and switches</td>
+<td>one row per shop</td>
+</tr>
+<tr>
+<td><code>services</code></td>
+<td>the menu: kind (reel/rod), price or "quoted", deposit % or fixed, turnaround days, estimate-fee flag</td>
+<td></td>
+</tr>
+<tr>
+<td><code>customers</code></td>
+<td>the shop's customers: name, email, phone, ship address, <code>user_id</code> reserved for a future consumer link</td>
+<td>unique email per shop; trigram search</td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td>the reel or rod: brand, model, serial, description</td>
+<td>per-item history hangs here</td>
+</tr>
+<tr>
+<td><code>jobs</code></td>
+<td>the job: number, <code>short_code</code>, kind, source, status, problem, promised date, delivery, tracking, <code>token_hash</code>, deposit and service price, <code>service_fee_charged_at</code>, <code>group_id</code> reserved</td>
+<td>unique <code>(shop_id, job_number)</code>; indexes on status, promised date</td>
+</tr>
+<tr>
+<td><code>job_status_transitions</code></td>
+<td>the allowed moves per kind</td>
+<td>seeded from PD §5d; enforced by <code>transition_job()</code></td>
+</tr>
+<tr>
+<td><code>job_status_history</code></td>
+<td>append-only log of every status change with actor and note</td>
+<td>no update/delete policies</td>
+</tr>
+<tr>
+<td><code>quotes</code>, <code>quote_lines</code></td>
+<td>versioned quotes with lines; totals by trigger</td>
+<td>discount lines are the only signed money</td>
+</tr>
+<tr>
+<td><code>payments</code></td>
+<td>deposits, quote payments, balances, offline payments; Stripe ids; refunds</td>
+<td>view <code>job_balances</code> sums per job</td>
+</tr>
+<tr>
+<td><code>job_photos</code></td>
+<td>intake/progress/finished photos; <code>customer_visible</code> iff in the shared bucket</td>
+<td></td>
+</tr>
+<tr>
+<td><code>notifications</code></td>
+<td>the email outbox: template, recipient, payload, attempts, provider id, <code>dedupe_key</code></td>
+<td>nothing sends email except the worker that drains it</td>
+</tr>
+<tr>
+<td><code>usage_events</code></td>
+<td>one row per job for life, with <code>collection</code> (application fee / ledger) and the payment or fee id</td>
+<td>counting twice is impossible</td>
+</tr>
+<tr>
+<td><code>billing_periods</code></td>
+<td>per shop per month: jobs counted, gross, capped, credit applied, <code>carried_forward_cents</code>, due, Stripe invoice</td>
+<td>created lazily; an idle month has no row</td>
+</tr>
+<tr>
+<td><code>billing_credits</code></td>
+<td>prepay, promo and adjustment credits with expiry</td>
+<td>$290 prepay = 29,000¢ for 12 months</td>
+</tr>
+<tr>
+<td><code>stripe_events</code></td>
+<td>webhook idempotency for both endpoints</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rate_limits</code></td>
+<td>per-IP and per-email counters for the public forms and token misses</td>
+<td>purged after 2 days</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Row-level security in plain English</strong> (PD §7c). Every table has RLS on. A signed-in person can read
+and write only rows whose <code>shop_id</code> belongs to a shop they are a member of; status, token hash, job
+number and billing columns change only through SQL functions, never by a direct update; history and
+usage rows cannot be edited or deleted by anyone but the server. Anonymous visitors have no table
+access at all: they reach the public page through one function (<code>public_shop(slug)</code>), the status page
+through another (<code>job_by_token</code>), and may decide a quote through a third (<code>decide_quote_by_token</code>).
+Edge functions and cron use the service role. The test file must prove, for two shops A and B, that A
+cannot read or write any B row in any table, that a wrong token returns nothing, and that a quote
+that is not <code>sent</code> cannot be decided; the code-review skill blocks a merge without it.</p>
+<p><strong>The token approach</strong> (PD §7b). Each job's status link carries 16 random bytes (128 bits) encoded as
+22 characters; only its SHA-256 is stored, so a leaked table or backup exposes no live links.
+"Resend link" rotates the token. The page shows the shop, the item, the status, the promised date,
+customer-visible history and photos, the current quote and the balance; never internal notes, other
+jobs, customer PII beyond first name, or Stripe ids. Lookups with no match are counted in
+<code>rate_limits</code> and reported in the daily digest. The red team added the short code + QR so the page is
+reachable from the printed receipt when an email goes to spam (change 2).</p>
+<p><strong>Storage buckets</strong> (PD §7d): <code>job-photos</code> (private, per-shop folders), <code>job-photos-shared</code> (public by
+exact path, for photos the shop marks customer-visible), <code>shop-assets</code> (logo, hero). Photos are
+resized on the device to ≤300 KB before upload (S702 / GA9).</p>
+<h3 id="5c-netlify-setup">5c. Netlify setup</h3>
+<ul>
+<li><strong>Build:</strong> repo-root <code>netlify.toml</code> sets <code>base = "app"</code>, <code>npm run build</code>, publish <code>dist</code>, Node 22;
+  <code>app/netlify.toml</code> repeats it (both files exist in the repo today).</li>
+<li><strong>SPA:</strong> <code>/*</code> → <code>/index.html</code> (200) so react-router owns the routes; PD §10a narrows this to
+  <code>/app/*</code>, <code>/t/*</code>, <code>/auth/*</code> once the public-page function exists.</li>
+<li><strong>Public page function:</strong> <code>public-page</code> is the one Netlify Function, rendering <code>/s/:slug</code>,
+  <code>/s/:slug/request</code> and <code>/s/:slug/find</code> as plain HTML from <code>public_shop(slug)</code> with the anon key:
+  services, turnaround, instructions, LocalBusiness JSON-LD, canonical, "Powered by Bench Tag", the
+  request form with the Turnstile script; <code>Cache-Control: public, s-maxage=300,
+  stale-while-revalidate=86400</code>; 404 for unpublished shops. It lives on Netlify because it is pure
+  rendering with no writes and the CDN must cache it; everything that touches secrets or writes rows
+  is a Supabase Edge Function (PD §8).</li>
+<li><strong>Headers</strong> (<code>app/netlify.toml</code> today, PD §10a): <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options:
+  nosniff</code>, <code>Referrer-Policy: strict-origin-when-cross-origin</code> (tokens must not leak via referrer),
+  <code>Permissions-Policy</code> restricting camera/microphone/geolocation, a CSP allowing only self, Supabase,
+  <code>js.stripe.com</code>/<code>checkout.stripe.com</code>/<code>connect.stripe.com</code> and <code>challenges.cloudflare.com</code>;
+  <code>X-Robots-Tag: noindex</code> on <code>/t/*</code> and <code>/app/*</code>; hashed assets cached for a year.</li>
+<li><strong>Secrets on Netlify:</strong> only public-safe values (<code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>,
+  <code>TURNSTILE_SITE_KEY</code>); the service-role key, Stripe secret key and Resend key never go in the
+  Netlify build environment (<code>app/.env.example</code>).</li>
+</ul>
+<h3 id="5d-external-services-and-what-they-cost">5d. External services and what they cost</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Role</th>
+<th>Price</th>
+<th>Limits that matter</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supabase Pro</td>
+<td>Postgres, Auth, Storage, Edge Functions, Cron</td>
+<td>$25/mo (includes $10/mo compute credit covering one Micro instance; spend caps on by default)</td>
+<td>8 GB DB, 100 GB storage then $0.0213/GB, 250 GB egress, 100,000 MAU, 2M invocations</td>
+<td><a href="https://supabase.com/pricing">S467 / D1</a>, S687 / R36</td>
+</tr>
+<tr>
+<td>Netlify</td>
+<td>SPA hosting + <code>public-page</code> function</td>
+<td>Free (300 credits) → Personal $9 (1,000 credits) at ~40 GB/mo</td>
+<td>20 credits per GB bandwidth</td>
+<td><a href="https://www.netlify.com/pricing/">S468 / D2</a>, S703 / GA10</td>
+</tr>
+<tr>
+<td>Stripe Payments</td>
+<td>shops' deposits and completion payments, on the shop's account</td>
+<td>2.9% + 30¢ per card charge, <strong>paid by the shop</strong></td>
+<td>—</td>
+<td><a href="https://stripe.com/pricing">S469 / D3</a></td>
+</tr>
+<tr>
+<td>Stripe Connect</td>
+<td>account creation, hosted onboarding, direct charges</td>
+<td>$0 to the platform under "Stripe handles pricing"; "the connected account is responsible for the cost of Stripe fees, refunds, and chargebacks"; Stripe covers negative balances</td>
+<td>the $2/active account and 0.25% + 25¢ payout fees apply only under "you handle pricing", which this design avoids</td>
+<td><a href="https://stripe.com/connect/pricing">S716 / PD4</a>, S652–S657 / R1–R6</td>
+</tr>
+<tr>
+<td>Stripe application fees</td>
+<td>the $1 metered fee on customer payments</td>
+<td>"There are no additional Stripe fees on the application fee itself"</td>
+<td>fees are not refunded automatically (<code>refund_application_fee</code>)</td>
+<td><a href="https://docs.stripe.com/connect/direct-charges">S713 / PD1</a>, S653 / R2</td>
+</tr>
+<tr>
+<td>Stripe Invoicing</td>
+<td>the monthly ledger invoice to each shop (platform account)</td>
+<td>Starter 0.4% per paid invoice + card processing → $0.93 on $19, $1.50 on $29, $0.64 on $10</td>
+<td>Billing Meters not used (Stripe steers new usage billing to Metronome)</td>
+<td><a href="https://stripe.com/invoicing/pricing">S718 / PD6</a>, S717 / PD5</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td>every email, including Supabase Auth via custom SMTP</td>
+<td>Free: 3,000/mo, 100/day; Pro $20: 50,000/mo; $35: 100,000; overage $0.90/1k; shared IPs by default</td>
+<td>Free's 100/day is exceeded at ~17 jobs/day, so Pro within weeks of launch; idempotency keys kept 24 h</td>
+<td><a href="https://resend.com/pricing">S694 / GA1</a>, S688 / R37, S722 / PD10</td>
+</tr>
+<tr>
+<td>Cloudflare Turnstile</td>
+<td>bot check on the public forms</td>
+<td>$0</td>
+<td>20 widgets, 10 hostnames per widget, unlimited challenges; works without proxying traffic through Cloudflare</td>
+<td><a href="https://developers.cloudflare.com/turnstile/plans/">S723 / PD11</a></td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>product domain</td>
+<td>~$15/yr (<strong>estimate</strong>, registrar price not fetched)</td>
+<td><code>benchtag.com</code> is parked</td>
+<td>S707 / GA14, S725 / PD13</td>
+</tr>
+<tr>
+<td>Twilio SMS (not in MVP)</td>
+<td>text updates, later</td>
+<td>$0.0083/segment + carrier fees; 10DLC registration fees not retrievable (VERIFY)</td>
+<td>~$384/mo at 10,000 jobs</td>
+<td><a href="https://www.twilio.com/en-us/sms/pricing/us">S696 / GA3</a>, S711 / GA18</td>
+</tr>
+</tbody>
+</table></div>
+<p>No third-party fishing data, no licensed dataset, no network effect, no moderation, no hardware
+(gate §4).</p>
+<h3 id="5e-estimated-build-effort">5e. Estimated build effort</h3>
+<p>The product definition assumes code-complete on <strong>2026-11-30 after a five-week build</strong> (PD §12); the
+gap analysis judged 4–6 weeks (S480 / G7). The split by feature below is this report's <strong>estimate</strong>
+(one developer, the <code>/app</code> scaffold already standing); it sums to the five weeks.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Work</th>
+<th>Weeks</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema, RLS, SQL functions, SQL tests (PD §6–§7, §16 schema consequences)</td>
+<td>0.7</td>
+<td>the transition table, <code>create_job</code>, <code>transition_job</code>, token RPCs, billing SQL; the two-shop RLS test file</td>
+</tr>
+<tr>
+<td>F1 onboarding wizard + F2 Stripe Connect</td>
+<td>0.5</td>
+<td>Stripe-hosted onboarding; card on file via Checkout <code>mode=setup</code></td>
+</tr>
+<tr>
+<td>F3 public page (Netlify function) + F4 request form + <code>public-intake</code> + Turnstile + rate limits</td>
+<td>0.6</td>
+<td>HTML template, JSON-LD, closed-until state</td>
+</tr>
+<tr>
+<td>F5 counter intake + F6 job board</td>
+<td>0.5</td>
+<td>camera upload with device-side resize</td>
+</tr>
+<tr>
+<td>F7 status page, short code/QR, email templates and the notifications outbox worker</td>
+<td>0.7</td>
+<td>~18 templates (PD §5), Resend with idempotency keys, retries</td>
+</tr>
+<tr>
+<td>F8 quotes and approval</td>
+<td>0.4</td>
+<td>versions, collect-on-approval</td>
+</tr>
+<tr>
+<td>F9 payments: <code>create-checkout</code>, Connect webhook, balance view, offline payments</td>
+<td>0.5</td>
+<td>idempotent webhooks via <code>stripe_events</code></td>
+</tr>
+<tr>
+<td>F10 close/ship/uncollected + cron jobs (<code>flag_uncollected</code>, <code>expire_requests</code>, reminders)</td>
+<td>0.3</td>
+<td></td>
+</tr>
+<tr>
+<td>F11 customers, items, search</td>
+<td>0.3</td>
+<td></td>
+</tr>
+<tr>
+<td>F12 metered billing: usage events, application fees, ledger carry-forward, <code>bill-shops</code>, platform webhook, <code>/app/billing</code></td>
+<td>0.6</td>
+<td>tested at the $4.99/$5.00 boundary and the cap</td>
+</tr>
+<tr>
+<td>F13 export, deletion, <code>delete_customer_pii</code>; ops digest; scorecard views</td>
+<td>0.3</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>≈5.0</strong></td>
+<td>range 4–6 weeks (G7); a slip past mid-February pushes the 90-day path onto Hampton Roads alone (PD §14 Q2)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5f-monthly-third-party-cost-at-scale">5f. Monthly third-party cost at scale</h3>
+<p>From PD §9c (<strong>estimate</strong>, S726 / PD14: 6 emails and 2 photos per job; one job ≈ one end customer;
+platform invoices ≈ shops with ≥1 job that month, each costing Stripe 2.9% + 30¢ + 0.4%).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Scale</th>
+<th>Jobs/mo</th>
+<th>Emails/mo</th>
+<th>Supabase</th>
+<th>Netlify</th>
+<th>Resend</th>
+<th>Turnstile</th>
+<th>Domain</th>
+<th>Stripe on platform invoices</th>
+<th><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 end customers</td>
+<td>100</td>
+<td>600</td>
+<td>$25</td>
+<td>$0</td>
+<td>$0</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>~$5 (≈5 invoices)</td>
+<td><strong>≈ $31</strong></td>
+</tr>
+<tr>
+<td>1,000 end customers</td>
+<td>1,000</td>
+<td>6,000</td>
+<td>$25</td>
+<td>$0</td>
+<td>$20</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>~$40 (≈40 invoices)</td>
+<td><strong>≈ $86</strong></td>
+</tr>
+<tr>
+<td>10,000 end customers</td>
+<td>10,000</td>
+<td>60,000</td>
+<td>$25 (+~$1 storage from year 2)</td>
+<td>$9</td>
+<td>$35</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>~$370 (≈400 invoices)</td>
+<td><strong>≈ $441</strong></td>
+</tr>
+<tr>
+<td>10 shops</td>
+<td>~250</td>
+<td>1,500</td>
+<td>$25</td>
+<td>$0</td>
+<td>$0</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>$9</td>
+<td><strong>≈ $35</strong></td>
+</tr>
+<tr>
+<td>100 shops</td>
+<td>~2,500</td>
+<td>15,000</td>
+<td>$25</td>
+<td>$0</td>
+<td>$20</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>$93</td>
+<td><strong>≈ $139</strong></td>
+</tr>
+<tr>
+<td>300 shops</td>
+<td>~7,500</td>
+<td>45,000</td>
+<td>$25</td>
+<td>$9</td>
+<td>$20 ($35 for headroom)</td>
+<td>$0</td>
+<td>$1.25</td>
+<td>$279</td>
+<td><strong>≈ $335–350</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Two things lower these numbers after the red team: the $1 collected as an application fee carries no
+Stripe fee at all (S653 / R2), so the "Stripe on platform invoices" column applies only to the ledger
+share of shops; and the gate's independent arithmetic at 10,000 jobs a month was $55–70 of fixed stack
+plus Stripe's percentage (S702 / GA9, S703 / GA10, S701 / GA8). Stripe's percentage is the only cost
+that scales with revenue; the fixed stack stays under $75 a month at every scale in the table.</p>
+<h3 id="5g-what-is-already-built-in-app">5g. What is already built in <code>/app</code></h3>
+<!-- TODO-5B: what is already built in /app (migrations, tests, vertical slice) and how to run it -->
+<div class="todo">TODO-5B: what is already built in /app (migrations, tests, vertical slice) and how to run it</div>
+<p><em>Section pending: phase 5b (schema, RLS, data layer, vertical slice) is in progress. At the time of
+writing <code>/app</code> holds the product-independent scaffold: React 19 + Vite + TypeScript strict + Tailwind,
+ESLint flat config, Prettier, Vitest, <code>supabase/migrations/0000_extensions_and_helpers.sql</code>, the plain-
+Postgres test harness (<code>supabase/tests/run.sh</code>, stubs, helpers, <code>000_harness.sql</code>), <code>netlify.toml</code>,
+<code>.env.example</code> and placeholder pages. Commands: <code>npm install</code>, <code>npm run check</code>, <code>npm run test:sql</code>
+(<code>app/package.json</code>, <code>app/supabase/README.md</code>).</em></p>
+<h3 id="5h-prototype">5h. Prototype</h3>
+<!-- TODO-PROTOTYPE: screenshots and flow list -->
+<div class="todo">TODO-PROTOTYPE: screenshots and flow list</div>
+<p><em>Section pending: <code>deliverables/prototype.html</code> is being produced by the prototype agent from
+<code>docs/product-definition.md</code> §5 and §10 (flows: shop onboarding, public intake with deposit, counter
+intake, job board, quote and approval on the status page, payment link, pickup/shipping, billing).</em></p>
+<hr />
+<h2 id="6-market-data">6. Market data</h2>
+<p>Populations are stated each time because the three big sources count different people: RBFF/Outdoor
+Foundation counts Americans 6+ who fished at least once; USFWS counts residents 16+; licence data
+counts paid holders. Never add across them (<code>research/market-sizing.md</code> §0).</p>
+<h3 id="6a-participation-spend-segments-churn-seasonality-demographics">6a. Participation, spend, segments, churn, seasonality, demographics</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Value</th>
+<th>Population / year</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Participants</td>
+<td><strong>57.0M</strong>, 18% of the population; first year-over-year drop since 2021 (57.9M in 2024, 50.1M in 2019)</td>
+<td>6+, 2025</td>
+<td><a href="https://asafishing.org/wp-content/uploads/2026/07/2026-Special-Report-on-Fishing_WEB_FV.pdf">S1 / M1</a>, S2 / M2, S3 / M3</td>
+</tr>
+<tr>
+<td>Anglers</td>
+<td><strong>39.9M</strong>, 15% rate; 785M days, 463M trips</td>
+<td>16+, 2022</td>
+<td><a href="https://www.fws.gov/sites/default/files/documents/Final_2022-National-Survey_101223-accessible-single-page.pdf">S27 / M27</a></td>
+</tr>
+<tr>
+<td>Paid licence holders</td>
+<td>32.24M (2023); gross licence revenue $841M (2023 sales) and $871M (2024 sales)</td>
+<td>licensed individuals</td>
+<td>S39 / M39, S38 / M38</td>
+</tr>
+<tr>
+<td>Total spend</td>
+<td><strong>$99.4B</strong>; <strong>$2,490 per angler</strong>; trip-related $36.6B ($917); fishing equipment $8.7B (<strong>$217 per angler</strong>, $297 per spender); special equipment $27.7B ($695)</td>
+<td>16+, 2022</td>
+<td>S28 / M28</td>
+</tr>
+<tr>
+<td>Tackle lines</td>
+<td><strong>rods &amp; reels $2.3B</strong>; lures $1.3B; lines $867M; hooks/sinkers $838M; electronics $782M; tackle boxes $475M; guides $2.2B; <strong>online media subscriptions $166M (≈$4 per angler a year, S93 / E4)</strong></td>
+<td>16+, 2022</td>
+<td><a href="https://asafishing.org/wp-content/uploads/2025/01/2024_ASA_Economic_Report_Digital_Spread.pdf">S35 / M35</a></td>
+</tr>
+<tr>
+<td>Segments</td>
+<td>freshwater ≈43M (14% rate); saltwater 15.5M (record; 56% in the South); fly 7.9M; 18% do more than one type</td>
+<td>6+, 2025</td>
+<td>S5 / M5, S6 / M6, S7 / M7, S20 / M20</td>
+</tr>
+<tr>
+<td>Segments (federal)</td>
+<td>freshwater 35.1M; saltwater 12.7M; black bass ≈12–15M (<strong>estimate</strong> from the 2001 38% share)</td>
+<td>16+, 2022</td>
+<td>S27 / M27, S33 / M33, S92 / E3</td>
+</tr>
+<tr>
+<td>Growth</td>
+<td>45.7M (2015) → 50.1M (2019) → 54.7M (2020 spike) → 57.9M (2024) → 57.0M (2025); outings still rose to 918M</td>
+<td>6+</td>
+<td>S3 / M3, S13 / M13</td>
+</tr>
+<tr>
+<td>Churn</td>
+<td>18M joined or returned, <strong>19M quit, churn rate 33%</strong>, the highest on record; only 39M of 57M were continuing participants; USFWS three-year retention 50%</td>
+<td>6+, 2025 / 16+</td>
+<td>S4 / M4, S26 / M26, S32 / M32</td>
+</tr>
+<tr>
+<td>Avidity</td>
+<td>68% fish fewer than 12 times a year; <strong>32% monthly or more</strong> (41% in 2007); weekly &lt;6%</td>
+<td>6+, 2025</td>
+<td>S13 / M13, S25 / M25</td>
+</tr>
+<tr>
+<td>Seasonality</td>
+<td>Minnesota sells ~20% of annual licences before the early-May opener (217,100 of 1.1M in 2019; +45–48% in 2020); winter sales ~5–6%; West Virginia tournament hours peak in May (19% of the year); 36% of trips unplanned, 82% planned less than a week out</td>
+<td>state data</td>
+<td>S70 / M70, S71 / M71, S72 / M72, S57 / M57, S15 / M15</td>
+</tr>
+<tr>
+<td>Demographics</td>
+<td>37% female (21.1M); 67% male among 16+; 49% of adult anglers 45+ and 65+ the fastest-growing cohort; median household income ≈$55k; 70% urban; Hispanic participants doubled since 2015 to 6.9M</td>
+<td>mixed</td>
+<td>S9 / M9, S29 / M29, S11 / M11, S10 / M10</td>
+</tr>
+<tr>
+<td>Digital adoption</td>
+<td>85% own a smartphone, <strong>25% use a fishing app</strong>; 46% of non-users want to "leave technology behind"; apps used before (71%) far more than after (14%) a trip</td>
+<td>active anglers, c. 2018</td>
+<td><a href="https://www.southwickassociates.com/smartphone-app-use-and-todays-angler/">S59 / M59</a>, S187 / I84</td>
+</tr>
+<tr>
+<td>Adjacent businesses</td>
+<td>15,548 tackle shops (incl. online; no firm &gt;5% share); 3,514 independent coastal bait-and-tackle stores (2013); ~5,700 charter enterprises; &gt;2,000 B.A.S.S. Nation clubs</td>
+<td>US</td>
+<td>S47 / M47, S48 / M48, S46 / M46, S52 / M52</td>
+</tr>
+<tr>
+<td>Abroad</td>
+<td>Canada 3.24M active adult anglers (2015); Australia ~4.2M a year; England 934,000 rod licences (2024/25)</td>
+<td></td>
+<td>S77 / M77, S79 / M79, S75 / M75</td>
+</tr>
+</tbody>
+</table></div>
+<p>What this means for Bench Tag: the hobby is large, older, modest-income, seasonal and leaky, and it
+spends on going fishing rather than on software ($4 per angler a year on all online media, S93 / E4).
+That is why the gate rejected every consumer candidate on distribution or willingness to pay and why
+the chosen product sells to the business, not the angler: a shop's $25–$100 job (S406–S411 /
+P67–P72) is the budget line, and the angler's $15–$44 service payment is already made without
+complaint (S432 / P93, S433 / P94).</p>
+<h3 id="6b-the-a-specific-tam-sam-som-math-shown">6b. The (a)-specific TAM / SAM / SOM, math shown</h3>
+<p><strong>Pool (the TAM in businesses).</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Estimate</th>
+<th>Derivation</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US businesses taking in reels for service or repair</td>
+<td><strong>800–1,400</strong> (core dedicated techs 500–900)</td>
+<td>Yellow Pages "Fishing Tackle Parts &amp; Repair": TX 36, FL 155, CA 60, NY 34, VA 7 (285 in four big states); those states hold 18.3% of 32.24M paid licence holders → ≈1,560 US listings; × 40–60% dedicated repair names; + 30–50% for Facebook-only techs not in directories</td>
+<td><strong>estimate</strong> <a href="https://www.yellowpages.com/search?search_terms=Fishing+Tackle+Parts+%26+Repair&amp;geo_location_terms=FL">S564 / VS82</a>; S502–S506 / VS20–VS24; S39 / M39; S40 / M40</td>
+</tr>
+<tr>
+<td>US custom rod builders who sell to customers</td>
+<td><strong>1,500–4,000</strong></td>
+<td>ICRBE draws 2,000–2,500 builders a year (3,000 in 2011); 40–60% sell rods; attendees are one in two or three of all sellers</td>
+<td><strong>estimate</strong> S565 / VS83; S512–S514 / VS30–VS32</td>
+</tr>
+<tr>
+<td>US tackle shops with a service counter</td>
+<td>1,000–1,600 (overlaps the first row)</td>
+<td>≈1,560 repair-tagged listings ÷ 15,548 tackle shops ≈ 10%</td>
+<td>evidence §2; S47 / M47</td>
+</tr>
+<tr>
+<td><strong>US total addressable</strong></td>
+<td><strong>≈2,000–4,500</strong> businesses</td>
+<td>repair 800–1,400 + builders 1,500–4,000, less ~20% overlap</td>
+<td>evidence §2</td>
+</tr>
+<tr>
+<td>UK, Canada, Australia</td>
+<td><strong>250–450</strong></td>
+<td>US pool scaled by angler ratios (Canada ≈10%, Australia ≈13%, UK ≈5–8%)</td>
+<td><strong>estimate</strong> S566 / VS84; S77 / M77; S79 / M79; S75 / M75</td>
+</tr>
+<tr>
+<td>Earlier, narrower estimates for comparison</td>
+<td>250–750 (monetization); 1,000–2,500 (market sizing)</td>
+<td>one search surfacing 7 price-list shops; one service per 6–15 tackle shops</td>
+<td>S462 / P123; S102 / E13</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Revenue per shop per year.</strong> Two sourced estimates: the gate's active-month ARPU of $19 and
+season-averaged $17 → $204/yr (S700 / GA7: 40% of shops at ~10 jobs, 40% at ~24, 20% at the cap;
+10.5 billable months); the red team's segment-and-season model, $11.72/mo → $141/yr (S692 / R41:
+30% rod builders at 4 builds, 30% part-timers at 8 jobs closed August, 25% techs at 18 closed
+Aug–Sep, 15% busy counters at 40; monthly demand profile peaking at 1.4× in March–April and
+troughing at 0.4× in August). This report's model (<code>scripts/revenue-model.py</code>) reproduces the red
+team's figure at $133/yr. Low $141, high $204, midpoint $170.</p>
+<pre><code>TAM (businesses)  low  2,000 US + 250 abroad = 2,250     base 3,250 + 350 = 3,600     high 4,500 + 450 = 4,950
+TAM ($/yr)        low  2,250 × $141 = $0.32M             base 3,600 × $170 = $0.61M   high 4,950 × $204 = $1.01M
+   reference: at a flat $29/mo ($348/yr) the same pool is $0.78–1.72M (S710 / GA17)
+
+SAM = shops with ≥10 jobs a month in season AND a web presence (site or Facebook page)
+   volume filter   40% / 50% / 60%   (red team §3c: the realistic payer is the 15+-job shop; &quot;perhaps 40–60% of the counted businesses&quot;)
+   presence filter 80% / 90% / 100%  (estimate: 5 of 8 shops found run a site builder, S530–S533 / VS48–VS51; the rest are reachable on Facebook, S494 / V20, S552 / V51)
+SAM (businesses)  low  2,250 × 0.40 × 0.8 =   720        base 3,600 × 0.50 × 0.9 = 1,620   high 4,950 × 0.60 × 1.0 = 2,970
+SAM ($/yr)        low  720 × $141 = $0.10M               base 1,620 × $170 = $0.28M       high 2,970 × $204 = $0.61M
+
+SOM (paying shops at year end; $/yr at the scenario's ARPU)
+   bounds: channel math 70–160 acquired in 12 months (S708 / GA15); 10–25 by day 90 (S709 / GA16);
+           churn 30–45%/yr (S706 / GA13); plateau = acquisitions ÷ churn = 155–400 shops (S706 / GA13), 93–229 if only reel techs convert
+   year 1   low  ≈40 ($5.6K)      base ≈80 ($13.6K)      high ≈130 ($26.5K)     (model: 51 / 104 / 156 gross adds less churn)
+   year 2   low  ≈60 ($8.5K)      base ≈130 ($22K)       high ≈220 ($45K)
+   year 3   low  ≈95 ($13K)       base ≈170 ($29K)       high ≈300 ($61K)       (bounded by the 155–400 plateau; 300 = 6% of the high pool)
+</code></pre>
+<p>Reading: 100 paying shops is 2–5% of the US pool (S474 / G1), which is why the gate insisted on a
+≥2,000-business pool (S475 / G2) and on rod builders in scope. At full penetration this is a
+$0.3–1.1M-a-year business; at a realistic 20% it is $100–225K (S710 / GA17). The red team's row 6
+reading, "lifestyle not venture", stands.</p>
+<hr />
+<h2 id="7-monetization">7. Monetization</h2>
+<h3 id="7a-the-recommended-model-c1-as-amended">7a. The recommended model (C1 as amended)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Decision</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td><strong>$1.00 per job created</strong> (a job = one reel or one rod build); counted the first time a job reaches <code>received</code>; public requests that never arrive and cancellations before receipt never count; declined quotes count; a 7-day void window for mistakes</td>
+<td>billing a shop for a reel that never arrived would be the first complaint (PD §11); matches the trade's volume unit, "100 reels a month" (S485 / V3)</td>
+</tr>
+<tr>
+<td>Cap</td>
+<td><strong>$29 per shop per calendar month</strong> in the shop's timezone</td>
+<td>the ceiling the evidence supports: Shopify annual Basic $29 and Digital Wrench $39.95 are the lowest paid software one-person fishing and repair businesses are shown on (S442 / P103, S452 / P113); $29 is 0.6–4% of a $750–5,000 monthly service gross (evidence §4)</td>
+</tr>
+<tr>
+<td>Idle</td>
+<td><strong>$0 in a month with no jobs</strong>; no invoice, no email</td>
+<td>three of seven shops close 4–8 weeks (S408–S410 / P69–P71); flat annual plans would lapse at the first off-season renewal (monetization §9)</td>
+</tr>
+<tr>
+<td>Prepay</td>
+<td>optional <strong>$290/yr</strong> credit, expiring after 12 months; ten capped months for the price of ten</td>
+<td>one invoice for shops that prefer it (PD §11)</td>
+</tr>
+<tr>
+<td>Collection</td>
+<td><strong>Application fee</strong> of $1 on any customer payment through the shop's connected account (deposit or completion); "There are no additional Stripe fees on the application fee itself" (S653 / R2). Jobs with no Stripe payment accrue on the shop's ledger; the card on file is charged only when the balance is <strong>≥$5</strong> or the month hits the cap; smaller balances roll forward</td>
+<td>a $1 Stripe invoice loses 34% to fees, $3 loses 14%, $5 10%, $10 6.6% (red team §3d); the ≥$5 rule keeps drag under 10% and keeps "$0 in an idle month" literally true</td>
+</tr>
+<tr>
+<td>Pass-through</td>
+<td>the shop may add an "Online service fee $1.00" line to the customer's Checkout (default off); the shop still owes the $1 either way</td>
+<td>C1 "built in rather than a second plan"; wording and legality of a flat service fee to be checked (PD §14 Q5)</td>
+</tr>
+<tr>
+<td>Refunds</td>
+<td>a full deposit refund within 7 days of intake refunds the platform's $1 too; otherwise the fee is kept</td>
+<td>one rule, no judgement calls (red-team change 8)</td>
+</tr>
+<tr>
+<td>Card on file</td>
+<td>required at onboarding, before Stripe Connect</td>
+<td>the commitment signal and the mechanism for the ledger charge (change 9); "charge from day one", no free season (C1)</td>
+</tr>
+<tr>
+<td>Failed card</td>
+<td>past due → retries at days 3 and 7 → read-only at day 14 (no new jobs; existing jobs can still be moved, quoted, paid and closed)</td>
+<td>the angler is not the debtor and must never be stranded (PD §11)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Worked examples: a 10-job part-timer pays $10; a 30-job shop $29; Alan Tani at 100 a month $29; a
+rod builder at 4 builds a month $4; a shop closed in September pays $0 and is still a customer in
+November (gate §2c).</p>
+<h3 id="7b-alternatives-considered">7b. Alternatives considered</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Why rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flat $29/mo</td>
+<td>Charges a shop that is closed for August; the monetization file expects annual and monthly plans to lapse at the first off-season renewal (P§9 item 3); zero in-segment evidence of any flat software fee for job tracking; kept only as the cap</td>
+</tr>
+<tr>
+<td>Flat $19/mo</td>
+<td>Same renewal cliff at a lower ceiling; Stripe takes 5.2% of a $19 invoice (S704 / GA11); below the $30–60 the nearest paying neighbours (bike shops) accept (S675 / R24), so it buys nothing on conversion</td>
+</tr>
+<tr>
+<td>Per seat</td>
+<td>The buyer is one person; a second seat is v1.1; per-seat is the pricing of RepairDesk and GoCanvas ("3 user minimum", S536 / VS54), the products this pool does not buy</td>
+</tr>
+<tr>
+<td>Customer-paid only (the angler pays a platform fee, the shop pays nothing)</td>
+<td>The hobby's adopted B2B pattern (TourneyX $6.50/angler, Weighfish 6.5%, FareHarbor 6–8%: S396 / P57, S400 / P61, S438 / P99), but a third of jobs are paid in cash at the counter or never through Checkout, so revenue would depend on the shop's payment habits (PD §9a); kept as the optional pass-through line instead</td>
+</tr>
+<tr>
+<td>Freemium</td>
+<td>Paperform Free and Square Invoices Free already occupy "free" for intake and deposits (S659 / R8, S661 / R10); a free tier would train the pool that the status page is worth $0, and the gate's rule is "charge from day one"</td>
+</tr>
+<tr>
+<td>One-time purchase</td>
+<td>No recurring business; the switching cost accumulates with use, and the per-item history is the moat the gate credited; one-time pricing fits the consumer runner-up (b), not a B2B tool</td>
+</tr>
+<tr>
+<td>Stripe Billing meters</td>
+<td>Stripe now says "Unless you're maintaining an existing Meters integration, use Metronome" (S717 / PD5); meters would emit $0 lines in idle months and cannot express "capped after prepay credit"; the ledger plus Stripe Invoicing at 0.4% replaces it (S718 / PD6)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="7c-revenue-projections">7c. Revenue projections</h3>
+<p><strong>Estimate.</strong> <code>scripts/revenue-model.py</code> (standard library; all inputs cited in the file). Launch
+month 1 = December 2026 (C5′). Revenue per paying shop follows the red team's segment mix and
+seasonal profile (S692 / R41), giving $11.64 in December, $15.69 in March–April, $2.88 in August and
+$133 a year. Churn is applied monthly from an annual rate. Third-party cost follows PD §9c (S726 /
+PD14) with the $1 collected as an application fee on half the shops (no Stripe fee) and a ledger
+invoice on the other half.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Assumption</th>
+<th>Conservative</th>
+<th>Base</th>
+<th>Optimistic</th>
+<th>Source of the range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hampton Roads in person (months 1–2)</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>channel row 7: 10 shops at 30–60% (S567 / VS85); red team would use 20–40%</td>
+</tr>
+<tr>
+<td>alantani.com Service Centers post + PMs (months 1–4)</td>
+<td>3</td>
+<td>10</td>
+<td>20</td>
+<td>gate 10–30 (row 2) corrected by the red team to 3–10 (S663 / R12, S664 / R13)</td>
+</tr>
+<tr>
+<td>Direct outreach to ~1,000 listed shops at 2–4% (months 1–12)</td>
+<td>20</td>
+<td>30</td>
+<td>40</td>
+<td>channel row 1 (S502–S506 / VS20–VS24)</td>
+</tr>
+<tr>
+<td>ICRBE Feb 20–21 2027, converting months 4–6</td>
+<td>12</td>
+<td>18</td>
+<td>25</td>
+<td>channel row 3: 2,500 reached, 1–2% sign up, half pay (S512–S514 / VS30–VS32, S669 / R18)</td>
+</tr>
+<tr>
+<td>Facebook groups and pages (months 2–12)</td>
+<td>8</td>
+<td>20</td>
+<td>30</td>
+<td>channel row 4, member counts unmeasured (S674 / R23); conservative halves the gate's low</td>
+</tr>
+<tr>
+<td>Supplier mentions: Mud Hole, Smooth Drag, Mystic (months 4–12)</td>
+<td>5</td>
+<td>15</td>
+<td>20</td>
+<td>channel row 5 (S526 / VS44, S511 / VS29)</td>
+</tr>
+<tr>
+<td>StripersOnline / YouTube creators</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>channel row 6 (S528 / VS46, S529 / VS47)</td>
+</tr>
+<tr>
+<td>Public-page loop from month 7</td>
+<td>0%</td>
+<td>+10%</td>
+<td>+20% of adds</td>
+<td>channel row 8; no search-volume evidence on disk</td>
+</tr>
+<tr>
+<td>Gross adds, year 1 / year 2</td>
+<td>51 / 51</td>
+<td>104 / 103</td>
+<td>156 / 156</td>
+<td>sums; year 2 repeats the channels with ICRBE 2028</td>
+</tr>
+<tr>
+<td>Annual churn</td>
+<td>45%</td>
+<td>40%</td>
+<td>30%</td>
+<td>30–40% first-renewal loss + 5–10% retirements and closures (S706 / GA13; S545 / V35, S552 / V50)</td>
+</tr>
+<tr>
+<td>Jobs per shop per month</td>
+<td>segment mix 4 / 8 / 18 / 40 × seasonal profile 0.4–1.4, closures in Aug–Sep</td>
+<td>same</td>
+<td>same</td>
+<td>S692 / R41</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Month 3 (Feb 2027): paying shops / revenue</th>
+<th>Month 12 (Nov 2027): shops / revenue / trailing 12 months</th>
+<th>Month 24 (Nov 2028): shops / revenue / trailing 12 months</th>
+<th>Cumulative, 24 months</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conservative</td>
+<td>11 / $147</td>
+<td>38 / $442 / $3,137</td>
+<td>59 / $689 / $6,914</td>
+<td>$10,051</td>
+</tr>
+<tr>
+<td>Base</td>
+<td>23 / $307</td>
+<td>81 / $945 / $6,338</td>
+<td>129 / $1,506 / $14,920</td>
+<td>$21,258</td>
+</tr>
+<tr>
+<td>Optimistic</td>
+<td>37 / $485</td>
+<td>132 / $1,533 / $9,943</td>
+<td>223 / $2,592 / $25,019</td>
+<td>$34,962</td>
+</tr>
+</tbody>
+</table></div>
+<p>Base scenario by month, to show the seasonal swing (active paying shops, revenue, third-party cost):
+Dec 2026 8 shops, $89, $29 cost → Mar 2027 37, $577, $61 → May 58, $810 → Aug 70, <strong>$202</strong>, $40 →
+Nov 81, $945, $74 → Mar 2028 105, $1,643 → Aug 126, <strong>$363</strong> → Nov 2028 129, $1,506, $91. The August
+trough is 19–25% of the spring peak, exactly the red team's warning (trough ÷ peak ≈ 0.19, S692 /
+R41): monthly revenue swings five-fold across the year, which matters for the founder's attention,
+not for solvency. For comparison, the gate's own figures at the same shop counts are ~40% higher
+because its ARPU assumes a busier mix (100 shops ≈ $1,900 active month, S700 / GA7).</p>
+<h3 id="7d-unit-economics">7d. Unit economics</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARPU, active month</td>
+<td>$19 (gate mix) / $11.72 (red team mix) / $11.08 (this model's average month)</td>
+<td>S700 / GA7; S692 / R41</td>
+</tr>
+<tr>
+<td>ARPU, per year</td>
+<td>$204 / $141 / $133</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Stripe cost on a ledger invoice (2.9% + 30¢ + Invoicing 0.4%)</td>
+<td>$0.64 on $10; $0.93 on $19; $1.50 on $29 (the gate assumed Billing's 0.7%: $0.66 / $0.98 / $1.34)</td>
+<td>S718 / PD6, S726 / PD14, S469 / D3; S704 / GA11</td>
+</tr>
+<tr>
+<td>Stripe cost on an application fee</td>
+<td>$0 ("no additional Stripe fees on the application fee itself"); the shop pays 2.9% + 30¢ on the customer's charge</td>
+<td>S653 / R2, S713 / PD1</td>
+</tr>
+<tr>
+<td>Fee drag on tiny invoices</td>
+<td>$1 → 34%, $3 → 14%, $5 → 10%, $10 → 6.6%; hence the ≥$5 ledger rule</td>
+<td>red team §3d</td>
+</tr>
+<tr>
+<td>Email cost per job</td>
+<td>6 emails (S726 / PD14) × $0.0004 (Resend Pro $20 for 50,000) ≈ $0.0024; $0 on the Free tier below 3,000 a month</td>
+<td>S694 / GA1</td>
+</tr>
+<tr>
+<td>Contribution margin per shop-month (base)</td>
+<td>$11.08 − ~$0.33 Stripe (half the shops ledger-billed at ~$0.67 each) − ~$0.03 email ≈ <strong>$10.7 (≈96%)</strong>; at the gate's $19: ≈ $18 (95%)</td>
+<td>derivation from the rows above</td>
+</tr>
+<tr>
+<td>Fixed stack</td>
+<td>$46/mo at 100 shops, $55 at 300 (Supabase $25, Netlify $0–9, Resend $20, domain $1.25)</td>
+<td>S705 / GA12, PD §9c</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="7e-break-even">7e. Break-even</h3>
+<p>Fixed costs ÷ net per shop: $46 ÷ ($19 − $0.98) = <strong>3 shops</strong>; all-part-timer case $46 ÷ ($10 −
+$0.66) = <strong>5 shops</strong> (S705 / GA12). On the red team's blended $133–141 a year, $552 of annual fixed
+cost needs <strong>4–5 shops</strong>; to cover an August bill from August revenue alone ($2.88 per shop) takes
+~18 shops, which the base scenario passes in month 2. In every scenario of the model the first month
+clears third-party costs. Break-even is never at risk; the ceiling is.</p>
+<h3 id="7f-the-ceiling">7f. The ceiling</h3>
+<ul>
+<li>Full penetration: (2,000–4,500 US + 250–450 abroad) × $19 × 12 ≈ <strong>$0.5–1.1M a year</strong>; at a flat
+  $29 ≈ $0.8–1.7M; at 20% penetration ≈ <strong>$100–225K a year</strong> (S710 / GA17). On the red team's ARPU the
+  same pool is ≈ $0.3–0.7M at 100% (red team §1 row 6).</li>
+<li>Steady state: acquisitions ÷ churn = 70/yr ÷ 45% ≈ <strong>155 shops</strong> to 160/yr ÷ 40% ≈ <strong>400 shops</strong>
+  (S706 / GA13) → $2,900–7,600 a month gross in active months at the gate's ARPU (gate §6), or
+  $22–56K a year at the red team's (red team §3e). Downside (reel techs only, 42–103 acquisitions a
+  year): 93–229 shops.</li>
+<li>Reading: a profitable side product for a working tech, or a wedge. The wedge candidates the
+  evidence points at, none proven: the angler-owned gear record with a next-service reminder that
+  routes back to the shop (gap-analysis candidate d), the directory through the public pages
+  (candidate i), parts ordering. The decision log requires the founder to accept this ceiling in
+  writing if C0 lands at 3–4 commitments (C0).</li>
+</ul>
+<hr />
+<h2 id="8-organic-go-to-market-the-first-100-customers">8. Organic go-to-market: the first 100 customers</h2>
+<h3 id="8a-step-zero-the-c0-commitment-test-days-121-0">8a. Step zero: the C0 commitment test (days 1–21, $0)</h3>
+<p>Before any build money beyond the scaffold, the founder personally contacts <strong>≥20 named external
+shops</strong> and asks each for a written commitment (an email or message is enough) to three things:
+run their next 10 jobs through Bench Tag at $1 a job, put a card on file at signup, connect their
+Stripe at onboarding. The named list (red team §5 change 1; <code>research/evidence-repair-shop-tool.md</code>
+§3): the seven shops with public price lists (S406–S411 / P67–P72, S412 / P73: Valley Reel Works,
+Mat's, Dave's, Fischer Angling, Rod &amp; Reel Repair Guy, Delaware Valley Tackle, Rick's); counters with
+visible winter queues such as Grumpys Tackle, NJ, with ~150 reels queued in January (S681 / R30); the
+six Houston shops anglers name (S547 / V38–V43); Haddrell's Point (S557 / V26); the Virginia 7
+(S506 / VS24); the four alantani Service Centers posters with 2025–26 activity (S663 / R12); the
+Hampton Roads drop-off network around Princess Anne Distributing (S340 / P1, S501 / VS19).
+<strong>Scoring:</strong> ≥5 commitments → build; 3–4 → build only with the lifestyle ceiling accepted in
+<code>docs/decision-log.md</code>; &lt;3 → stop, record FAIL on criterion 2 in <code>docs/validation-gate.md</code>, and
+re-open the gate with candidate (b).</p>
+<h3 id="8b-the-channel-table-reach-conversion-paying-shops">8b. The channel table (reach × conversion = paying shops)</h3>
+<p>Conversion means a shop that creates jobs and is billed. Every assumption is the evidence file's
+(S567 / VS85), restated per row; none is a sourced conversion rate.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Channel</th>
+<th>Reach (sourced)</th>
+<th>Assumption</th>
+<th>Paying shops</th>
+<th>Timing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Founder's own shop (customer zero, unpaid)</td>
+<td>1 live reference installation; its dead "Book NOW" becomes the intake page</td>
+<td>the demo is a live screen, not a slide</td>
+<td>0</td>
+<td>weeks −3 to 0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Hampton Roads in person</td>
+<td>VA 7 repair-tagged listings (S506 / VS24); 33 Virginia Beach "fishing reel repair" results incl. Princess Anne Distributing (S501 / VS19)</td>
+<td>10 shops visited; 30–60% (red team: 20–40%)</td>
+<td><strong>3–6</strong></td>
+<td>weeks 1–4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Named direct-message list (the C0 list above, then ~300 of the ≈1,560 YP-listed shops)</td>
+<td>≈1,560 US listings extrapolated from TX 36, FL 155, CA 60, NY 34, VA 7 (S502–S506 / VS20–VS24); brand locators (S507–S509 / VS25–VS27)</td>
+<td>1,000 reachable; cold peer B2B 2–4%</td>
+<td><strong>20–40</strong></td>
+<td>months 1–12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>alantani.com: one post on the <strong>"Reel Repair Service Centers"</strong> board (live; 4 topics with 2025–26 posts), not "Member Services" (dormant since 2023-09-24); PMs to the 58 self-listed centres</td>
+<td>17,263 members, 454,887 posts, 91 users online on 2026-10-20 (S662 / R11, S511 / VS29)</td>
+<td>visible working techs are dozens, not hundreds</td>
+<td><strong>3–10</strong> (gate said 10–30)</td>
+<td>months 1–6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>rodbuilding.org + ICRBE, Winston-Salem, Feb 20–21 2027</td>
+<td>≈96,000 topics (S515 / VS33); expo 2,000–2,500 builders, 60+ booths, floor space up 30% in 2026 (S512 / VS30, S669 / R18, S670 / R19)</td>
+<td>a booth or a walker with QR cards reaches 2,500; 1–2% sign up, half pay</td>
+<td><strong>12–25</strong></td>
+<td>after Feb 2027</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Suppliers: Mud Hole, Smooth Drag/Carbontex, Mystic Reel Parts, Batson, Hedgehog Studio</td>
+<td>Mud Hole YouTube 73.4K subscribers, 28.3M views (S526 / VS44); Smooth Drag and Mystic have their own alantani boards (S511 / VS29)</td>
+<td>one newsletter or forum mention to a 5–10k list; 0.2–0.5%</td>
+<td><strong>10–20</strong></td>
+<td>months 3–12</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Facebook: "Custom Rod Builders" group (8,297 posts mirrored to rodbuilding.org since 2024-09), local fishing pages, shop pages</td>
+<td><strong>member counts not retrievable</strong> (login wall, S674 / R23); techs name Facebook as their channel (S494 / V20, S552 / V51)</td>
+<td>assume 5–10k members; 0.3%</td>
+<td><strong>15–30</strong> (low confidence; re-compute after F2)</td>
+<td>months 2–12</td>
+</tr>
+<tr>
+<td>7</td>
+<td>StripersOnline boards (34.6k and 131.8k posts) and reel-repair YouTube creators (2nd Chance Tackle 42.8K subs)</td>
+<td>S528 / VS46, S529 / VS47</td>
+<td>audiences are anglers and DIYers</td>
+<td><strong>0–5</strong></td>
+<td>any</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Public-page SEO loop:</strong> each shop's indexable page for "[city] reel repair" with a "powered by" link; every status email carries the brand</td>
+<td>the question is asked everywhere (S140 / M20, S141 / M22, S142 / M25, S552 / V51); <strong>no search-volume evidence on disk</strong></td>
+<td>starts after ~20 shops are live</td>
+<td><strong>+10–20%</strong> after month 6</td>
+<td>months 7–12</td>
+</tr>
+</tbody>
+</table></div>
+<p>Sums: reel techs only 42–103; with custom rod builders (all rows) <strong>70–160, midpoint ≈110</strong>
+(S708 / GA15). By day 90: <strong>10–25 paying shops, $100–725 a month run-rate</strong> (S709 / GA16), with C6′
+(five shops with real usage) at the bottom of that range.</p>
+<h3 id="8c-the-90-day-plan-week-by-week-pd-12-as-amended-by-red-team-changes-1315">8c. The 90-day plan, week by week (PD §12 as amended by red-team changes 13–15)</h3>
+<p>Assumes code-complete <strong>Monday 2026-11-30</strong>; day 90 is <strong>2027-03-01</strong>, a billing day. ICRBE is
+days 82–83. Revenue counted = billing to shops other than Storm Proof Tackle.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Dates</th>
+<th>Actions</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−3 to 0</td>
+<td>Nov 9 – Dec 6</td>
+<td>C0 result in hand (day 21 ≈ Nov 11). Founder's shop live on production for 2–3 weeks before any pitch: price list and policies loaded, Stripe connected, every incoming reel logged, real customers opening the status page; <code>stormprooftackle.com</code>'s dead "Book NOW" points at <code>/s/stormproof</code> and the template site is replaced by the product's public page; daily bug list; ops digest running</td>
+<td>1 live shop, first 20 real jobs</td>
+</tr>
+<tr>
+<td>1–2</td>
+<td>Dec 7–20</td>
+<td>Hampton Roads in person: 10 shops incl. the drop-off partner Princess Anne Distributing and the VA repair-tagged listings; founder demos on his phone with his own board; sign up on the spot (card + Stripe in 15 minutes)</td>
+<td>3–6 shops signed</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Dec 14–20</td>
+<td>alantani.com: one post in <strong>"Reel Repair Service Centers"</strong> per the board's rules; PM the 58 self-listed centres; rodbuilding.org post within the Solicitations sticky's rules (S515 / VS33)</td>
+<td>10–20 trials started</td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>Dec 21 – Jan 3</td>
+<td>Direct-message batch 1: the C0 list first, then 100 shops from the YP repair category in VA, TX, FL, CA, NY and the Houston six, founder writing as a peer with his page as the proof. Holiday lull expected</td>
+<td>2–4 more signed</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Jan 1</td>
+<td><strong>First billing run</strong> (December usage). C6′ counter starts. Fix anything the invoice flow breaks</td>
+<td>first charges to external shops</td>
+</tr>
+<tr>
+<td>5–8</td>
+<td>Jan 4–31</td>
+<td>Batches 2–3 (to ~300 contacted); ask Mud Hole, Smooth Drag, Mystic Reel Parts for one newsletter or forum mention; Facebook posts from the founder's and partner shops' pages ("Dont wait till March", S145 / I42) with the member counts measured in week −3 (F2)</td>
+<td>cumulative 8–16 signed</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Feb 1</td>
+<td>Second billing run. Review which shops create jobs and which signed and stalled; call the stalled ones</td>
+<td>≥5 external shops billed (early pass possible)</td>
+</tr>
+<tr>
+<td>10–12</td>
+<td>Feb 1–21</td>
+<td>ICRBE prep: <strong>a walker's pass with QR cards unless a booth is confirmed and priced by 2026-12-01</strong> (change 14; booth prices unpublished, S669 / R18); one-page handout with a QR to a demo shop page; rod-build flow polished (C2). Feb 20–21 at Winston-Salem</td>
+<td>20–40 builder sign-ups, most converting after day 90</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Mar 1</td>
+<td>Third billing run at 12:00 UTC, then <strong>evaluate C6′</strong>: ≥5 external shops each with ≥10 jobs across ≥2 calendar months and ≥1 customer payment through its connected account</td>
+<td>pass → v1.1 and March–June outreach (backlogs peak, S174 / M1, S142 / M26); fail → criterion 2 FAIL, gate re-opens with (b); Bench Tag keeps serving paying shops at ~$46–86/month of fixed cost; founder decides by 2027-04-01 whether to keep it as a lifestyle tool or sunset with 60 days' notice and a final export</td>
+</tr>
+</tbody>
+</table></div>
+<p>Why these dates: winter is working season for mail-in techs (150 reels queued at a New Jersey counter
+in January, S681 / R30; "Local shops are staying busy with winter rod and reel repairs", S682 / R31)
+and the spring rush that makes the status page valuable is next; the wrong window is March–June,
+when a shop with a 5–8-week backlog will not change how it takes reels in; July–October is the dead
+window (S680 / R29, S409 / P70, S531 / V23). If the build slips past mid-February, expect the
+external count to stall until July (red team §3f).</p>
+<h3 id="8d-built-in-loops">8d. Built-in loops</h3>
+<ol>
+<li><strong>The public page</strong> (C7): indexable, with LocalBusiness structured data, prices, turnaround and
+   the "closed until" state, so each shop answers "who fixes reels near me?" for its town and carries
+   "Powered by Bench Tag" (F3).</li>
+<li><strong>The status page and every email</strong> carry the brand to every customer; the status URL goes on hang
+   tags, Facebook posts and the printed form the shop already uses (S495 / V21, S551 / V47).</li>
+<li><strong>Seasonal timing as a channel:</strong> shops already push off-season specials ("Dont wait till March to
+   get your reels serviced", S145 / I42); a January launch puts the pitch in the buying window and the
+   product's proof in the pain window (gate §3c).</li>
+<li><strong>The trade's forums are the support channel:</strong> the forum owner at alantani.com is himself a
+   repairman (S485 / VS3); a working tech's recommendation travels further there than any ad.</li>
+</ol>
+<hr />
+<h2 id="9-risks-and-red-team-findings">9. Risks and red-team findings</h2>
+<h3 id="9a-five-failure-modes-red-team-4-probabilities-are-the-red-teams-estimates-for-the-first-twelve-months-after-launch-overlapping-not-summing">9a. Five failure modes (red team §4; probabilities are the red team's estimates for the first twelve months after launch, overlapping, not summing)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Probability</th>
+<th>Evidence</th>
+<th>What must be true for it not to happen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>"Free and fine."</strong> Shops sign up, create a few jobs, keep taking reels by text, phone and Facebook message; the status URL never goes on the tag; fewer than five external shops are genuinely using it by day 90</td>
+<td><strong>45%</strong></td>
+<td>zero shops found paying for tracking in 54 pain rows, eight websites and two forum searches; the 2026 builder ask answered with "Google Spreadsheet" (S667 / R16); Paperform Free covers a ≤30-job shop's intake and deposit for $0 (S659 / R8); Square Invoices Free requests deposits (S661 / R10); "A repair shop spreadsheet can feel perfectly fine…" (S543 / N-V17); Alan Tani ran 100 a month on box dates (S485 / N-V10)</td>
+<td>≥5 shops commit before the build (C0); onboarding to a live public page in under 15 minutes; the first thing a shop sees after creating a job is the customer's status page and the email the customer gets; the shop's existing printed form is reproduced as the intake page</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Distribution never reaches the pool.</strong> The founder's online reach is unmeasured and his site is a template; Facebook groups are unmeasured; the alantani business board is dormant; ICRBE booths are gone or unaffordable; outreach stalls at the shops he can drive to</td>
+<td><strong>35%</strong></td>
+<td>S672 / R21, S673 / R22, S674 / R23, S664 / R13; booth prices unpublished and demand high (S669 / R18); the 2–5% and 3–5% conversion rates are unsourced (gate §3b)</td>
+<td>Facebook group sizes reported within a week (F2); an alantani Service Centers post gets replies from working techs; ten in-person visits in weeks 1–4; a walker's pass at ICRBE with a QR card if no booth; one supplier mention by month 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>It works and stays tiny.</strong> 100 shops is ≈$14K a year with an August of ≈$300; the full-penetration ceiling is ≈$0.3–0.6M; the founder's attention drifts back to the bench</td>
+<td><strong>60%</strong> (conditional on surviving 1 and 2)</td>
+<td>season model (S692 / R41); S710 / GA17; "lifestyle or wedge" is the gate's own phrase</td>
+<td>the founder wants a profitable side product, or the shop tool becomes the wedge to something evidenced (the angler-owned gear record, parts ordering, the directory via the public pages); none proven; a known ceiling, not a surprise</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Churn above 40%.</strong> Part-timers who onboard in winter go quiet in July–October and do not come back; techs retire, go back to a day job, or drop the service line; the plateau is 100–200 shops</td>
+<td><strong>40%</strong></td>
+<td>S545 / V35 ("doesn't do reels anymore"), S552 / V50 ("I thought he retired?"), retiring-tech thread (S555 / VS73, N-V4), closures (S680 / R29, S409 / P70, S531 / V23); S706 / GA13</td>
+<td>the $0 idle month keeps the account alive; the public page keeps taking requests while the shop is closed so the queue is waiting when it reopens; history makes the return automatic; the "closed until" switch is in v1 (change 4)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>The first promise breaks in front of a tight community.</strong> Status emails land in spam, Stripe onboarding stalls a shop at KYC, or a public page gets spammed; customers call anyway; the tech tells alantani it "doesn't work"</td>
+<td><strong>15%</strong></td>
+<td>shared sending IPs by default (S688 / R37); Stripe-hosted KYC (S655 / R4, S656 / R5); "Greasy Hands, cannot always pick up the phone" (S486 / V4) means nobody will debug DNS</td>
+<td>domain authentication (SPF, DKIM, DMARC) before the first external shop; status page reachable by short code and QR without email (change 2); deposits gated on <code>charges_enabled</code> but jobs never gated (change 3); rate-limited, Turnstile-checked public forms; a weekly deliverability check in the founder's own inbox</td>
+</tr>
+</tbody>
+</table></div>
+<p>A sixth pressure without a probability: <strong>scope pull toward inventory and POS.</strong> The only 2026
+builder ask is inventory/costs/sales (S667 / R16) and tackle shops buy POS (S442 / P103, S443 / P104);
+the product must refuse both in v1 or it becomes a bad Square (red team §4).</p>
+<h3 id="9b-counter-evidence-the-gate-weighed-evidence-file-6">9b. Counter-evidence the gate weighed (evidence file §6)</h3>
+<ul>
+<li>DIY culture: "Do it yourself. Believe it or not, reel repairs aren't that hard to do." (S552 /
+  N-V1); a UK angler quoted £20+ by the OEM did it himself for £17 (S553 / N-V2).</li>
+<li>A shrinking trade: "All the little mom and pops have been wiped out, because it's not economically
+  feasible." (S554 / N-V3, 2010); "He eventually had to close his business. Now, in my area, there are
+  no tackle repairmen." (S690 / R39); PENN's "Reels No Longer Serviced" list and Shimano's refusal to
+  authorise retailer warranty repairs (S684 / R33, S685 / R34). The red team's reading: OEM retreat
+  from parts and older models pushes work <em>to</em> independents; what is shrinking is the number of
+  techs who announce themselves publicly, which makes the pool harder to enumerate, not smaller
+  (red team §3b).</li>
+<li>Techs who do not want to scale: "keeping me busy on a part time basis, which is what I wanted"
+  (S487 / N-V11); "I do not take a deposit as I do not want to hold onto someone's money." (S489 /
+  N-V12).</li>
+<li>Customers who tolerate slow service: "usually send reels in during the off-season and tell him no
+  hurry" (S560 / N-V9).</li>
+<li>The vendor's own concession: RepairDesk, 2026: a spreadsheet "can feel perfectly fine when the
+  day is calm, and the same one or two people touch every repair." (S543 / N-V17).</li>
+<li>Nothing found in the other direction: no tech saying "I don't want customers tracking jobs"
+  (N-V20).</li>
+</ul>
+<h3 id="9c-data-licensing-and-legal-exposure-red-team-3g">9c. Data, licensing and legal exposure (red team §3g)</h3>
+<p>None material. The product uses no third-party fishing data, no licensed dataset, no map tiles
+(gate §4). What remains is ordinary SaaS exposure:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Finding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bailment (the shop holds the customer's reel)</td>
+<td>The shop's contract with its customer; the platform is a record-keeper. Terms of service must say the platform is not a party to the repair and does not inspect, store or insure items; the status page names the shop as the business.</td>
+</tr>
+<tr>
+<td>Holding customer money</td>
+<td>None by construction: direct charges settle in the connected account (S652 / R1, S653 / R2); the platform receives only its application fee; no money-transmission question arises.</td>
+</tr>
+<tr>
+<td>Chargebacks, refunds, disputes</td>
+<td>Land on the shop's Stripe balance ("Refunds and chargebacks reduce the connected account's balance", S652 / R1); dispute fee payer is the connected account (S654 / R3); negative balances are covered by Stripe (S656 / R5, S657 / R6). The platform decides per the 7-day rule whether to refund its $1 (change 8).</td>
+</tr>
+<tr>
+<td>KYC / identity</td>
+<td>Stripe-hosted for Standard-behaviour accounts (S655 / R4). The product must work without a connected account and gate only deposits on <code>charges_enabled</code> (change 3).</td>
+</tr>
+<tr>
+<td>PII</td>
+<td>Names, emails, phones, item descriptions, photos; no card data touches the platform. Needs a privacy notice, per-shop isolation proven by the RLS tests, export and deletion (F13), a photo retention rule. Below CCPA/GDPR thresholds at this scale.</td>
+</tr>
+<tr>
+<td>Email terms and deliverability</td>
+<td>Transactional only; Resend shared IPs by default (S688 / R37); SPF/DKIM/DMARC on the product's own domain from day one; bounce and complaint suppression; the status page must not depend on email arriving (change 2). No SMS in v1 → no TCPA/10DLC exposure (C3).</td>
+</tr>
+<tr>
+<td>Stripe terms</td>
+<td>Connect platform agreement; restricted-business list irrelevant; application-fee refund behaviour as documented (S713 / PD1).</td>
+</tr>
+<tr>
+<td>Tax</td>
+<td>The shop's 1099-K and sales tax are the shop's (its own Stripe account). SaaS sales tax on the platform's $1 fee applies in some states above thresholds this business will not reach for years; ask the accountant (PD §14 Q4) and ignore until revenue is material.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="9d-how-it-fails-without-ad-spend">9d. How it fails without ad spend</h3>
+<p>Without paid acquisition the whole first-100 path rests on five things the founder does personally:
+ten in-person visits, a named direct-message list, one credible forum post, a two-day expo, and his
+own shop's public page ranking for its town. The three ways that chain breaks: (1) the founder's
+online credibility is not fixed before outreach, so peers land on a template site with "Lorem ipsum"
+testimonials and "100+ Active Worker" (S672 / R21); (2) the unmeasured channels (Facebook, S674 /
+R23; Instagram, S346 / P7) turn out to be small, removing 15–30 of the 70–160; (3) the build slips
+past mid-February, the spring rush arrives, and shops with 5–8-week backlogs will not change intake
+until July (red team §3f). The public-page loop is the only compounding channel and it is not
+counted before month 7 and has no search-volume evidence behind it (channel row 8).</p>
+<h3 id="9e-what-would-need-to-be-true-for-this-to-work-checklist">9e. What would need to be true for this to work (checklist)</h3>
+<ul>
+<li><input type="checkbox" disabled> ≥5 of 20 named shops commit in writing within 21 days (C0).</li>
+<li><input type="checkbox" disabled> The founder's own shop runs on it for 2–3 weeks with real customers opening the status page
+      before any peer pitch (change 14).</li>
+<li><input type="checkbox" disabled> <code>stormprooftackle.com</code> is replaced by the product's public page before outreach (F3).</li>
+<li><input type="checkbox" disabled> Facebook group sizes are measured and channel row 6 recomputed (F2, change 15).</li>
+<li><input type="checkbox" disabled> A tech with 15+ reels a month in season values not answering "is it ready yet?" more than he
+      values keeping his texts (red team §4 closing paragraph).</li>
+<li><input type="checkbox" disabled> The customer's status page becomes the thing the shop is known for ("my reels are always done
+      before the estimated date given at drop off", S547 / V41).</li>
+<li><input type="checkbox" disabled> Code-complete by 2026-11-30; launch before early December; hard stop mid-February (C5′).</li>
+<li><input type="checkbox" disabled> Domain authentication done and a QR/short-code path on every receipt before the first external
+      shop (change 2; S688 / R37).</li>
+<li><input type="checkbox" disabled> By day 90: ≥5 external shops with ≥10 jobs across ≥2 months and ≥1 customer payment each (C6′).</li>
+<li><input type="checkbox" disabled> The founder accepts, in the decision log, that the base outcome is a $14–20K-a-year side
+      product unless a wedge proves out (failure mode 3).</li>
+</ul>
+<hr />
+<h2 id="10-remaining-actions-for-the-founder">10. Remaining actions for the founder</h2>
+<p>Everything below is outstanding as of 2026-10-21. Nothing is blocking the deliverables: the <code>/app</code>
+starter runs on a local Postgres harness and in demo mode (<code>docs/approvals.md</code>). Ids: A = approvals
+log, F = founder actions from the red team, Q = product-definition §14.</p>
+<h3 id="10a-do-this-week">10a. Do this week</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Action</th>
+<th>How</th>
+<th>Verify</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td><strong>C0 commitment test</strong> (deadline: 21 days from 2026-10-21 → 2026-11-11)</td>
+<td>1. Take the named list in §8a (the seven price-list shops, Grumpys-type winter counters, the Houston six, Haddrell's, the Virginia 7, the four alantani Service Centers posters, the Princess Anne network). 2. Write as a peer, from your shop's email or Facebook page, with one screenshot of a job on your board and one of the customer's status page. 3. Ask for three things in writing: next 10 jobs at $1 a job, a card on file at signup, Stripe connected at onboarding. 4. Record each reply (yes / no / silent, date, channel) in <code>docs/decision-log.md</code>.</td>
+<td>≥5 written yeses → proceed; 3–4 → proceed only after writing the lifestyle-ceiling acceptance into the decision log; &lt;3 → record FAIL on criterion 2 in <code>docs/validation-gate.md</code> §8 and reopen the gate with (b).</td>
+<td>None; this is the kill switch. A late or partial result is reported as what it is, not rounded up (PD §12).</td>
+</tr>
+<tr>
+<td>F2</td>
+<td><strong>Measure Facebook group sizes</strong> (7 days)</td>
+<td>While logged in, open the "Custom Rod Builders" group (<code>facebook.com/groups/customrodbuilders/</code>, S674 / R23) and every reel-repair / reel-restoration group you can find; note member count, posts per day and date checked; also your own page's follower count (S673 / R22) and your Instagram followers and posting cadence (S346 / P7).</td>
+<td>Numbers appear in <code>docs/decision-log.md</code>; channel row 6 in §8b is recomputed from them before the first-100 claim is repeated anywhere.</td>
+<td>If counts are under ~5,000 in total, move row 6 to the bottom of the plan and lean on rows 1–5.</td>
+</tr>
+<tr>
+<td>F4a</td>
+<td><strong>Domain decision</strong></td>
+<td>Decide between acquiring <code>benchtag.com</code> (registered, parked lander, S725 / PD13: use the registrar's "make an offer" or a broker) and launching on <code>benchtag.app</code> or <code>getbenchtag.com</code> (availability unchecked). Do a quick trademark search (USPTO TESS) before paying for either.</td>
+<td>Domain in your registrar account; DNS zone reachable (needed by A3, A7 and Stripe branding).</td>
+<td>Launch on any <code>.app</code> you own: customers see the shop's page and status link, so the root domain carries little weight at launch (PD §1a).</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="10b-before-deploy">10b. Before deploy</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Action</th>
+<th>How</th>
+<th>Verify</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2</td>
+<td><strong>Supabase account and project</strong></td>
+<td>1. Create a Supabase organisation and a project in a US region on the <strong>Pro</strong> plan (Free pauses after a week idle; $25/mo, S467 / D1). 2. From the project's settings copy the project ref, the database password you set, the anon key and the service-role key. 3. Create a personal access token for the CLI. 4. Put <code>SUPABASE_ACCESS_TOKEN</code>, <code>SUPABASE_PROJECT_REF</code>, <code>SUPABASE_DB_PASSWORD</code> in the GitHub repository's environment secrets; put <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> in Netlify's build environment and in <code>app/.env.local</code> locally. 5. Enable the <code>pg_cron</code>, <code>pg_net</code> and Vault features the cron jobs need (Q10). 6. In Auth settings, set the site URL and redirect URLs to the app's domain and switch the email provider to custom SMTP once A7 is done (Q12).</td>
+<td><code>npx supabase@2 link --project-ref &lt;ref&gt;</code> then <code>npx supabase@2 db push</code> applies the migrations with no error; <code>npm run db:types</code> regenerates <code>app/src/lib/supabase/types.ts</code> unchanged.</td>
+<td>The local harness (<code>npm run test:sql</code>) keeps proving migrations and RLS on plain Postgres 16 (decision D3, D7).</td>
+</tr>
+<tr>
+<td>A3</td>
+<td><strong>Netlify account and site</strong></td>
+<td>1. Create a Netlify account; "Add new site → Import from Git" and pick the repo; Netlify reads the root <code>netlify.toml</code> (<code>base = "app"</code>, build <code>npm run build</code>, publish <code>dist</code>, Node 22). 2. Add build environment variables: <code>VITE_SUPABASE_URL</code>, <code>VITE_SUPABASE_ANON_KEY</code>, <code>VITE_APP_URL</code>, <code>VITE_TURNSTILE_SITE_KEY</code> (public-safe values only; never the service-role key, Stripe secret or Resend key, <code>app/.env.example</code>). 3. Create a personal access token and note the site id; add <code>NETLIFY_AUTH_TOKEN</code> and <code>NETLIFY_SITE_ID</code> to GitHub secrets for CI deploys. 4. Point the domain from F4a at the site and let Netlify issue the certificate.</td>
+<td><code>curl -I https://&lt;site&gt;</code> returns 200 with the CSP and <code>X-Frame-Options</code> headers from <code>app/netlify.toml</code>; <code>/app</code> loads the SPA; <code>/s/&lt;slug&gt;</code> returns server-rendered HTML once the function ships.</td>
+<td><code>netlify.toml</code> and the README are in the repo; the prototype is published as an Artifact (A3 fallback).</td>
+</tr>
+<tr>
+<td>A4</td>
+<td><strong>Stripe account, test mode, Connect enabled</strong></td>
+<td>1. Create the Stripe account (or use the shop's) and stay in <strong>test mode</strong>. 2. Connect settings → complete the platform profile and choose the model where <strong>Stripe handles pricing</strong> (connected accounts pay Stripe's fees; no $2 active-account or payout fees, S716 / PD4); confirm accounts will be created with controller defaults equal to Standard (<code>fees.payer=account</code>, <code>losses.payments=stripe</code>, <code>requirement_collection=stripe</code>, full Dashboard, S715 / PD3) (Q3). 3. Developers → API keys: copy the secret key and publishable key. 4. Developers → Webhooks: create <strong>two</strong> endpoints, one for "Events from your account" (<code>checkout.session.completed</code>, <code>invoice.paid</code>, <code>invoice.payment_failed</code>, <code>invoice.voided</code>) and one for "Events from connected accounts" (<code>checkout.session.completed</code>, <code>checkout.session.async_payment_*</code>, <code>payment_intent.succeeded</code>, <code>charge.refunded</code>, <code>application_fee.*</code>, <code>account.updated</code>, <code>account.application.deauthorized</code>) (S719 / PD7); copy each signing secret. 5. Store <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET_PLATFORM</code>, <code>STRIPE_WEBHOOK_SECRET_CONNECT</code> as Supabase Edge Function secrets and <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify. 6. Enable Stripe Invoicing on the platform account (Starter, 0.4%, S718 / PD6).</td>
+<td>A test connected account completes hosted onboarding and shows <code>charges_enabled</code>; a test Checkout on it with <code>application_fee_amount=100</code> produces a $1 application fee on the platform balance; both webhook endpoints show 200s.</td>
+<td>Billing behind a feature flag (A4 fallback); jobs, status pages and quotes work without Stripe (change 3).</td>
+</tr>
+<tr>
+<td>A7</td>
+<td><strong>Resend</strong></td>
+<td>1. Create a Resend account; add a sending subdomain (e.g. <code>mail.&lt;domain&gt;</code>); add the SPF, DKIM and DMARC (<code>p=quarantine</code>) DNS records it gives you (Q12). 2. Create an API key → <code>RESEND_API_KEY</code> in Supabase Edge Function secrets. 3. Create SMTP credentials and enter them as Supabase Auth's custom SMTP so sign-in codes and status emails share one sender reputation (PD §7a). 4. Start on Free (3,000/mo, 100/day); upgrade to Pro $20 when daily volume approaches 100 (≈17 jobs a day, S694 / GA1, S721 / PD9).</td>
+<td>The domain shows "verified" in Resend; a sign-in email and a test <code>status_update</code> land in your own inbox, not spam; the ops digest arrives daily.</td>
+<td>Postmark is the priced alternative (S695 / GA2); the status page is reachable by short code and QR regardless (change 2).</td>
+</tr>
+<tr>
+<td>T1</td>
+<td><strong>Cloudflare Turnstile keys</strong></td>
+<td>1. In a Cloudflare account (free), open Turnstile → Add site; hostnames: the product domain (one widget covers every shop page because all live on one hostname, S723 / PD11). 2. Copy the site key → <code>VITE_TURNSTILE_SITE_KEY</code> (Netlify and the <code>public-page</code> function) and the secret key → <code>TURNSTILE_SECRET_KEY</code> (Supabase secrets).</td>
+<td>The request form renders the widget and <code>public-intake</code> rejects a missing or failed token with the plain-text error in PD §5b.</td>
+<td>Rate limits alone protect the form until the key exists; custom domains per shop later need one widget per 10 hostnames (Q7).</td>
+</tr>
+<tr>
+<td>E1</td>
+<td><strong>Environment variables, complete list</strong></td>
+<td>Supabase Edge Function secrets: <code>SUPABASE_SERVICE_ROLE_KEY</code>, <code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET_PLATFORM</code>, <code>STRIPE_WEBHOOK_SECRET_CONNECT</code>, <code>RESEND_API_KEY</code>, <code>TURNSTILE_SECRET_KEY</code>, <code>CRON_SECRET</code> (also in Vault for the cron SQL, PD §8). Netlify build env: <code>VITE_SUPABASE_URL</code>, <code>VITE_SUPABASE_ANON_KEY</code>, <code>VITE_APP_URL</code>, <code>VITE_TURNSTILE_SITE_KEY</code>, <code>VITE_STRIPE_PUBLISHABLE_KEY</code>, plus <code>SUPABASE_URL</code>, <code>SUPABASE_ANON_KEY</code>, <code>TURNSTILE_SITE_KEY</code> for the <code>public-page</code> function. GitHub environment secrets: <code>SUPABASE_ACCESS_TOKEN</code>, <code>SUPABASE_PROJECT_REF</code>, <code>SUPABASE_DB_PASSWORD</code>, <code>NETLIFY_AUTH_TOKEN</code>, <code>NETLIFY_SITE_ID</code>.</td>
+<td><code>app/.env.example</code> documents the browser-side set; a secrets scan in CI finds no secret in the bundle (PD §13).</td>
+<td>—</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>Third-party data API keys</td>
+<td><strong>Not needed.</strong> The product uses no tide, weather, regulation or map data (gate §4).</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="10c-before-launch">10c. Before launch</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Action</th>
+<th>How</th>
+<th>Verify</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F3</td>
+<td><strong>Replace the stormprooftackle.com template</strong></td>
+<td>Point the site's "Book NOW" and service pages at <code>/s/stormproof</code> (or redirect the whole domain to the Bench Tag public page); remove the Lorem-ipsum testimonials, "100+ Active Worker" counters and placeholder team (S672 / R21, S340 / P1, S341 / P2); publish your real price list (Spinning reel service $30, guide replacement from $10, S342 / P3, S343 / P4) and decide whether to charge an estimate fee like the $15–$20 your peers charge (Q14; S406 / P67, S407 / P68).</td>
+<td>A peer who clicks from your Facebook page lands on a page with prices, turnaround and a working request button.</td>
+<td>Do it before any outreach (change 14); the whole peer-credibility argument depends on it.</td>
+</tr>
+<tr>
+<td>F4b</td>
+<td><strong>Accountant question</strong></td>
+<td>Ask: (1) sales-tax treatment of the $1/job platform fee for a Virginia seller and SaaS taxability in the shops' states, and when to switch on Stripe Tax on platform invoices (Q4); (2) the wording and legality of a flat "Online service fee $1.00" line on the customer's payment under card-network and state rules (Q5); (3) the prepay refund policy, proposed full refund within 30 days if unused (Q6).</td>
+<td>Written answers filed in <code>docs/decision-log.md</code>; pricing-page sentence updated.</td>
+<td>Launch with the pass-through switch <strong>off</strong> by default (it already is) and no tax on platform invoices (PD §11) until answered.</td>
+</tr>
+<tr>
+<td>F4c</td>
+<td><strong>ICRBE decision by 2026-12-01</strong></td>
+<td>Contact the organiser (rodbuilding.org / Tom Kirkman; the 2027 vendor update thread is on the forum index, S666 / R15) for booth price, deadline and whether a floor presence without a booth is allowed (Q9).</td>
+<td>Booth confirmed and priced by Dec 1, or a walker's pass bought and 200 QR cards printed (change 14).</td>
+<td>Walker with QR cards; a demo shop page on the card.</td>
+</tr>
+<tr>
+<td>A6</td>
+<td><strong>Domain live</strong></td>
+<td>Finish F4a: DNS for the app (A3), the sending subdomain (A7) and Stripe's branding settings on the platform account.</td>
+<td><code>https://&lt;domain&gt;/s/stormproof</code> and <code>https://&lt;domain&gt;/t/&lt;demo token&gt;</code> answer from an external uptime check every 5 minutes (Q18, PD §13).</td>
+<td>—</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>Reddit access (optional, research only)</td>
+<td>Allow <code>reddit.com</code>, <code>www.reddit.com</code>, <code>old.reddit.com</code>, <code>api.pullpush.io</code> in the environment's network policy if a further evidence round is ever run.</td>
+<td><code>curl https://www.reddit.com/r/Fishing/.json</code> returns 200 (it returned 403 on 2026-10-20).</td>
+<td>Search-engine snippets and reachable forums, as used throughout (decision D2).</td>
+</tr>
+</tbody>
+</table></div>
+<p>Count: 3 this week (F1, F2, F4a), 7 before deploy (A2, A3, A4, A7, T1, E1, A5-as-confirmation),
+5 before launch (F3, F4b, F4c, A6, A1-optional) → <strong>15 actions</strong>, of which F1 is the one that decides
+whether the rest happen.</p>
+<hr />
+<h2 id="11-decision-log-highlights-and-runner-up-opportunities">11. Decision log highlights and runner-up opportunities</h2>
+<h3 id="11a-the-eight-most-consequential-decisions-docsdecision-logmd">11a. The eight most consequential decisions (<code>docs/decision-log.md</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Decision, in one line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D2</td>
+<td>Reddit is blocked by the environment; proceed on search-engine snippets of Reddit threads plus directly reachable forums, YouTube comments and app-store reviews rather than idle the team.</td>
+</tr>
+<tr>
+<td>D3 / D7</td>
+<td>No Docker daemon → migrations and RLS are tested on a throwaway plain PostgreSQL 16 cluster with an <code>auth.uid()</code> shim; faithful because the schema is plain SQL.</td>
+</tr>
+<tr>
+<td>D5 / D8</td>
+<td>Stack kept and pinned after a probe build: React 19.3, Vite 8.3, TypeScript 6.0, Tailwind 4.3, Vitest 5, ESLint 9 flat config with typescript-eslint 8.72, supabase-js 2.118, Zod 4.6, react-router 7.18, TanStack Query 5.104.</td>
+</tr>
+<tr>
+<td>D9</td>
+<td><strong>Proceed with candidate (a)</strong> under gate conditions C1–C7; (b) and (e) recorded as runners-up.</td>
+</tr>
+<tr>
+<td>D10 / D12</td>
+<td>Phase 5 split: the product-independent scaffold (5a) started in parallel with the product definition; schema and vertical slice (5b) wait for it; the prototype launched as soon as the definition landed; <code>/app</code> work serialised to avoid two agents writing it at once.</td>
+</tr>
+<tr>
+<td>D11</td>
+<td><strong>Bench Tag</strong>; one 12-value <code>job_status</code> enum with a per-item <code>kind</code> instead of separate reel and rod flows; payment is a computed badge, not a status; customers reach status pages through a SECURITY DEFINER RPC with sha256-hashed 128-bit tokens; money settles on the shop's own Stripe account (Connect, direct charges); the platform bills from its own ledger through Stripe Invoicing, not Billing Meters.</td>
+</tr>
+<tr>
+<td>D13</td>
+<td><strong>Red team pass 1 accepted in full</strong> (17 changes: C0 pre-build commitment test, status pages that work without email, jobs independent of Stripe onboarding, the "closed until" switch, the $1 as an application fee with a ≥$5 ledger rule, the refund rule, card on file at signup, the corrected launch window, tightened C6, the day-90 scorecard); the starter and prototype are still delivered because they are the mission's deliverables and the vehicle for the C0 pilots.</td>
+</tr>
+<tr>
+<td>C0 (via D13)</td>
+<td>The kill switch moved from day 90 after launch to day 21 before the build: fewer than three written commitments ends the project at the cost of a few emails.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="11b-runner-up-opportunities">11b. Runner-up opportunities</h3>
+<p><strong>(b) Private, exportable web-first logbook with automatic NOAA/NWS conditions</strong> (gap-analysis rank 2,
+61 points; <code>research/evidence-private-logbook.md</code> §6). Why it lost: willingness to pay is proven only
+at $10–20/yr or $25–40 one-time (976 ratings on an $8.99 paper log, S595 / L29; Anglers' Log 100K+
+downloads at $11.99/yr, S573 / L6) against (a)'s ~$11–19 a month; the 90-day organic path is a likely
+FAIL (≈2,400 US searches a month for the log family and ≈130 with "app" intent, S604 / L38, S605 /
+L39; 23–65 payers in 90 days on stated assumptions); Fishing Points already ships a private log with
+automatic weather, solunar and tide, GPX import, a web app and sync to 10M+ installs (S624 / L58) and
+101 log apps launched in 2026 (S650 / L87); retention is structural (33% of incentivised diarists
+still logging at 12 months, 3–7% day-30 retention for apps, S637 / L71, S640 / L74). What would revive
+it: C0 or C6′ failing for (a), plus a distribution partner (a forum or creator post) and a design that
+removes entry effort (automatic conditions from a single tap). It also remains the natural consumer
+companion to (a): the per-item service history the shop tool creates is the seed of an angler-owned
+gear record.</p>
+<p><strong>(e) Fly-tying materials inventory</strong> (rank 3, 61 points). Why it lost: eleven handles on one platform
+(FAOL) in threads from 2006–2013, half at intensity 1 — it fails criterion 1's three-platform rule on
+current evidence; competition was never researched, so criterion 3 was capped at 2; break-even needs
+~59 payers at $12/yr (S479 / G6). It scored high only because it is trivial to build. What would
+revive it: ≥10 handles on ≥3 platforms dated 2020 or later and a competitor sweep nobody has done;
+run it as a pain-mining round first.</p>
+<p><strong>(c) Fishing club administration</strong> (rank 8, 56 points). Why it lost: the pain is one club on one
+forum (I-C1–C17, marked "provisional" by the immersion file); a volunteer director decides once a
+year in winter; Fishing Chaos has an unpriced club module and "could ship it in a quarter" (S296 /
+C61, competitors §7). What would revive it: an officer-side evidence set from more than one club, and a
+club-first wedge (meetings, dues, roles, a public page) that hands tournaments to TourneyX/FishDonkey.</p>
+<h3 id="11c-scoring-grid-top-8-researchgap-analysismd-2-nine-criteria-weights-332122122-max-90">11c. Scoring grid, top 8 (<code>research/gap-analysis.md</code> §2; nine criteria, weights 3/3/2/1/2/2/1/2/2, max 90)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Candidate</th>
+<th>Pain</th>
+<th>WTP</th>
+<th>Comp. weak</th>
+<th>Fit</th>
+<th>Solo build</th>
+<th>Time to $</th>
+<th>Defens.</th>
+<th>Distrib.</th>
+<th>Low resource</th>
+<th>Weighted</th>
+<th>Why it lost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>a. Reel/rod service job tracker (B2B)</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>5</td>
+<td><strong>63</strong></td>
+<td>— (pain scored 2: no first-person shop complaint on disk; fixed by the evidence round)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>b. Private web logbook, auto conditions</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td><strong>61</strong></td>
+<td>Fishing Points one feature away at 10M installs; export-by-design gives away the moat</td>
+</tr>
+<tr>
+<td>3</td>
+<td>e. Fly-tying materials inventory</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td><strong>61</strong></td>
+<td>one platform, 2006–2013 threads; competition unresearched</td>
+</tr>
+<tr>
+<td>4</td>
+<td>k. Tackle inventory with cost/value</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+<td><strong>60</strong></td>
+<td>one 2010 thread; "low-intensity except for fly tiers"</td>
+</tr>
+<tr>
+<td>5</td>
+<td>f. Small-club tournament director tool</td>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td><strong>59</strong></td>
+<td>four live incumbents priced per angler; "the slots are taken"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>d. Personal gear record with reminders</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td><strong>59</strong></td>
+<td>one spreadsheet user; the pain is access and parts, not tracking</td>
+</tr>
+<tr>
+<td>7</td>
+<td>i. Reel-service directory + mail-in flow</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td><strong>58</strong></td>
+<td>no shop pays for leads; absorbed into (a) as the public shop page (C7)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>c. Fishing club administration</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td><strong>56</strong></td>
+<td>one club, one forum; one volunteer decision a year</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="12-appendix">12. Appendix</h2>
+<h3 id="12a-method">12a. Method</h3>
+<p>A lead agent ran the mission in eight phases (<code>docs/progress.md</code>): preflight and approvals (0),
+setup (1), four parallel research agents for market sizing, hobby immersion, competitors and
+monetization plus a lead-written infrastructure file (2), a desk-only gap-analysis agent and two
+targeted evidence agents followed by the gate (3), a product-definition agent (4), a scaffold agent
+and a schema/vertical-slice agent for <code>/app</code> (5a, 5b), a prototype agent (6), an independent red team
+that re-ran the gate before reading the gate document and then attacked the pass with 31 searches and
+36 fetches (7a; 7b, code review, follows 5b), and this report (8). Eight skills were written in phase
+1 and used throughout (<code>docs/skills-log.md</code>): <code>source-logging</code> (one citation row format, so the lead
+merges tables instead of reformatting), <code>pain-point-mining</code> (the search recipe and evidence table the
+gate consumes), <code>competitor-teardown</code>, <code>market-size-triangulation</code>, <code>opportunity-scoring</code> (fixed
+anchors and weights so two agents score the same way), <code>validation-gate-checklist</code> (the six pass
+conditions as tests; the red team re-runs the same checklist), <code>code-review-against-standards</code>, and
+<code>approvals-audit</code>. Numbers in this report were not re-derived except where stated (the (a)-specific
+TAM/SAM/SOM in §6b and <code>scripts/revenue-model.py</code> in §7c, both labelled estimates with cited inputs).</p>
+<h3 id="12b-evidence-limits">12b. Evidence limits</h3>
+<ul>
+<li><strong>Reddit blocked</strong> by the environment's network policy (403 via proxy, and Reddit blocks reader
+  proxies); every agent's <code>site:reddit.com</code> searches returned nothing (nine attempts by the red team
+  alone). Fallback: search-engine snippets of Reddit threads plus directly reachable forums
+  (alantani.com, rodbuilding.org, StripersOnline, Texas Kayak Fisherman, Northwest Fishing Reports,
+  charlestonfishing, Lake Ontario United, TigerDroppings, sdfish, NESA) (decision D2; approvals A1).</li>
+<li><strong>Search budgets:</strong> the shared WebSearch budget ran out part-way through market sizing and at about
+  two-thirds of the monetization plan; later work used direct fetches of primary PDFs. Google Trends
+  could not be pulled, so seasonality rests on licence-sales and tournament data (market-sizing
+  tooling note; monetization §0).</li>
+<li><strong>Unmeasured Facebook:</strong> group and page pages are login walls; no member counts anywhere in the
+  evidence (S674 / R23). Channel row 6 (15–30 shops) is therefore the least reliable number in the
+  plan and is to be recomputed after F2.</li>
+<li><strong>Founder reach unmeasured:</strong> Instagram returned HTTP 429 on every attempt by two agents (S346 /
+  P7, S673 / R22); the Facebook page shows no follower count to a logged-out fetch.</li>
+<li><strong>Rate-limited or blocked pages:</strong> Shopify-hosted manufacturer pages (PENN, Daiwa, Shimano) and
+  Square's own pricing page returned 429; Trustpilot.com, Yelp, yell.com, BassResource and The Hull
+  Truth returned 403/502; quotes from those are marked "snippet" and are from search excerpts or
+  country mirrors (evidence file §0; monetization §0).</li>
+<li><strong>Age of the business-side evidence:</strong> eight of the fourteen business-side quotes in §2b are
+  2004–2014 rodbuilding.org threads; the gate weighed them against 2023–2026 shop pages and complaints
+  that show the same workflow (gate §1a).</li>
+<li><strong>Unsourced conversion rates:</strong> the 2–4% cold-outreach, 3–5% forum and 30–60% in-person rates in
+  the channel table are assumptions, stated as such (S567 / VS85); the red team would use 20–40% for
+  in-person.</li>
+<li><strong>Two estimates the gate used that the red team corrected:</strong> active-month ARPU ($19 → ≈$12) and the
+  alantani channel (10–30 → 3–10); both are shown side by side in §6b, §7 and §8.</li>
+</ul>
+<h3 id="12c-source-list">12c. Source list</h3>
+<p>The full table is <a href="../docs/sources.md"><code>docs/sources.md</code></a>: 727 rows merged from the research files'
+source tables by <code>scripts/merge-sources.py</code> (market-sizing 103, hobby-immersion 132, competitors 104,
+monetization 127, infrastructure 7, gap-analysis 9, evidence-repair-shop-tool 85,
+evidence-private-logbook 84, red-team 42, validation-gate 19, product-definition 15). The forty most
+relied on in this report:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>S</th>
+<th>Local</th>
+<th>Claim used</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>M1</td>
+<td>57.0M US participants 6+ in 2025</td>
+<td>https://asafishing.org/wp-content/uploads/2026/07/2026-Special-Report-on-Fishing_WEB_FV.pdf</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>M4</td>
+<td>19M quit in 2025; churn 33%</td>
+<td>same</td>
+</tr>
+<tr>
+<td>S13</td>
+<td>M13</td>
+<td>32% fish monthly or more; 918M outings</td>
+<td>same</td>
+</tr>
+<tr>
+<td>S27</td>
+<td>M27</td>
+<td>39.9M anglers 16+ in 2022</td>
+<td>https://www.fws.gov/sites/default/files/documents/Final_2022-National-Survey_101223-accessible-single-page.pdf</td>
+</tr>
+<tr>
+<td>S28</td>
+<td>M28</td>
+<td>$99.4B spend; $2,490 per angler; $217 tackle</td>
+<td>same</td>
+</tr>
+<tr>
+<td>S35</td>
+<td>M35</td>
+<td>rods &amp; reels $2.3B; online media subscriptions $166M</td>
+<td>https://asafishing.org/wp-content/uploads/2025/01/2024_ASA_Economic_Report_Digital_Spread.pdf</td>
+</tr>
+<tr>
+<td>S39</td>
+<td>M39</td>
+<td>32.24M paid licence holders (2023)</td>
+<td>https://www.statista.com/statistics/247669/fishing-license-holders-in-the-us/</td>
+</tr>
+<tr>
+<td>S40</td>
+<td>M40</td>
+<td>paid licence holders by state, 2021</td>
+<td>https://stacker.com/your-state/states-most-registered-anglers</td>
+</tr>
+<tr>
+<td>S47</td>
+<td>M47</td>
+<td>15,548 tackle shops</td>
+<td>https://www.ibisworld.com/united-states/market-research-reports/tackle-shops-industry/</td>
+</tr>
+<tr>
+<td>S59</td>
+<td>M59</td>
+<td>25% of active anglers use a fishing app</td>
+<td>https://www.southwickassociates.com/smartphone-app-use-and-todays-angler/</td>
+</tr>
+<tr>
+<td>S142</td>
+<td>I39</td>
+<td>charlestonfishing "Reels" thread: 5-week wait at Haddrell's</td>
+<td>https://forum.charlestonfishing.com/t/reels/38461</td>
+</tr>
+<tr>
+<td>S174</td>
+<td>I71</td>
+<td>sdfish thread: "8 week backlog", "didn't even know shops did this"</td>
+<td>https://www.sdfish.org/viewtopic.php?p=28999</td>
+</tr>
+<tr>
+<td>S314</td>
+<td>C79</td>
+<td>ReelKeep, the only maintenance app, unrated</td>
+<td>(competitors.md C79)</td>
+</tr>
+<tr>
+<td>S340</td>
+<td>P1</td>
+<td>founder's site: template, dead "Book NOW"</td>
+<td>https://www.stormprooftackle.com/</td>
+</tr>
+<tr>
+<td>S406</td>
+<td>P67</td>
+<td>Valley Reel Works price list and intake</td>
+<td>https://www.valleyreelworks.com/</td>
+</tr>
+<tr>
+<td>S407</td>
+<td>P68</td>
+<td>Mat's Reel Repair prices, printed form</td>
+<td>https://matsreelrepair.com/service-pricing</td>
+</tr>
+<tr>
+<td>S408</td>
+<td>P69</td>
+<td>Dave's Reel Service: 8-week turnaround, closed Aug 25–Oct 15</td>
+<td>https://www.davesreelservice.com/rates/</td>
+</tr>
+<tr>
+<td>S409</td>
+<td>P70</td>
+<td>Fischer Angling: 10-day turnaround, closed Jul 15–Sep 15</td>
+<td>https://fischeranglingpro.com/</td>
+</tr>
+<tr>
+<td>S450</td>
+<td>P111</td>
+<td>RepairDesk $99/$149</td>
+<td>https://www.repairdesk.co/pricing</td>
+</tr>
+<tr>
+<td>S452</td>
+<td>P113</td>
+<td>no reel-specific repair software; Digital Wrench $39.95, RepairTRAX $30</td>
+<td>https://www.capterra.com/p/130999/RepairTRAX/</td>
+</tr>
+<tr>
+<td>S467</td>
+<td>D1</td>
+<td>Supabase Pro $25 and quotas</td>
+<td>https://supabase.com/pricing</td>
+</tr>
+<tr>
+<td>S468</td>
+<td>D2</td>
+<td>Netlify credits and plans</td>
+<td>https://www.netlify.com/pricing/</td>
+</tr>
+<tr>
+<td>S469</td>
+<td>D3</td>
+<td>Stripe 2.9% + 30¢; Billing 0.7%</td>
+<td>https://stripe.com/pricing</td>
+</tr>
+<tr>
+<td>S483</td>
+<td>VS1</td>
+<td>Square: rod builder's one-day prep-time limit (V1)</td>
+<td>https://community.squareup.com/t5/Questions-How-To/How-would-I-show-my-customers-order-wait-time-or-how-long-an/td-p/639869</td>
+</tr>
+<tr>
+<td>S485</td>
+<td>VS3</td>
+<td>Alan Tani: 100 reels a month, dates on boxes (V3)</td>
+<td>https://alantani.com/index.php/topic,277.0.html</td>
+</tr>
+<tr>
+<td>S488</td>
+<td>VS6</td>
+<td>rodbuilding.org "stiffed for a repair" (V6–V10)</td>
+<td>https://www.rodbuilding.org/read.php?2,429833</td>
+</tr>
+<tr>
+<td>S496</td>
+<td>VS14</td>
+<td>Valley Reel Works two-invoice parts flow (V22)</td>
+<td>https://www.valleyreelworks.com/</td>
+</tr>
+<tr>
+<td>S502–S506</td>
+<td>VS20–VS24</td>
+<td>Yellow Pages "Fishing Tackle Parts &amp; Repair" counts TX/FL/CA/NY/VA</td>
+<td>https://www.yellowpages.com/search?search_terms=Fishing+Tackle+Parts+%26+Repair&amp;geo_location_terms=FL</td>
+</tr>
+<tr>
+<td>S511</td>
+<td>VS29</td>
+<td>alantani.com member and board counts</td>
+<td>https://alantani.com/</td>
+</tr>
+<tr>
+<td>S512</td>
+<td>VS30</td>
+<td>ICRBE attendance 2,000–2,500</td>
+<td>https://www.visitwinstonsalem.com/event/international-custom-rod-building-exposition-icrbe</td>
+</tr>
+<tr>
+<td>S524</td>
+<td>VS42</td>
+<td>Tower Systems pricing and repairs module</td>
+<td>https://www.towersystems.com.au/pricing.html</td>
+</tr>
+<tr>
+<td>S545</td>
+<td>VS63</td>
+<td>NWFR: "calling him every day" (V34)</td>
+<td>https://cdn.northwestfishingreports.com/Forum/viewtopic.php?p=160872</td>
+</tr>
+<tr>
+<td>S547</td>
+<td>VS65</td>
+<td>Texas Kayak Fisherman: told "ready" when not (V38–V43)</td>
+<td>https://texaskayakfisherman.com/forum/viewtopic.php?p=2339973</td>
+</tr>
+<tr>
+<td>S564–S567</td>
+<td>VS82–VS85</td>
+<td>pool, builders, abroad, first-100 math (estimates)</td>
+<td>(evidence-repair-shop-tool.md §2–§3)</td>
+</tr>
+<tr>
+<td>S653</td>
+<td>R2</td>
+<td>application fees carry no Stripe fee</td>
+<td>https://docs.stripe.com/connect/direct-charges</td>
+</tr>
+<tr>
+<td>S659</td>
+<td>R8</td>
+<td>Paperform Free: 30 submissions a month, Stripe included</td>
+<td>https://paperform.com/pricing</td>
+</tr>
+<tr>
+<td>S667</td>
+<td>R16</td>
+<td>2026 rodbuilding.org software ask → "Google Spreadsheet"</td>
+<td>https://www.rodbuilding.org/read.php?2,584503,584503</td>
+</tr>
+<tr>
+<td>S669</td>
+<td>R18</td>
+<td>ICRBE 2027: Feb 20–21, Winston-Salem, 60+ booths</td>
+<td>https://www.sharedaudiences.com/events/international-custom-rod-building-exposition-2027</td>
+</tr>
+<tr>
+<td>S672</td>
+<td>R21</td>
+<td>founder's site observed 2026-10-21</td>
+<td>https://www.stormprooftackle.com/</td>
+</tr>
+<tr>
+<td>S675</td>
+<td>R24</td>
+<td>Hubtiger bike-shop job cards $52–125/mo</td>
+<td>https://apps.shopify.com/hubtiger</td>
+</tr>
+<tr>
+<td>S681</td>
+<td>R30</td>
+<td>Grumpys Tackle: ~150 reels queued in January 2026</td>
+<td>https://www.thefisherman.com/contributor/grumpys-tackle/</td>
+</tr>
+<tr>
+<td>S692</td>
+<td>R41</td>
+<td>red team season and metering model</td>
+<td>(red-team.md §3e; scratchpad script)</td>
+</tr>
+<tr>
+<td>S694</td>
+<td>GA1</td>
+<td>Resend pricing</td>
+<td>https://resend.com/pricing</td>
+</tr>
+<tr>
+<td>S700</td>
+<td>GA7</td>
+<td>gate active-month ARPU $19 (estimate)</td>
+<td>(validation-gate.md §6)</td>
+</tr>
+<tr>
+<td>S706</td>
+<td>GA13</td>
+<td>plateau 155–400 shops (estimate)</td>
+<td>(validation-gate.md §6)</td>
+</tr>
+<tr>
+<td>S708</td>
+<td>GA15</td>
+<td>first-100 sums 42–103 / 70–160 (estimate)</td>
+<td>(validation-gate.md §3)</td>
+</tr>
+<tr>
+<td>S710</td>
+<td>GA17</td>
+<td>ceiling $0.5–1.1M at full penetration (estimate)</td>
+<td>(validation-gate.md §5)</td>
+</tr>
+<tr>
+<td>S716</td>
+<td>PD4</td>
+<td>Connect pricing under "Stripe handles pricing"</td>
+<td>https://stripe.com/connect/pricing</td>
+</tr>
+<tr>
+<td>S718</td>
+<td>PD6</td>
+<td>Stripe Invoicing 0.4%</td>
+<td>https://stripe.com/invoicing/pricing</td>
+</tr>
+<tr>
+<td>S723</td>
+<td>PD11</td>
+<td>Turnstile free plan limits</td>
+<td>https://developers.cloudflare.com/turnstile/plans/</td>
+</tr>
+<tr>
+<td>S726</td>
+<td>PD14</td>
+<td>cost-table arithmetic (estimate)</td>
+<td>(product-definition.md §9c)</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>End of report. Sections 5g and 5h carry <code>TODO</code> placeholders for the <code>/app</code> starter and the
+prototype; re-run <code>python3 scripts/build-report-html.py</code> after they are filled.</em></p>
+</main>
+</div>
+</body>
+</html>
