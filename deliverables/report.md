@@ -402,11 +402,44 @@ Postgres test harness (`supabase/tests/run.sh`, stubs, helpers, `000_harness.sql
 
 ### 5h. Prototype
 
-<!-- TODO-PROTOTYPE: screenshots and flow list -->
+**Delivered:** [`deliverables/prototype.html`](prototype.html) — one self-contained file (222 KB,
+inline CSS and JS, system fonts, no external requests, no build step, nothing written to
+localStorage). Open it by double-clicking or serve the folder; it is also published as a private
+claude.ai artifact for click-through (link in the hand-off summary). Details, routes and the
+not-shown list: [`prototype/README.md`](../prototype/README.md).
 
-*Section pending: `deliverables/prototype.html` is being produced by the prototype agent from
-`docs/product-definition.md` §5 and §10 (flows: shop onboarding, public intake with deposit, counter
-intake, job board, quote and approval on the status page, payment link, pickup/shipping, billing).*
+**What it demonstrates** (one in-memory state shared across the Shop, Customer and Public-page
+views, so every action is real across screens):
+
+| Step | Screen | What happens |
+|---|---|---|
+| 1 | Public page `#/s/storm-proof-tackle` | Services with prices and turnaround, mail-in instructions, policies, the "closed until" banner when switched on, "Find my job" by short code + phone/email, and the request form (kind toggle, services filtered by kind, demo Turnstile). Submitting creates the customer, item and job at `requested`, writes the `intake_received` and `new_request` emails and shows the confirmation with the short code (`SPT-XXXX`), a QR placeholder and the status link. |
+| 2 | Today board `#/app` | Overdue, new requests, due this week, ready and waiting (with the 7-day reminder), waiting on the customer; the month's meter (23 jobs → $23.00 of the $29 cap, split 14 collected as a fee on card payments / 9 on the ledger) and the month's takings. |
+| 3 | Job detail `#/app/jobs/:id` | The **Next step** button follows the §5d transition table for the item's kind; "Other" lists the rest. `received` records the usage event (meter +1), defaults the promised date from the service's turnaround and emails `item_received`; parts quotes are built from lines and sent; the payment panel sends the payment link (with the optional $1 service-fee line when pass-through is on) or marks cash/check; the close sheet does picked up / shipped with tracking / returned unrepaired / abandoned and refuses to close with a balance without an override. Stripe is a state: with Stripe disconnected, jobs, quotes and emails still work and only "Deposit by card" and "Send payment link" are disabled with a one-line reason. |
+| 4 | Status page `#/t/<token>` | The customer label for the status, the promised date, shop contact, the quote card with Approve / Decline, the balance card with the demo checkout, visible photos, shipping details, the uncollected-items policy and "Powered by Bench Tag". Approving moves the job to `approved` and writes the shop's email; paying marks the payment and the paid badge. |
+| 5 | Billing `#/app/billing` | This month's meter, the fee-vs-ledger split with the one-sentence ≥$5 rule, the $290/yr prepay card, card on file, invoice history. |
+
+Also built: counter intake (`#/app/jobs/new`, customer picker by phone or email, item, services,
+promised date, deposit chooser, photo placeholder, printable receipt with the short code),
+customers and items with history, settings (Stripe state, pass-the-fee toggle, CSV export of the
+mock data, danger zone), public-page settings (preview, copy link, closed-until switch), a
+dismissible 30-second tour that deep-links to each step, light and dark themes, and "Reset demo".
+
+**Verification** (headless Chromium via Playwright 1.56, script in the session scratchpad; results
+in `prototype/README.md`): the full flow was driven end to end — landing → tour → public page →
+request → its status link → find-my-job by code → today board → mark received (meter 23 → 24,
+promised date from turnaround) → diagnosing → quote $24.95 sent → customer approves → payment link
+→ demo checkout → paid in full → billing meter 24 jobs → $24.00 ($15 fee / $9 ledger) — **96 of 96
+assertions passed, 0 console errors, 0 page errors**, and 29 overflow checks at 360, 390 and 1280 px
+across 13 routes all passed (no horizontal scroll).
+
+**Screenshots** (`prototype/screenshots/`): phone and desktop for landing, public page, status
+page, today board, job detail and billing, plus the today board in dark mode.
+
+**Not shown in the prototype** (documented in its README): the onboarding wizard and login, the
+services editor, timer-driven reminders beyond one seeded reminder, refunds, SMS, the day-90
+scorecard. Photos and QR codes are placeholder tiles; email is an in-memory outbox shown in each
+job's timeline; Stripe Checkout and Turnstile are clearly labelled demos.
 
 ---
 ## 6. Market data

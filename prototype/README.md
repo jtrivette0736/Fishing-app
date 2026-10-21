@@ -159,3 +159,9 @@ Phone 390 px: `phone-landing.png`, `phone-public-page.jpg`, `phone-status-page.p
 Desktop 1280 px: `desktop-landing.png`, `desktop-public-page.jpg`, `desktop-status-page.png`,
 `desktop-today-board.png`, `desktop-job-detail.png` (#1047 with its quote and photos),
 `desktop-billing.png`, `desktop-today-board-dark.png` (dark theme).
+
+## Note on the claude.ai artifact copy
+
+The same file is published as a private claude.ai artifact for click-through. The artifact viewer
+blocks file downloads, so the Settings → "Export CSV" buttons do nothing there; they work when the
+file is opened directly from disk or served locally.

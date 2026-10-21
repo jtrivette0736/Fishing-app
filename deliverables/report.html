@@ -1335,11 +1335,67 @@ Postgres test harness (<code>supabase/tests/run.sh</code>, stubs, helpers, <code
 <code>.env.example</code> and placeholder pages. Commands: <code>npm install</code>, <code>npm run check</code>, <code>npm run test:sql</code>
 (<code>app/package.json</code>, <code>app/supabase/README.md</code>).</em></p>
 <h3 id="5h-prototype">5h. Prototype</h3>
-<!-- TODO-PROTOTYPE: screenshots and flow list -->
-<div class="todo">TODO-PROTOTYPE: screenshots and flow list</div>
-<p><em>Section pending: <code>deliverables/prototype.html</code> is being produced by the prototype agent from
-<code>docs/product-definition.md</code> §5 and §10 (flows: shop onboarding, public intake with deposit, counter
-intake, job board, quote and approval on the status page, payment link, pickup/shipping, billing).</em></p>
+<p><strong>Delivered:</strong> <a href="prototype.html"><code>deliverables/prototype.html</code></a> — one self-contained file (222 KB,
+inline CSS and JS, system fonts, no external requests, no build step, nothing written to
+localStorage). Open it by double-clicking or serve the folder; it is also published as a private
+claude.ai artifact for click-through (link in the hand-off summary). Details, routes and the
+not-shown list: <a href="../prototype/README.md"><code>prototype/README.md</code></a>.</p>
+<p><strong>What it demonstrates</strong> (one in-memory state shared across the Shop, Customer and Public-page
+views, so every action is real across screens):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Screen</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Public page <code>#/s/storm-proof-tackle</code></td>
+<td>Services with prices and turnaround, mail-in instructions, policies, the "closed until" banner when switched on, "Find my job" by short code + phone/email, and the request form (kind toggle, services filtered by kind, demo Turnstile). Submitting creates the customer, item and job at <code>requested</code>, writes the <code>intake_received</code> and <code>new_request</code> emails and shows the confirmation with the short code (<code>SPT-XXXX</code>), a QR placeholder and the status link.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Today board <code>#/app</code></td>
+<td>Overdue, new requests, due this week, ready and waiting (with the 7-day reminder), waiting on the customer; the month's meter (23 jobs → $23.00 of the $29 cap, split 14 collected as a fee on card payments / 9 on the ledger) and the month's takings.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Job detail <code>#/app/jobs/:id</code></td>
+<td>The <strong>Next step</strong> button follows the §5d transition table for the item's kind; "Other" lists the rest. <code>received</code> records the usage event (meter +1), defaults the promised date from the service's turnaround and emails <code>item_received</code>; parts quotes are built from lines and sent; the payment panel sends the payment link (with the optional $1 service-fee line when pass-through is on) or marks cash/check; the close sheet does picked up / shipped with tracking / returned unrepaired / abandoned and refuses to close with a balance without an override. Stripe is a state: with Stripe disconnected, jobs, quotes and emails still work and only "Deposit by card" and "Send payment link" are disabled with a one-line reason.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Status page <code>#/t/&lt;token&gt;</code></td>
+<td>The customer label for the status, the promised date, shop contact, the quote card with Approve / Decline, the balance card with the demo checkout, visible photos, shipping details, the uncollected-items policy and "Powered by Bench Tag". Approving moves the job to <code>approved</code> and writes the shop's email; paying marks the payment and the paid badge.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Billing <code>#/app/billing</code></td>
+<td>This month's meter, the fee-vs-ledger split with the one-sentence ≥$5 rule, the $290/yr prepay card, card on file, invoice history.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Also built: counter intake (<code>#/app/jobs/new</code>, customer picker by phone or email, item, services,
+promised date, deposit chooser, photo placeholder, printable receipt with the short code),
+customers and items with history, settings (Stripe state, pass-the-fee toggle, CSV export of the
+mock data, danger zone), public-page settings (preview, copy link, closed-until switch), a
+dismissible 30-second tour that deep-links to each step, light and dark themes, and "Reset demo".</p>
+<p><strong>Verification</strong> (headless Chromium via Playwright 1.56, script in the session scratchpad; results
+in <code>prototype/README.md</code>): the full flow was driven end to end — landing → tour → public page →
+request → its status link → find-my-job by code → today board → mark received (meter 23 → 24,
+promised date from turnaround) → diagnosing → quote $24.95 sent → customer approves → payment link
+→ demo checkout → paid in full → billing meter 24 jobs → $24.00 ($15 fee / $9 ledger) — <strong>96 of 96
+assertions passed, 0 console errors, 0 page errors</strong>, and 29 overflow checks at 360, 390 and 1280 px
+across 13 routes all passed (no horizontal scroll).</p>
+<p><strong>Screenshots</strong> (<code>prototype/screenshots/</code>): phone and desktop for landing, public page, status
+page, today board, job detail and billing, plus the today board in dark mode.</p>
+<p><strong>Not shown in the prototype</strong> (documented in its README): the onboarding wizard and login, the
+services editor, timer-driven reminders beyond one seeded reminder, refunds, SMS, the day-90
+scorecard. Photos and QR codes are placeholder tiles; email is an in-memory outbox shown in each
+job's timeline; Stripe Checkout and Turnstile are clearly labelled demos.</p>
 <hr />
 <h2 id="6-market-data">6. Market data</h2>
 <p>Populations are stated each time because the three big sources count different people: RBFF/Outdoor
