@@ -80,6 +80,7 @@ export function AuthCallback() {
 function describeProviderError(raw: string): string {
   const text = raw.replace(/\+/g, ' ')
   if (/expired/i.test(text)) return 'This sign-in link has expired. Request a new one.'
-  if (/invalid|already/i.test(text)) return 'This sign-in link was already used or is no longer valid.'
+  if (/invalid|already/i.test(text))
+    return 'This sign-in link was already used or is no longer valid.'
   return `Sign-in failed: ${text}`
 }

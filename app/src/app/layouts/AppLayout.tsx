@@ -38,7 +38,9 @@ export function AppLayout() {
           </nav>
           <div className="ml-auto flex items-center gap-3 text-sm">
             {auth.mode === 'demo' && <Badge tone="warning">Demo mode</Badge>}
-            <span className="hidden text-slate-600 sm:inline">{auth.user?.email ?? 'Signed in'}</span>
+            <span className="hidden text-slate-600 sm:inline">
+              {auth.user?.email ?? 'Signed in'}
+            </span>
             <Button variant="ghost" size="sm" onClick={signOut} loading={signingOut}>
               Sign out
             </Button>

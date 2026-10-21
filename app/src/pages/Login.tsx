@@ -49,7 +49,10 @@ export function Login() {
         ? passwordSchema.safeParse({ email, password })
         : magicLinkSchema.safeParse({ email })
     if (!parsed.success) {
-      const fields = z.flattenError(parsed.error).fieldErrors as Record<string, string[] | undefined>
+      const fields = z.flattenError(parsed.error).fieldErrors as Record<
+        string,
+        string[] | undefined
+      >
       setErrors({ email: fields.email?.[0], password: fields.password?.[0] })
       return
     }
@@ -108,7 +111,11 @@ export function Login() {
         </p>
       )}
 
-      <form onSubmit={submit} noValidate className="space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+      <form
+        onSubmit={submit}
+        noValidate
+        className="space-y-4 rounded-lg border border-slate-200 bg-white p-6"
+      >
         <Field label="Email" error={errors.email}>
           {(control) => (
             <Input

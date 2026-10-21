@@ -24,8 +24,7 @@ export interface ApiError {
 }
 
 export type Result<T, E = ApiError> =
-  | { readonly ok: true; readonly data: T }
-  | { readonly ok: false; readonly error: E }
+  { readonly ok: true; readonly data: T } | { readonly ok: false; readonly error: E }
 
 export function ok<T>(data: T): Result<T, never> {
   return { ok: true, data }

@@ -17,7 +17,12 @@ export interface SpinnerProps {
 
 export function Spinner({ label = 'Loading', size = 'md', className }: SpinnerProps) {
   return (
-    <span role="status" aria-live="polite" className={cn('inline-flex items-center', className)}>
+    <span
+      role="status"
+      aria-live="polite"
+      aria-label={label}
+      className={cn('inline-flex items-center', className)}
+    >
       <span
         aria-hidden="true"
         className={cn(

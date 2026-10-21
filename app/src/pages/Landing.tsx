@@ -15,8 +15,8 @@ export function Landing() {
         Every job tracked, every customer kept in the loop.
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-slate-600">
-        A public intake page for your shop, a status page for each customer, and payments that
-        land in your own account. Pay per job, never for an empty month.
+        A public intake page for your shop, a status page for each customer, and payments that land
+        in your own account. Pay per job, never for an empty month.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link

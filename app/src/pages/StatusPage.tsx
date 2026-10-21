@@ -24,7 +24,11 @@ function lookupStatusPlaceholder(token: string): Promise<StatusPlaceholder | nul
     setTimeout(() => {
       resolve(
         token.startsWith('demo')
-          ? { shopName: 'Demo Reel Service', itemLabel: 'Shimano Stradic 3000', status: 'In progress' }
+          ? {
+              shopName: 'Demo Reel Service',
+              itemLabel: 'Shimano Stradic 3000',
+              status: 'In progress',
+            }
           : null,
       )
     }, 400)

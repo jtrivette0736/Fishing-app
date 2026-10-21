@@ -1,0 +1,79 @@
+# CI for the app in app/. Two jobs run in parallel:
+#   app  - npm ci, then `npm run check` (lint, format, typecheck, unit tests, production build)
+#   sql  - the database harness against a postgres:16 service container (no initdb/sudo needed in
+#          CI: supabase/tests/run.sh switches to "existing server" mode when DATABASE_URL is set)
+#
+# Deploying migrations (`npx supabase@2 db push`) is added here once a Supabase project exists;
+# see app/README.md -> Deploy. Actions are pinned to major tags; pin to commit SHAs before the
+# repo takes outside contributions.
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: app/.nvmrc
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - name: Bundle size
+        run: du -sh dist && ls -la dist/assets
+
+  sql:
+    name: Migrations and SQL tests
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v5
+      - name: SQL tests
+        run: bash supabase/tests/run.sh
+      - name: Set up Node (for the Supabase CLI and Prettier)
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: app/.nvmrc
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: Generated types are up to date
+        run: |
+          cp src/lib/supabase/types.ts /tmp/types.before.ts
+          npm run db:types
+          diff -u /tmp/types.before.ts src/lib/supabase/types.ts \
+            || { echo "::error::src/lib/supabase/types.ts is stale; run 'npm run db:types' and commit it."; exit 1; }

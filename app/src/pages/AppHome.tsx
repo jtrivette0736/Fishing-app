@@ -43,8 +43,8 @@ export function AppHome() {
           <p className="flex items-center gap-2 text-slate-700">
             <Badge tone="success">Connected</Badge>
             <span>
-              {health.data.mode === 'demo' ? 'Demo data, in this browser only.' : 'Supabase'} Checked{' '}
-              {new Date(health.data.checkedAt).toLocaleTimeString()}.
+              {health.data.mode === 'demo' ? 'Demo data, in this browser only.' : 'Supabase'}{' '}
+              Checked {new Date(health.data.checkedAt).toLocaleTimeString()}.
             </span>
           </p>
         )}

@@ -13,6 +13,20 @@ export default defineConfig({
   build: {
     sourcemap: false,
     target: 'es2022',
+    rolldownOptions: {
+      output: {
+        // Long-lived vendor chunks cache independently of app code between deploys.
+        codeSplitting: {
+          groups: [
+            { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/ },
+            { name: 'supabase', test: /node_modules[\\/]@supabase[\\/]/ },
+            { name: 'router', test: /node_modules[\\/](react-router|react-router-dom)[\\/]/ },
+            { name: 'query', test: /node_modules[\\/]@tanstack[\\/]/ },
+            { name: 'zod', test: /node_modules[\\/]zod[\\/]/ },
+          ],
+        },
+      },
+    },
   },
   test: {
     environment: 'jsdom',

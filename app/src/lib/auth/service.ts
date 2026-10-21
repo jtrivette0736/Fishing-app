@@ -25,7 +25,9 @@ export interface AuthService {
   signOut(): Promise<Result<void>>
 }
 
-function toAuthUser(user: { id: string; email?: string | undefined } | null | undefined): AuthUser | null {
+function toAuthUser(
+  user: { id: string; email?: string | undefined } | null | undefined,
+): AuthUser | null {
   if (!user) return null
   return { id: user.id, email: user.email ?? null }
 }

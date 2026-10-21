@@ -18,7 +18,10 @@ describe('run', () => {
 
   it('maps a PostgREST error to an ApiError', async () => {
     const result = await run(
-      resolved({ data: null, error: { code: 'PGRST116', message: 'no rows', details: '', hint: '' } }),
+      resolved({
+        data: null,
+        error: { code: 'PGRST116', message: 'no rows', details: '', hint: '' },
+      }),
     )
     expect(result.ok).toBe(false)
     if (!result.ok) expect(result.error.code).toBe('not_found')

@@ -13,7 +13,9 @@ describe('Field', () => {
     )
     const input = screen.getByLabelText('Email')
     expect(input).toHaveAttribute('aria-invalid', 'true')
-    expect(input).toHaveAccessibleDescription('We only use it to sign you in. Enter an email address.')
+    expect(input).toHaveAccessibleDescription(
+      'We only use it to sign you in. Enter an email address.',
+    )
     expect(screen.getByText('Enter an email address.')).toBeInTheDocument()
   })
 

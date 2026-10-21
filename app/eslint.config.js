@@ -43,7 +43,10 @@ export default defineConfig(
       // `onClick={() => setOpen(true)}` is idiomatic React; the void return is intentional.
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
       // Async event handlers are fine in JSX attributes; React ignores the returned promise.
-      '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        { checksVoidReturn: { attributes: false } },
+      ],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
@@ -67,7 +70,8 @@ export default defineConfig(
           patterns: [
             {
               group: ['**/lib/supabase/client', '@/lib/supabase/client'],
-              message: 'Use useApi() / useAuth(); only src/lib/api and src/lib/auth may import the client.',
+              message:
+                'Use useApi() / useAuth(); only src/lib/api and src/lib/auth may import the client.',
             },
           ],
         },
@@ -98,7 +102,7 @@ export default defineConfig(
 
   // Node-side config and scripts: type-aware through tsconfig.node.json.
   {
-    files: ['vite.config.ts', 'eslint.config.js', 'scripts/**/*.mjs'],
+    files: ['vite.config.ts', 'eslint.config.js'],
     extends: [js.configs.recommended, tseslint.configs.strictTypeChecked],
     languageOptions: {
       globals: globals.node,
